@@ -23,14 +23,12 @@ android {
     versionCode = Versions.versionCode
     versionName = Versions.versionName
 
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     vectorDrawables {
       useSupportLibrary = true
     }
   }
 
   buildTypes {
-
     debug {
 
     }
@@ -40,19 +38,24 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
     }
   }
+
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
   }
+
   kotlinOptions {
     jvmTarget = "1.8"
   }
+
   buildFeatures {
     compose = true
   }
+
   composeOptions {
     kotlinCompilerExtensionVersion = Versions.compose
   }
+
   packagingOptions {
     resources {
       excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -64,6 +67,7 @@ android {
 
 dependencies {
 
+  implementation(project(":common"))
   implementation(project(":authentication"))
 
   implementation(Dependencies.Core.activityKtx)

@@ -1,4 +1,4 @@
-package com.musicianhelper.demoapp
+package com.musicianhelper.musicianhelper
 
 import org.junit.Test
 

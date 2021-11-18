@@ -48,13 +48,15 @@ object Dependencies {
   }
 
   object Compose {
-    private const val activityVersion = "1.4.0"
-    private const val materialVersion = "1.0.4"
-    private const val animationVersion = "1.0.4"
-    private const val uiToolingVersion = "1.0.4"
-    private const val lifeCycleViewModelVersion = "2.4.0-rc01"
-    private const val compilerVersion = "1.1.0-beta01"
+      private const val activityVersion = "1.4.0"
+    private const val materialVersion = "1.0.5"
+    private const val animationVersion = "1.0.5"
+    private const val uiToolingVersion = "1.0.5"
+    private const val lifeCycleViewModelVersion = "2.4.0"
+    private const val compilerVersion = "1.1.0-beta03"
+    private const val UI = "1.0.5"
 
+    val composeUI by lazy { "androidx.compose.ui:ui:$UI" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
     val composeMaterial by lazy { "androidx.compose.material:material:$materialVersion" }
     val composeAnimation by lazy { "androidx.compose.animation:animation:$animationVersion" }

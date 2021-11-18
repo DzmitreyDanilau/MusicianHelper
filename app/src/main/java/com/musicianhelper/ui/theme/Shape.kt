@@ -1,4 +1,4 @@
-package com.musicianhelper.demoapp.ui.theme
+package com.musicianhelper.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

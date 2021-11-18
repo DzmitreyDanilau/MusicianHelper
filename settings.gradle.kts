@@ -23,3 +23,4 @@ pluginManagement {
 rootProject.name = "MusicianHelper"
 include(":app")
 include(":authentication")
+include(":common")

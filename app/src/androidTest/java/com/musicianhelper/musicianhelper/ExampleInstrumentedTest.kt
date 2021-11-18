@@ -1,4 +1,4 @@
-package com.musicianhelper.demoapp
+package com.musicianhelper.musicianhelper
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

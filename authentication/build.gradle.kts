@@ -1,5 +1,6 @@
 plugins {
   id("com.android.library")
+  kotlin("android")
 }
 
 repositories {
@@ -10,10 +11,10 @@ repositories {
 }
 
 android {
-  compileSdk =  ConfigData.compileSdkVersion
+  compileSdk = ConfigData.compileSdkVersion
 
   defaultConfig {
-    minSdk  = ConfigData.minSdkVersion
+    minSdk = ConfigData.minSdkVersion
     targetSdk = ConfigData.targetSdkVersion
   }
 
@@ -27,12 +28,35 @@ android {
 
     }
   }
+
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
+  buildFeatures {
+    compose = true
+  }
+
+  composeOptions {
+    kotlinCompilerExtensionVersion = Versions.compose
+  }
 }
 
 dependencies {
 
+  implementation(project(":common"))
+
   implementation(Dependencies.Firebase.firebaseAuth)
   implementation(Dependencies.Firebase.firebaseAuthKtx)
-  implementation(Dependencies.Firebase.firebaseAuthKtx)
+
+  implementation(Dependencies.Kotlin.coroutinesCore)
   implementation(Dependencies.stdLibjdk8)
+
+  implementation(Dependencies.Compose.composeUI)
+  implementation(Dependencies.Compose.composeActivity)
+  implementation(Dependencies.Compose.composeUiTooling)
+  implementation(Dependencies.Compose.composeMaterial)
+  implementation(Dependencies.Compose.composeCompiler)
+  implementation(Dependencies.Compose.composeLifeCycleViewModel)
+  implementation(Dependencies.Compose.composeAnimation)
 }
