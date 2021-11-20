@@ -5,10 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.tooling.preview.Preview
-import com.musicianhelper.login.impl.ui.LoginScreen
+import com.musicianhelper.data.api.LocalUserDataSourceProvider
+import com.musicianhelper.di.LocalAppProvider
 import com.musicianhelper.di.LocalCommonProvider
 import com.musicianhelper.ui.theme.AppTheme
 
@@ -18,18 +17,15 @@ class MainActivity : ComponentActivity() {
     setContent {
       AppTheme {
         Surface(color = MaterialTheme.colors.background) {
-          CompositionLocalProvider {
-            LocalCommonProvider provides application.appProvider
+          CompositionLocalProvider(
+            LocalAppProvider provides application.appProvider,
+            LocalCommonProvider provides application.appProvider,
+            LocalUserDataSourceProvider provides application.appProvider
+          ) {
+            Navigation()
           }
-          Start()
         }
       }
     }
   }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun Start() {
-  LoginScreen()
 }

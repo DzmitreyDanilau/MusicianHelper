@@ -42,7 +42,9 @@ object Dependencies {
 
   object Firebase {
     private const val version = "21.0.1"
+    private const val coreVersion = "20.0.0"
 
+    val firebaseCore by lazy {"com.google.firebase:firebase-core:$coreVersion"}
     val firebaseAuth by lazy { "com.google.firebase:firebase-auth:$version" }
     val firebaseAuthKtx by lazy { "com.google.firebase:firebase-auth-ktx:$version" }
   }

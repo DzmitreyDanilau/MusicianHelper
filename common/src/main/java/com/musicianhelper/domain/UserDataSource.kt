@@ -2,7 +2,7 @@ package com.musicianhelper.domain
 
 import kotlinx.coroutines.flow.Flow
 
-interface UserDataStore {
+interface UserDataSource {
 
   fun getUser(): Flow<User>
 }

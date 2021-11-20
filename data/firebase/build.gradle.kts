@@ -33,6 +33,11 @@ android {
 }
 
 dependencies {
+
+  implementation(project(":common"))
+  api(project(":data:api"))
+
+  implementation(Dependencies.Firebase.firebaseCore)
   implementation(Dependencies.Firebase.firebaseAuth)
   implementation(Dependencies.Firebase.firebaseAuthKtx)
   implementation(Dependencies.PlayServices.playServicesCoroutines)

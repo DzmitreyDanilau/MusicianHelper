@@ -1,6 +1,6 @@
 plugins {
   id("com.android.application")
-  // id("dagger.hilt.android.plugin")
+  id("com.google.gms.google-services")
   kotlin("android")
   kotlin("kapt") version "1.5.21"
 }
@@ -69,6 +69,7 @@ dependencies {
 
   implementation(project(":common"))
   implementation(project(":login:impl"))
+  implementation(project(":data:firebase"))
 
   implementation(Dependencies.Core.activityKtx)
   implementation(Dependencies.Core.coreKtx)
@@ -81,6 +82,7 @@ dependencies {
   implementation(Dependencies.Compose.composeLifeCycleViewModel)
   implementation(Dependencies.Compose.composeMaterial)
   implementation(Dependencies.Compose.composeUiTooling)
+  implementation(Dependencies.Compose.composeNavigation)
 
   implementation(Dependencies.LifeCycle.lifecycleCommonJava8)
   implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)

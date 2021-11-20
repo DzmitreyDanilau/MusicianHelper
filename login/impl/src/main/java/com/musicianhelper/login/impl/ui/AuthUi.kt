@@ -29,7 +29,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(viewModel: LoginViewModel) {
   Column(
     modifier = Modifier
       .fillMaxWidth()

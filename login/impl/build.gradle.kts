@@ -46,6 +46,7 @@ android {
 dependencies {
 
   implementation(project(":common"))
+  implementation(project(":data:api"))
   api(project(":login:api"))
 
   implementation(Dependencies.Dagger.dagger)

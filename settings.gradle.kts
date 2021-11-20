@@ -13,8 +13,8 @@ pluginManagement {
       if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
         useVersion("1.5.21")
       }
-      if (requested.id.id.startsWith("com.google.android")) {
-        useModule("com.google.android.gms:play-services-location:18.0.0")
+      if (requested.id.id.startsWith("com.google.gms")) {
+        useModule("com.google.gms:google-services:4.3.8")
       }
     }
   }
