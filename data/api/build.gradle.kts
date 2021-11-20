@@ -11,6 +11,7 @@ repositories {
   maven(url = "https://maven.google.com")
 }
 
+
 android {
   compileSdk = ConfigData.compileSdkVersion
 
@@ -44,19 +45,7 @@ android {
 }
 
 dependencies {
-
   implementation(project(":common"))
-  api(project(":login:api"))
 
-  implementation(Dependencies.Dagger.dagger)
-  kapt(Dependencies.Dagger.kapt)
-
-  implementation(Dependencies.Compose.composeUI)
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeUiTooling)
-  implementation(Dependencies.Compose.composeMaterial)
-  implementation(Dependencies.Compose.composeCompiler)
   implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeAnimation)
-  implementation(Dependencies.Compose.composeNavigation)
 }

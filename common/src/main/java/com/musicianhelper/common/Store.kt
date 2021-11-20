@@ -2,10 +2,10 @@ package com.musicianhelper.common
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface StoreState
+interface State
 interface Action
 
-interface Store<S : StoreState, A : Action> {
+interface Store<S : State, A : Action> {
 
   fun observeState(): StateFlow<S>
 

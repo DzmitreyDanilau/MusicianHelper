@@ -86,10 +86,6 @@ dependencies {
   implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
   implementation(Dependencies.LifeCycle.lifecycleViewmodelKtx)
 
-  // implementation(Dependencies.Hilt.hiltAndroid)
-  // implementation(Dependencies.Hilt.hiltNavigation)
-  // kapt(Dependencies.Hilt.kapt)
-
   implementation(Dependencies.Dagger.dagger)
   kapt(Dependencies.Dagger.kapt)
 

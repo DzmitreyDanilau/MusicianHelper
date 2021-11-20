@@ -13,9 +13,9 @@ pluginManagement {
       if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
         useVersion("1.5.21")
       }
-      // if (requested.id.id.startsWith("dagger.hilt.android")) {
-      //   useModule("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
-      // }
+      if (requested.id.id.startsWith("com.google.android")) {
+        useModule("com.google.android.gms:play-services-location:18.0.0")
+      }
     }
   }
 }
@@ -23,4 +23,7 @@ pluginManagement {
 rootProject.name = "MusicianHelper"
 include(":app")
 include(":common")
+
 include(":login:impl", ":login:api")
+include(":data:firebase")
+include(":data:api")

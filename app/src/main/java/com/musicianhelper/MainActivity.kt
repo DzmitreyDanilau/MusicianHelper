@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.tooling.preview.Preview
-import com.musicianhelper.authentication.LoginScreen
+import com.musicianhelper.login.impl.ui.LoginScreen
 import com.musicianhelper.di.LocalCommonProvider
 import com.musicianhelper.ui.theme.AppTheme
 
