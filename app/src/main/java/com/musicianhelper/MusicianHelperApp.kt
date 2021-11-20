@@ -1,17 +1,23 @@
 package com.musicianhelper
 
 import android.app.Application
-import com.musicianhelper.di.ComponentDependenciesProvider
-import com.musicianhelper.di.HasComponentDependencies
+import com.musicianhelper.di.AppProvider
+import com.musicianhelper.di.DaggerAppComponent
+import com.musicianhelper.di.DaggerCommonComponent
 
-class MusicianHelperApp : Application(), HasComponentDependencies {
+class MusicianHelperApp : Application() {
 
-  override val dependencies: ComponentDependenciesProvider
-    get() = TODO("Not yet implemented")
+  lateinit var appProvider: AppProvider
 
-  // private fun initializeComponent(): AppComponent {
-  //   // Creates an instance of AppComponent using its Factory constructor
-  //   // We pass the applicationContext that will be used as Context in the graph
-  //   return DaggerAppComponent.factory().create(applicationContext)
-  // }
+  override fun onCreate() {
+    super.onCreate()
+
+    val commonProvider = DaggerCommonComponent.factory().create(this)
+    appProvider = DaggerAppComponent.builder()
+      .commonProvider(commonProvider)
+      .build()
+  }
 }
+
+val Application.appProvider: AppProvider
+  get() = (this as MusicianHelperApp).appProvider

@@ -1,6 +1,7 @@
 plugins {
   id("com.android.library")
   kotlin("android")
+  kotlin("kapt")
 }
 
 repositories {
@@ -52,6 +53,7 @@ dependencies {
   implementation(Dependencies.Compose.composeNavigation)
 
   implementation(Dependencies.Dagger.dagger)
+  kapt(Dependencies.Dagger.kapt)
 
   implementation(Dependencies.stdLibjdk8)
   implementation(Dependencies.Kotlin.coroutinesCore)

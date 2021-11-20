@@ -31,9 +31,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun LoginScreen() {
-  CompositionLocalProvider(values = ) {
-    
-  }
   Column(
     modifier = Modifier
       .fillMaxWidth()

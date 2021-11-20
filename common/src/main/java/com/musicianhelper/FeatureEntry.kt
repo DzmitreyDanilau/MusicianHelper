@@ -37,9 +37,10 @@ interface ComposableFeatureEntry : FeatureEntry {
   )
 }
 
-/*
-   It covers cases when a feature implements nested navigation and contains its own navigation subgraph.
-   It contains a navigation function that would allow a feature entry to define a navigation subgraph in it.
+/**
+ * It covers cases when a feature implements nested navigation and
+ * contains its own navigation subgraph. It contains a navigation function
+ * that would allow a feature entry to define a navigation subgraph in it.
  */
 interface AggregateFeatureEntry : FeatureEntry {
 

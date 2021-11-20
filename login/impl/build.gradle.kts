@@ -1,6 +1,7 @@
 plugins {
   id("com.android.library")
   kotlin("android")
+  kotlin("kapt")
 }
 
 repositories {
@@ -54,7 +55,7 @@ dependencies {
   implementation(Dependencies.stdLibjdk8)
 
   implementation(Dependencies.Dagger.dagger)
-  implementation(Dependencies.Dagger.kapt)
+  kapt(Dependencies.Dagger.kapt)
 
   implementation(Dependencies.Compose.composeUI)
   implementation(Dependencies.Compose.composeActivity)

@@ -11,6 +11,7 @@ interface CommonComponent : CommonProvider {
 
   @Component.Factory
   interface Factory {
+
     fun create(@BindsInstance context: Context): CommonComponent
   }
 }
