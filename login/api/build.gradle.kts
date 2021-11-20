@@ -44,15 +44,5 @@ android {
 }
 
 dependencies {
-
-  implementation(Dependencies.Compose.composeUI)
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeCompiler)
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeNavigation)
-
-  implementation(Dependencies.Dagger.dagger)
-
-  implementation(Dependencies.stdLibjdk8)
-  implementation(Dependencies.Kotlin.coroutinesCore)
+  implementation(project(":common"))
 }

@@ -54,15 +54,17 @@ object Dependencies {
     private const val uiToolingVersion = "1.0.5"
     private const val lifeCycleViewModelVersion = "2.4.0"
     private const val compilerVersion = "1.1.0-beta03"
-    private const val UI = "1.0.5"
+    private const val uiVersion = "1.0.5"
+    private const val navigationVersion = "2.4.0-beta02"
 
-    val composeUI by lazy { "androidx.compose.ui:ui:$UI" }
+    val composeUI by lazy { "androidx.compose.ui:ui:$uiVersion" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
     val composeMaterial by lazy { "androidx.compose.material:material:$materialVersion" }
     val composeAnimation by lazy { "androidx.compose.animation:animation:$animationVersion" }
     val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:$uiToolingVersion" }
     val composeLifeCycleViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:$lifeCycleViewModelVersion" }
     val composeCompiler by lazy { "androidx.compose.compiler:compiler:$compilerVersion" }
+    val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion"}
   }
 
   object Hilt {
@@ -72,6 +74,13 @@ object Dependencies {
     val hiltAndroid by lazy { "com.google.dagger:hilt-android:$version" }
     val kapt by lazy { "com.google.dagger:hilt-compiler:$version" }
     val hiltNavigation by lazy { "androidx.hilt:hilt-navigation-compose:$navigationVersion" }
+  }
+
+  object Dagger {
+    private const val version = "2.40.1"
+
+    val dagger by lazy { "com.google.dagger:dagger:$version" }
+    val kapt by lazy { "com.google.dagger:dagger-compiler:$version" }
   }
 
   object PlayServices {

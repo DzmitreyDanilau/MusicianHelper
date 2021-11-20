@@ -29,6 +29,10 @@ android {
     }
   }
 
+  kotlinOptions {
+    jvmTarget = "1.8"
+  }
+
   buildFeatures {
     compose = true
   }
@@ -36,23 +40,28 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = Versions.compose
   }
-
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
 }
 
 dependencies {
 
-  implementation(Dependencies.Compose.composeUI)
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeCompiler)
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeNavigation)
+  implementation(project(":common"))
+  api(project(":login:api"))
+
+  implementation(Dependencies.Firebase.firebaseAuth)
+  implementation(Dependencies.Firebase.firebaseAuthKtx)
+
+  implementation(Dependencies.Kotlin.coroutinesCore)
+  implementation(Dependencies.stdLibjdk8)
 
   implementation(Dependencies.Dagger.dagger)
+  implementation(Dependencies.Dagger.kapt)
 
-  implementation(Dependencies.stdLibjdk8)
-  implementation(Dependencies.Kotlin.coroutinesCore)
+  implementation(Dependencies.Compose.composeUI)
+  implementation(Dependencies.Compose.composeActivity)
+  implementation(Dependencies.Compose.composeUiTooling)
+  implementation(Dependencies.Compose.composeMaterial)
+  implementation(Dependencies.Compose.composeCompiler)
+  implementation(Dependencies.Compose.composeLifeCycleViewModel)
+  implementation(Dependencies.Compose.composeAnimation)
+  implementation(Dependencies.Compose.composeNavigation)
 }

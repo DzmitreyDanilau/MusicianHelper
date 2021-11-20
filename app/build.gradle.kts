@@ -1,6 +1,6 @@
 plugins {
   id("com.android.application")
-  id("dagger.hilt.android.plugin")
+  // id("dagger.hilt.android.plugin")
   kotlin("android")
   kotlin("kapt") version "1.5.21"
 }
@@ -68,7 +68,7 @@ android {
 dependencies {
 
   implementation(project(":common"))
-  implementation(project(":authentication"))
+  implementation(project(":login:impl"))
 
   implementation(Dependencies.Core.activityKtx)
   implementation(Dependencies.Core.coreKtx)
@@ -86,9 +86,12 @@ dependencies {
   implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
   implementation(Dependencies.LifeCycle.lifecycleViewmodelKtx)
 
-  implementation(Dependencies.Hilt.hiltAndroid)
-  implementation(Dependencies.Hilt.hiltNavigation)
-  kapt(Dependencies.Hilt.kapt)
+  // implementation(Dependencies.Hilt.hiltAndroid)
+  // implementation(Dependencies.Hilt.hiltNavigation)
+  // kapt(Dependencies.Hilt.kapt)
+
+  implementation(Dependencies.Dagger.dagger)
+  kapt(Dependencies.Dagger.kapt)
 
   testImplementation("junit:junit:4.+")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
