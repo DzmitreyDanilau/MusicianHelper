@@ -1,20 +1,29 @@
 package com.musicianhelper.login.impl.ui
 
-import android.service.autofill.UserData
-import com.musicianhelper.login.impl.data.Repository
-import com.musicianhelper.login.impl.usecase.Login
+import com.musicianhelper.login.impl.domain.Login
+import com.musicianhelper.login.impl.domain.LoginResult
+import com.musicianhelper.login.impl.domain.LoginResult.Fail
+import com.musicianhelper.login.impl.domain.LoginResult.Loading
+import com.musicianhelper.login.impl.domain.LoginResult.Success
+import com.musicianhelper.login.impl.domain.Repository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
   private val repository: Repository
 ) : Login {
 
-  init {
-    val test = "DASDASD"
-  }
-
-  override fun invoke(query: String): Flow<UserData> {
-    TODO("Not yet implemented")
+  override fun invoke(name: String, password: String): Flow<LoginResult> {
+    return repository.login(name, password).map {
+      it.fold(
+        onSuccess = { user -> Success(user) },
+        onFailure = { error -> Fail(error) }
+      )
+    }.onStart {
+      flowOf(Loading)
+    }
   }
 }

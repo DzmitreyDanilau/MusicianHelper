@@ -1,8 +1,8 @@
 package com.musicianhelper.data.fireabase.di
 
 import com.google.firebase.auth.FirebaseAuth
-import com.musicianhelper.data.fireabase.FirebaseUserDataSource
-import com.musicianhelper.domain.UserDataSource
+import com.musicianhelper.data.fireabase.FirebaseAuthenticationService
+import com.musicianhelper.domain.AuthenticationService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -11,15 +11,14 @@ import dagger.Provides
 // to use data source, in-app msgs etc
 
 @Module(includes = [FirebaseModule::class])
-interface UserDataSourceModule {
+interface AuthServiceModule {
 
   @Binds
-  fun bindUserDataSource(firebaseAuth: FirebaseUserDataSource): UserDataSource
+  fun bindAuthentificationService(firebaseAuth: FirebaseAuthenticationService): AuthenticationService
 }
 
 @Module
 object FirebaseModule {
-
 
   @Provides
   fun provideFirebaseAuth() = FirebaseAuth.getInstance()

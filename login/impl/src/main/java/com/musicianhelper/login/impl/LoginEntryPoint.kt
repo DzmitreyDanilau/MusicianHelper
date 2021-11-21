@@ -5,13 +5,15 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.musicianhelper.Destinations
-import com.musicianhelper.data.api.LocalUserDataSourceProvider
+import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
 import com.musicianhelper.login.impl.ui.LoginScreen
 import injectedViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 class LoginEntryPoint @Inject constructor() : LoginEntry() {
 
   @Composable
@@ -24,10 +26,11 @@ class LoginEntryPoint @Inject constructor() : LoginEntry() {
     val viewModel = injectedViewModel {
       DaggerLoginComponent
         .builder()
-        .userDataSourceProvider(LocalUserDataSourceProvider.current)
+        .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
         .build()
         .viewModel
     }
+
     LoginScreen(viewModel = viewModel)
   }
 }

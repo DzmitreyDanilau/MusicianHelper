@@ -2,4 +2,8 @@ package com.musicianhelper.login.impl.ui
 
 import com.musicianhelper.common.State
 
-sealed class LoginState : State
+data class LoginState(
+  val progress: Boolean,
+  val success: Boolean,
+  val error: String? = null
+) : State

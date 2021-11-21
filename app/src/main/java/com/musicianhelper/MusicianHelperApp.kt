@@ -1,8 +1,7 @@
 package com.musicianhelper
 
 import android.app.Application
-import com.musicianhelper.data.fireabase.di.DaggerFirebaseComponent
-import com.musicianhelper.data.fireabase.di.FirebaseComponent
+import com.musicianhelper.data.fireabase.di.DaggerUserDataComponent
 import com.musicianhelper.di.AppProvider
 import com.musicianhelper.di.DaggerAppComponent
 import com.musicianhelper.di.DaggerCommonComponent
@@ -17,7 +16,7 @@ class MusicianHelperApp : Application() {
     val commonProvider = DaggerCommonComponent.factory().create(this)
     appProvider = DaggerAppComponent.builder()
       .commonProvider(commonProvider)
-      .userDataSourceProvider(DaggerFirebaseComponent.builder().build())
+      .authenticationServiceProvider(DaggerUserDataComponent.builder().build())
       .build()
   }
 }
