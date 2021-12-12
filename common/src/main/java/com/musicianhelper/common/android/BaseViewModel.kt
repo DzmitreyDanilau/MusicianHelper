@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -23,7 +24,7 @@ import kotlinx.coroutines.flow.scan
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-abstract class BaseViewModel<S : State, E : Event, A : Action, R : Result>(
+abstract class BaseViewModel<S : State>(
   private val initialState: S
 ) : ViewModel() {
 
@@ -31,23 +32,26 @@ abstract class BaseViewModel<S : State, E : Event, A : Action, R : Result>(
     CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
   private val stateFlow = MutableStateFlow(initialState)
-  private val eventFlow = MutableSharedFlow<A>()
+  private val actionFlow = MutableSharedFlow<Action>()
 
   init {
     initState()
   }
 
   private fun initState() {
-    eventFlow
+    actionFlow
       .flatMapMerge(transform = ::mapActionToResult)
+      .distinctUntilChanged()
       .scan(initialState, ::reduceState)
-      .onEach(stateFlow::emit)
+      .onEach {
+        stateFlow.emit(it)
+      }
       .launchIn(viewModelCoroutineScope)
   }
 
-  private fun processEvent(event: Flow<E>) {
+  private fun processEvent(event: Flow<Event>) {
     event.onEach {
-      eventFlow.emit(mapEventToAction(it))
+      actionFlow.emit(mapEventToAction(it))
     }.launchIn(viewModelCoroutineScope)
   }
 
@@ -56,7 +60,7 @@ abstract class BaseViewModel<S : State, E : Event, A : Action, R : Result>(
     super.onCleared()
   }
 
-  fun dispatch(event: E) {
+  fun dispatch(event: Event) {
     processEvent(flowOf(event))
   }
 
@@ -64,9 +68,9 @@ abstract class BaseViewModel<S : State, E : Event, A : Action, R : Result>(
     return stateFlow
   }
 
-  abstract fun mapEventToAction(event: E): A
+  abstract fun mapEventToAction(event: Event): Action
 
-  abstract fun mapActionToResult(action: A): Flow<R>
+  abstract fun mapActionToResult(action: Action): Flow<Result>
 
-  abstract fun reduceState(previous: S, result: R): S
+  abstract fun reduceState(previous: S, result: Result): S
 }

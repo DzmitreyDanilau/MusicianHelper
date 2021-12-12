@@ -11,6 +11,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarResult
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.material.TextFieldDefaults
@@ -19,6 +20,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +34,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.musicianhelper.login.impl.components.SnackBar
+import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.launch
@@ -46,11 +49,22 @@ fun LoginScreen(viewModel: LoginViewModel) {
   val state by viewModel.observeState().collectAsState()
 
 
-  state.error?.let { text ->
-    coroutineScope.launch {
-      scaffoldState.snackbarHostState.showSnackbar(text)
+  when (state) {
+    is LoginState.Fail -> {
+      (state as LoginState.Fail).error?.message?.let { text ->
+        coroutineScope.launch {
+          val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+            message = text
+          )
+          if (snackbarResult == SnackbarResult.Dismissed) {
+            viewModel.dispatch(DismissSnackbar)
+          }
+        }
+      }
     }
   }
+
+
 
   Scaffold(
     scaffoldState = scaffoldState,
@@ -84,6 +98,10 @@ fun LoginScreen(viewModel: LoginViewModel) {
       snackbarHostState = scaffoldState.snackbarHostState,
       onDismiss = { scaffoldState.snackbarHostState.currentSnackbarData?.dismiss() },
     )
+
+    SideEffect {
+      val tmp = ""
+    }
   }
 }
 

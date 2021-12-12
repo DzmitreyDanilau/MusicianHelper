@@ -3,13 +3,10 @@ package com.musicianhelper.login.impl.ui
 import com.musicianhelper.login.impl.domain.Login
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.Fail
-import com.musicianhelper.login.impl.domain.LoginResult.Loading
 import com.musicianhelper.login.impl.domain.LoginResult.Success
 import com.musicianhelper.login.impl.domain.Repository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(
@@ -22,8 +19,6 @@ class LoginUseCase @Inject constructor(
         onSuccess = { user -> Success(user) },
         onFailure = { error -> Fail(error) }
       )
-    }.onStart {
-      flowOf(Loading)
     }
   }
 }
