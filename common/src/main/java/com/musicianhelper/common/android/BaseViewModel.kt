@@ -1,16 +1,14 @@
 package com.musicianhelper.common.android
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.State
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,11 +23,9 @@ import kotlinx.coroutines.flow.scan
 @ExperimentalCoroutinesApi
 @FlowPreview
 abstract class BaseViewModel<S : State>(
-  private val initialState: S
+  private val initialState: S,
+  private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
-
-  private val viewModelCoroutineScope =
-    CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
   private val stateFlow = MutableStateFlow(initialState)
   private val actionFlow = MutableSharedFlow<Action>()
@@ -43,21 +39,14 @@ abstract class BaseViewModel<S : State>(
       .flatMapMerge(transform = ::mapActionToResult)
       .distinctUntilChanged()
       .scan(initialState, ::reduceState)
-      .onEach {
-        stateFlow.emit(it)
-      }
-      .launchIn(viewModelCoroutineScope)
+      .onEach { stateFlow.emit(it) }
+      .launchIn(viewModelScope)
   }
 
   private fun processEvent(event: Flow<Event>) {
     event.onEach {
       actionFlow.emit(mapEventToAction(it))
-    }.launchIn(viewModelCoroutineScope)
-  }
-
-  override fun onCleared() {
-    viewModelCoroutineScope.cancel()
-    super.onCleared()
+    }.launchIn(viewModelScope)
   }
 
   fun dispatch(event: Event) {
@@ -72,5 +61,8 @@ abstract class BaseViewModel<S : State>(
 
   abstract fun mapActionToResult(action: Action): Flow<Result>
 
-  abstract fun reduceState(previous: S, result: Result): S
+  abstract fun reduceState(
+    previous: S,
+    result: Result
+  ): S
 }

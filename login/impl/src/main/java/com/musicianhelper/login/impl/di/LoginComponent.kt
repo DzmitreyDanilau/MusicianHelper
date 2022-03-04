@@ -14,6 +14,5 @@ import kotlinx.coroutines.FlowPreview
   dependencies = [AuthenticationServiceProvider::class]
 )
 interface LoginComponent {
-
   val viewModel: LoginViewModel
 }

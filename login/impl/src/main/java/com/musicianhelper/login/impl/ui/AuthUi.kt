@@ -48,7 +48,6 @@ fun LoginScreen(viewModel: LoginViewModel) {
   val coroutineScope = rememberCoroutineScope()
   val state by viewModel.observeState().collectAsState()
 
-
   when (state) {
     is LoginState.Fail -> {
       (state as LoginState.Fail).error?.message?.let { text ->
@@ -62,8 +61,10 @@ fun LoginScreen(viewModel: LoginViewModel) {
         }
       }
     }
-  }
+    else -> {
 
+    }
+  }
 
 
   Scaffold(

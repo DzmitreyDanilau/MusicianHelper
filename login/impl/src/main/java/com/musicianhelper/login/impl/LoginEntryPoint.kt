@@ -6,10 +6,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.musicianhelper.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
+import com.musicianhelper.di.injectedViewModel
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
 import com.musicianhelper.login.impl.ui.LoginScreen
-import injectedViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 

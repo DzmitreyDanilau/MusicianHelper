@@ -10,6 +10,7 @@ import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
 import com.musicianhelper.login.impl.ui.LoginState.Fail
 import com.musicianhelper.login.impl.ui.LoginState.Initial
 import com.musicianhelper.login.impl.ui.LoginState.Success
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -20,10 +21,14 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 class LoginViewModel @Inject constructor(
+  dispatcher: CoroutineDispatcher,
   private val loginUseCase: Login
-) : BaseViewModel<LoginState>(initialState = Initial) {
+) : BaseViewModel<LoginState>(initialState = Initial, dispatcher = dispatcher) {
 
-  override fun reduceState(previous: LoginState, result: Result): LoginState {
+  override fun reduceState(
+    previous: LoginState,
+    result: Result
+  ): LoginState {
     return when (result) {
       is LoginResult.Success -> Success(inProgress = false)
       is LoginResult.Fail -> {
