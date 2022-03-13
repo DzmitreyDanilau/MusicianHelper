@@ -6,7 +6,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component
+@Component(modules = [DispatchersModule::class])
 interface CommonComponent : CommonProvider {
 
   @Component.Factory

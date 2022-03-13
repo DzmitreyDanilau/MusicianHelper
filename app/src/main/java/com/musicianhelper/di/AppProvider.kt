@@ -7,7 +7,6 @@ import com.musicianhelper.data.api.AuthenticationServiceProvider
 interface AppProvider : CommonProvider, AuthenticationServiceProvider {
 
   val destinations: Destinations
-
 }
 
 val LocalAppProvider = compositionLocalOf<AppProvider> { error("No app provider found!") }

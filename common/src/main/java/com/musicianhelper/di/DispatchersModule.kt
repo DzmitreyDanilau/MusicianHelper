@@ -2,23 +2,25 @@ package com.musicianhelper.di
 
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Module
 object DispatchersModule {
 
   @Main
   @Provides
-  fun provideMainDispatcher() = Dispatchers.Main
+  fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
   @Default
   @Provides
-  fun provideDefaultDispatcher() = Dispatchers.Default
+  fun provideDefaultDispatcher(): CoroutineDispatcher = Dispatchers.Default
 
   @IO
   @Provides
-  fun provideIODispatcher() = Dispatchers.IO
+  fun provideIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 }
 
 @Qualifier

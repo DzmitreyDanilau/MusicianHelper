@@ -4,6 +4,7 @@ import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
+import com.musicianhelper.di.Main
 import com.musicianhelper.login.impl.domain.Login
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 class LoginViewModel @Inject constructor(
-  dispatcher: CoroutineDispatcher,
+  @Main dispatcher: CoroutineDispatcher,
   private val loginUseCase: Login
 ) : BaseViewModel<LoginState>(initialState = Initial, dispatcher = dispatcher) {
 

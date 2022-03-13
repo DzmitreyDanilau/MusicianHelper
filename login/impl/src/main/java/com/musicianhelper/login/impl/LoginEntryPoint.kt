@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.musicianhelper.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
+import com.musicianhelper.di.LocalCommonProvider
 import com.musicianhelper.di.injectedViewModel
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
@@ -26,6 +27,7 @@ class LoginEntryPoint @Inject constructor() : LoginEntry() {
     val viewModel = injectedViewModel {
       DaggerLoginComponent
         .builder()
+        .commonProvider(LocalCommonProvider.current)
         .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
         .build()
         .viewModel
