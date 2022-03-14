@@ -30,7 +30,6 @@ object Dependencies {
   object Core {
     private const val coreKtxVersion = "1.7.0"
     private const val activityKtxVersion = "1.4.0"
-
     val coreKtx by lazy { "androidx.core:core-ktx:$coreKtxVersion" }
     val activityKtx by lazy { "androidx.activity:activity-ktx:$activityKtxVersion" }
   }
@@ -51,14 +50,13 @@ object Dependencies {
 
   object Compose {
       private const val activityVersion = "1.4.0"
-    private const val materialVersion = "1.0.5"
-    private const val animationVersion = "1.0.5"
-    private const val uiToolingVersion = "1.0.5"
+    private const val materialVersion = "1.1.1"
+    private const val animationVersion = "1.1.1"
+    private const val uiToolingVersion = "1.1.1"
     private const val lifeCycleViewModelVersion = "2.4.0"
     private const val compilerVersion = "1.1.0-beta03"
-    private const val uiVersion = "1.0.5"
+    private const val uiVersion = "1.1.1"
     private const val navigationVersion = "2.4.0-beta02"
-
     val composeUI by lazy { "androidx.compose.ui:ui:$uiVersion" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
     val composeMaterial by lazy { "androidx.compose.material:material:$materialVersion" }
@@ -67,15 +65,6 @@ object Dependencies {
     val composeLifeCycleViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:$lifeCycleViewModelVersion" }
     val composeCompiler by lazy { "androidx.compose.compiler:compiler:$compilerVersion" }
     val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion"}
-  }
-
-  object Hilt {
-    private const val version = "2.38.1"
-    private const val navigationVersion = "1.0.0-alpha03"
-
-    val hiltAndroid by lazy { "com.google.dagger:hilt-android:$version" }
-    val kapt by lazy { "com.google.dagger:hilt-compiler:$version" }
-    val hiltNavigation by lazy { "androidx.hilt:hilt-navigation-compose:$navigationVersion" }
   }
 
   object Dagger {

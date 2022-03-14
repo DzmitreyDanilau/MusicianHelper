@@ -12,13 +12,19 @@ import androidx.compose.ui.graphics.Color
 fun DefaultButton(
   modifier: Modifier = Modifier,
   onClick: () -> Unit = { },
-  buttonText: String
+  buttonText: String,
+  isEnabled: Boolean
 ) {
+
   TextButton(
+    enabled = isEnabled,
     onClick = onClick,
-    //
     modifier = modifier.wrapContentWidth(),
-    colors = ButtonDefaults.textButtonColors(backgroundColor = Color.Blue),
+    colors = if (isEnabled) {
+      ButtonDefaults.textButtonColors(backgroundColor = Color.Blue)
+    } else {
+      ButtonDefaults.textButtonColors(backgroundColor = Color.Gray)
+    },
   ) {
     Text(
       color = Color.White,

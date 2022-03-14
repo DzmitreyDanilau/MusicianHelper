@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
 import androidx.compose.material.icons.Icons
@@ -20,6 +21,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.TextFieldValue
 import com.musicianhelper.login.impl.components.DefaultButton
 import com.musicianhelper.login.impl.components.DefaultOutlinedField
@@ -70,9 +73,25 @@ fun LoginScreen(viewModel: LoginViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
       ) {
-        DefaultOutlinedField(defaultValue = email, label = "Email", icon = Icons.Default.Email)
-        DefaultOutlinedField(defaultValue = password, label = "Password", icon = Icons.Default.Lock)
+
+        val focusManager = LocalFocusManager.current
+
+        DefaultOutlinedField(
+          defaultValue = email,
+          label = "Email",
+          icon = Icons.Default.Email,
+          keyboardActions = KeyboardActions(
+            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+          )
+        )
+        DefaultOutlinedField(
+          defaultValue = password,
+          label = "Password",
+          icon = Icons.Default.Lock,
+          keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+        )
         DefaultButton(
+          isEnabled = email.value.text.isNotBlank(),
           buttonText = "Login",
           onClick = { viewModel.dispatch(Login(email.value.text, password.value.text)) })
       }
