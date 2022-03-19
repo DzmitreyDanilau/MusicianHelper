@@ -3,6 +3,7 @@ package com.musicianhelper.login.impl.ui
 import com.musicianhelper.login.impl.domain.Login
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.Fail
+import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
 import com.musicianhelper.login.impl.domain.LoginResult.Success
 import com.musicianhelper.login.impl.domain.Repository
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ class LoginUseCase @Inject constructor(
     return repository.login(name, password).map {
       it.fold(
         onSuccess = { user -> Success(user) },
-        onFailure = { error -> Fail(error) }
+        onFailure = { error -> NavigateToRegisterResult }
       )
     }
   }

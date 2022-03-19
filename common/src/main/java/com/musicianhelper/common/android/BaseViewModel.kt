@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
+import com.musicianhelper.common.Navigation
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.State
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,8 +13,10 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
@@ -29,6 +32,7 @@ abstract class BaseViewModel<S : State>(
 
   private val stateFlow = MutableStateFlow(initialState)
   private val actionFlow = MutableSharedFlow<Action>()
+  private val navigationFlow = MutableSharedFlow<Navigation>()
 
   init {
     initState()
@@ -38,6 +42,8 @@ abstract class BaseViewModel<S : State>(
     actionFlow
       .flatMapMerge(transform = ::mapActionToResult)
       .distinctUntilChanged()
+      .onEach(::navigate)
+      .filterNot { it !is Navigation }
       .scan(initialState, ::reduceState)
       .onEach { stateFlow.emit(it) }
       .launchIn(viewModelScope)
@@ -53,8 +59,21 @@ abstract class BaseViewModel<S : State>(
     processEvent(flowOf(event))
   }
 
-  fun observeState(): StateFlow<S> {
+  fun collectState(): StateFlow<S> {
     return stateFlow
+  }
+
+  fun collectNavigation() : SharedFlow<Navigation> = navigationFlow
+
+  private fun navigate(result: Result) {
+    val navigation = getNavigationByResult(result)
+    navigation?.let {
+      navigationFlow.tryEmit(navigation)
+    }
+  }
+
+  protected open fun getNavigationByResult(result: Result): Navigation? {
+    return null
   }
 
   abstract fun mapEventToAction(event: Event): Action

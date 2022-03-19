@@ -2,12 +2,14 @@ package com.musicianhelper.login.impl.ui
 
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
+import com.musicianhelper.common.Navigation
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
 import com.musicianhelper.di.Main
 import com.musicianhelper.login.impl.domain.Login
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
+import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
 import com.musicianhelper.login.impl.ui.LoginState.Fail
 import com.musicianhelper.login.impl.ui.LoginState.Initial
 import com.musicianhelper.login.impl.ui.LoginState.Success
@@ -52,6 +54,13 @@ class LoginViewModel @Inject constructor(
     }
   }
 
+  override fun getNavigationByResult(result: Result): Navigation? {
+    return when (result) {
+      is NavigateToRegisterResult -> NavigateToRegistration
+      else -> null
+    }
+  }
+
   override fun mapActionToResult(action: Action): Flow<Result> {
     return when (action) {
       is LoginAction.Login -> loginUseCase.invoke(action.name, action.password)
@@ -62,3 +71,5 @@ class LoginViewModel @Inject constructor(
 }
 
 object SnackbarDismissAction : Action
+
+object NavigateToRegistration : Navigation

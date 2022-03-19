@@ -31,16 +31,18 @@ import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
 import com.musicianhelper.login.impl.ui.LoginEvent.Login
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@FlowPreview
 @OptIn(ExperimentalCoroutinesApi::class)
+@FlowPreview
 @Composable
 fun LoginScreen(viewModel: LoginViewModel) {
 
   val scaffoldState = rememberScaffoldState()
   val coroutineScope = rememberCoroutineScope()
-  val state by viewModel.observeState().collectAsState()
+  val state by viewModel.collectState().collectAsState()
 
   when (state) {
     is LoginState.Fail -> {

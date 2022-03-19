@@ -57,7 +57,7 @@ internal fun DefaultOutlinedField(
     keyboardOptions = KeyboardOptions.Default.copy(
       capitalization = KeyboardCapitalization.Sentences,
       autoCorrect = true,
-      keyboardType = KeyboardType.Number,
+      keyboardType = KeyboardType.Ascii,
       imeAction = ImeAction.Done
     ),
     keyboardActions = keyboardActions
