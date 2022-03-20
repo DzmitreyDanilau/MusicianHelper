@@ -1,38 +1,50 @@
 package com.musicianhelper.login.impl
 
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.musicianhelper.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
 import com.musicianhelper.di.LocalCommonProvider
 import com.musicianhelper.di.injectedViewModel
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
-import com.musicianhelper.login.impl.ui.LoginScreen
+import com.musicianhelper.login.impl.login.ui.LoginScreen
+import com.musicianhelper.login.impl.registr.ui.RegistrationScreen
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 class LoginEntryPoint @Inject constructor() : LoginEntry() {
 
-  @Composable
-  override fun NavGraphBuilder.Composable(
+  override fun NavGraphBuilder.navigation(
     navController: NavHostController,
-    destinations: Destinations,
-    backStackEntry: NavBackStackEntry
+    destinations: Destinations
   ) {
 
-    val viewModel = injectedViewModel {
-      DaggerLoginComponent
-        .builder()
-        .commonProvider(LocalCommonProvider.current)
-        .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
-        .build()
-        .viewModel
-    }
+    navigation(startDestination = loginDestination(), route = "@login") {
+      composable(route = featureRoute) {
+        val viewModel = injectedViewModel {
+          DaggerLoginComponent
+            .builder()
+            .commonProvider(LocalCommonProvider.current)
+            .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
+            .build()
+            .viewModel
+        }
+        LoginScreen(navController = navController, viewModel = viewModel)
+      }
 
-    LoginScreen(viewModel = viewModel)
+      composable(route = InternalRoutes.REGISTRATION) {
+        RegistrationScreen()
+      }
+    }
+  }
+
+  internal object InternalRoutes {
+    const val REGISTRATION = "registration"
   }
 }

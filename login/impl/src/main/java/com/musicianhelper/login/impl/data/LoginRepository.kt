@@ -2,7 +2,7 @@ package com.musicianhelper.login.impl.data
 
 import com.musicianhelper.data.User
 import com.musicianhelper.domain.AuthenticationService
-import com.musicianhelper.login.impl.domain.Repository
+import com.musicianhelper.login.impl.login.domain.Repository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

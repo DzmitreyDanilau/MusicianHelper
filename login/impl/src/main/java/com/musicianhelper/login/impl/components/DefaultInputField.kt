@@ -10,32 +10,31 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun DefaultOutlinedField(
   modifier: Modifier = Modifier,
-  defaultValue: MutableState<TextFieldValue>,
+  value: String = "",
   label: String = "",
   icon: ImageVector? = null,
   description: String? = null,
-  keyboardActions: KeyboardActions
+  keyboardActions: KeyboardActions,
+  onValueChange: (String) -> Unit
 ) {
 
   OutlinedTextField(
-    value = defaultValue.value,
+    value = value,
     label = { Text(text = label) },
-    onValueChange = { defaultValue.value = it },
+    onValueChange = { text ->
+      onValueChange.invoke(text)
+    },
     leadingIcon = {
       icon?.let {
         Icon(

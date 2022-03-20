@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.ui
+package com.musicianhelper.login.impl.login.ui
 
 import com.musicianhelper.common.Event
 

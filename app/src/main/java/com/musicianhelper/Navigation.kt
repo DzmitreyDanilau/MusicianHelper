@@ -1,10 +1,8 @@
 package com.musicianhelper
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -19,9 +17,9 @@ fun Navigation() {
   val loginScreen = destinations.find<LoginEntry>()
 
   Box(Modifier.fillMaxSize()) {
-    NavHost(navController, startDestination = loginScreen.destination()) {
+    NavHost(navController, startDestination = loginScreen.loginDestination()) {
       with(loginScreen) {
-        composable(navController, destinations)
+        navigation(navController, destinations)
       }
     }
   }

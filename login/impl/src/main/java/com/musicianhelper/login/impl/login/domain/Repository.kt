@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.domain
+package com.musicianhelper.login.impl.login.domain
 
 import com.musicianhelper.data.User
 import kotlinx.coroutines.flow.Flow

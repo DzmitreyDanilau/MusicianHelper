@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.domain
+package com.musicianhelper.login.impl.login.domain
 
 import com.musicianhelper.common.Result
 import com.musicianhelper.data.User

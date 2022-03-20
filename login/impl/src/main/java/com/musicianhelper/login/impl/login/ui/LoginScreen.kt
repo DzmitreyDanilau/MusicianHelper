@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.ui
+package com.musicianhelper.login.impl.login.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -19,26 +19,29 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.navigation.NavController
+import com.musicianhelper.login.impl.LoginEntryPoint.InternalRoutes
 import com.musicianhelper.login.impl.components.DefaultButton
 import com.musicianhelper.login.impl.components.DefaultOutlinedField
 import com.musicianhelper.login.impl.components.DefaultSnackbar
-import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
-import com.musicianhelper.login.impl.ui.LoginEvent.Login
+import com.musicianhelper.login.impl.login.ui.LoginEvent.DismissSnackbar
+import com.musicianhelper.login.impl.login.ui.LoginEvent.Login
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @FlowPreview
 @Composable
-fun LoginScreen(viewModel: LoginViewModel) {
+fun LoginScreen(
+  navController: NavController,
+  viewModel: LoginViewModel
+) {
 
   val scaffoldState = rememberScaffoldState()
   val coroutineScope = rememberCoroutineScope()
@@ -60,8 +63,8 @@ fun LoginScreen(viewModel: LoginViewModel) {
     }
   }
 
-  val email = remember { mutableStateOf(TextFieldValue("")) }
-  val password = remember { mutableStateOf(TextFieldValue("")) }
+  var email by remember { mutableStateOf("") }
+  var password by remember { mutableStateOf("") }
 
   Scaffold(
     scaffoldState = scaffoldState,
@@ -79,7 +82,8 @@ fun LoginScreen(viewModel: LoginViewModel) {
         val focusManager = LocalFocusManager.current
 
         DefaultOutlinedField(
-          defaultValue = email,
+          value = email,
+          onValueChange = { textValue -> email = textValue },
           label = "Email",
           icon = Icons.Default.Email,
           keyboardActions = KeyboardActions(
@@ -87,15 +91,17 @@ fun LoginScreen(viewModel: LoginViewModel) {
           )
         )
         DefaultOutlinedField(
-          defaultValue = password,
+          value = password,
+          onValueChange = { textValue -> password = textValue },
           label = "Password",
           icon = Icons.Default.Lock,
           keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
         )
         DefaultButton(
-          isEnabled = email.value.text.isNotBlank(),
+          isEnabled = email.isNotBlank(),
           buttonText = "Login",
-          onClick = { viewModel.dispatch(Login(email.value.text, password.value.text)) })
+          // onClick = { viewModel.dispatch(Login(email, password)) })
+          onClick = { navController.navigate(InternalRoutes.REGISTRATION) })
       }
 
       DefaultSnackbar(

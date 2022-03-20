@@ -1,10 +1,10 @@
 package com.musicianhelper.login.api
 
-import com.musicianhelper.ComposableFeatureEntry
+import com.musicianhelper.AggregateFeatureEntry
 
-abstract class LoginEntry : ComposableFeatureEntry {
+abstract class LoginEntry : AggregateFeatureEntry {
 
   final override val featureRoute = "login"
 
-  fun destination() = featureRoute
+  fun loginDestination() = "login"
 }
