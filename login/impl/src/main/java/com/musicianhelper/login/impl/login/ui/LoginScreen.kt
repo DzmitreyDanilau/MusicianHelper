@@ -12,8 +12,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.navigation.NavController
+import com.musicianhelper.data.AuthThrowable
 import com.musicianhelper.login.impl.LoginEntryPoint
 import com.musicianhelper.login.impl.components.DefaultButton
 import com.musicianhelper.login.impl.components.DefaultOutlinedField
@@ -23,6 +25,13 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+
+// TODO seems like each time the user navigates to the another composable, we trigger
+// TODO recomposition, that causes displaying snack bar 3 times.
+// TODO Need to investigate that issue
+
+// TODO Also, if we try to dismiss the snackBar and hide sign up offer, ui starts flickering
+// TODO it seems like navigation happens with delay
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @FlowPreview
@@ -35,10 +44,15 @@ fun LoginScreen(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val state by viewModel.collectState().collectAsState()
+    var isRegisterVisible by remember{ mutableStateOf(false)}
 
     when (state) {
         is LoginState.Fail -> {
-            (state as LoginState.Fail).error?.message?.let { text ->
+            val error = (state as LoginState.Fail).error as AuthThrowable
+            if (error.code == 903) {
+                isRegisterVisible = true
+            }
+            error.errorText.let { text ->
                 coroutineScope.launch {
                     val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
                         message = text,
@@ -55,8 +69,8 @@ fun LoginScreen(
         }
     }
 
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("test@gmail.com") }
+    var password by remember { mutableStateOf("1234") }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -93,6 +107,18 @@ fun LoginScreen(
                     isEnabled = email.isNotBlank(),
                     buttonText = "Login",
                     onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) })
+
+                if (isRegisterVisible) {
+                    AnnotatedClickableText(
+                        text = "Don't have an account? ",
+                        textColor = Color.Black,
+                        tag = "Sign up",
+                        tagColor = Color.Red,
+                        onClick = {
+                            navController.navigate(LoginEntryPoint.InternalRoutes.REGISTRATION)
+                        }
+                    )
+                }
             }
 
             DefaultSnackbar(
