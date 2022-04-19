@@ -42,8 +42,12 @@ abstract class BaseViewModel<S : State>(
     actionFlow
       .flatMapMerge(transform = ::mapActionToResult)
       .distinctUntilChanged()
-      .onEach(::navigate)
-      .filterNot { it !is Navigation }
+      .onEach{
+        navigate(it)
+      }
+      .filterNot {
+        it !is Navigation
+      }
       .scan(initialState, ::reduceState)
       .onEach { stateFlow.emit(it) }
       .launchIn(viewModelScope)
@@ -65,10 +69,10 @@ abstract class BaseViewModel<S : State>(
 
   fun collectNavigation() : SharedFlow<Navigation> = navigationFlow
 
-  private fun navigate(result: Result) {
+  private suspend fun navigate(result: Result) {
     val navigation = getNavigationByResult(result)
     navigation?.let {
-      navigationFlow.tryEmit(navigation)
+      navigationFlow.emit(navigation)
     }
   }
 

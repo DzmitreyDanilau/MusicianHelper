@@ -20,31 +20,31 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class LoginEntryPoint @Inject constructor() : LoginEntry() {
 
-  override fun NavGraphBuilder.navigation(
-    navController: NavHostController,
-    destinations: Destinations
-  ) {
+    override fun NavGraphBuilder.navigation(
+        navController: NavHostController,
+        destinations: Destinations
+    ) {
 
-    navigation(startDestination = loginDestination(), route = "@login") {
-      composable(route = featureRoute) {
-        val viewModel = injectedViewModel {
-          DaggerLoginComponent
-            .builder()
-            .commonProvider(LocalCommonProvider.current)
-            .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
-            .build()
-            .viewModel
+        navigation(startDestination = "@login", route = "login") {
+            composable(route = "@login") {
+                val viewModel = injectedViewModel {
+                    DaggerLoginComponent
+                        .builder()
+                        .commonProvider(LocalCommonProvider.current)
+                        .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
+                        .build()
+                        .viewModel
+                }
+                LoginScreen(navController = navController, viewModel = viewModel)
+            }
+
+            composable(route = InternalRoutes.REGISTRATION) {
+                RegistrationScreen()
+            }
         }
-        LoginScreen(navController = navController, viewModel = viewModel)
-      }
-
-      composable(route = InternalRoutes.REGISTRATION) {
-        RegistrationScreen()
-      }
     }
-  }
 
-  internal object InternalRoutes {
-    const val REGISTRATION = "registration"
-  }
+    internal object InternalRoutes {
+        const val REGISTRATION = "registration"
+    }
 }

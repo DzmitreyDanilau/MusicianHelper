@@ -56,7 +56,9 @@ class LoginViewModel @Inject constructor(
 
   override fun getNavigationByResult(result: Result): Navigation? {
     return when (result) {
-      is NavigateToRegisterResult -> NavigateToRegistration
+      is NavigateToRegisterResult -> {
+        NavigateToRegistration
+      }
       else -> null
     }
   }
