@@ -31,9 +31,32 @@ class LoginViewModel @Inject constructor(
         result: Result
     ): LoginState {
         return when (result) {
-            is LoginResult.Success -> Success(inProgress = false)
-            is LoginResult.Fail -> Fail(inProgress = false, error = result.error)
-            is DismissResult -> Success(inProgress = previous.inProgress)
+            is LoginResult.Success -> Success
+
+            is LoginResult.Fail -> {
+                Fail(
+                    inProgress = false,
+                    error = result.error,
+                    isSnackBarVisible = true,
+                    isSignUpVisible = true
+                )
+            }
+            is DismissResult -> {
+                Fail(
+                    inProgress = previous.inProgress,
+                    isSignUpVisible = previous.isSignUpVisible,
+                    isSnackBarVisible = false,
+                    error = previous.error
+                )
+            }
+            is NavigateToRegisterResult -> {
+                Fail(
+                    inProgress = previous.inProgress,
+                    isSnackBarVisible = false,
+                    isSignUpVisible = false,
+                    error = previous.error
+                )
+            }
             else -> previous
         }
     }
@@ -42,6 +65,7 @@ class LoginViewModel @Inject constructor(
         return when (event) {
             is LoginEvent.Login -> LoginAction.Login(event.name, event.password)
             is LoginEvent.DismissSnackbar -> SnackbarDismissAction
+            is LoginEvent.SignUpClicked -> LoginAction.SignUpAction
             else -> object : Action {}
         }
     }
@@ -57,6 +81,7 @@ class LoginViewModel @Inject constructor(
         return when (action) {
             is LoginAction.Login -> loginUseCase.invoke(action.name, action.password)
             is SnackbarDismissAction -> flowOf(DismissResult)
+            is LoginAction.SignUpAction -> flowOf(NavigateToRegisterResult)
             else -> emptyFlow()
         }
     }

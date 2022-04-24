@@ -40,6 +40,8 @@ class LoginEntryPoint @Inject constructor() : LoginEntry() {
 
             composable(route = InternalRoutes.REGISTRATION) {
                 RegistrationScreen()
+            }.apply {
+
             }
         }
     }

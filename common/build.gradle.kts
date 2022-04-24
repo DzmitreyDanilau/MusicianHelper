@@ -55,6 +55,8 @@ dependencies {
   implementation(Dependencies.Dagger.dagger)
   kapt(Dependencies.Dagger.kapt)
 
+  api(Dependencies.Common.timber)
+
   implementation(Dependencies.stdLibjdk8)
   implementation(Dependencies.Kotlin.coroutinesCore)
 }

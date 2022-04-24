@@ -25,13 +25,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-// TODO seems like each time the user navigates to the another composable, we trigger
-// TODO recomposition, that causes displaying snack bar 3 times.
-// TODO Need to investigate that issue
-
-// TODO Also, if we try to dismiss the snackBar and hide sign up offer, ui starts flickering
-// TODO it seems like navigation happens with delay
+var counter = 0
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @FlowPreview
@@ -44,29 +40,31 @@ fun LoginScreen(
     val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
     val state by viewModel.collectState().collectAsState()
-    var isRegisterVisible by remember{ mutableStateOf(false)}
 
     when (state) {
         is LoginState.Fail -> {
-            val error = (state as LoginState.Fail).error as AuthThrowable
-            if (error.code == 903) {
-                isRegisterVisible = true
-            }
-            error.errorText.let { text ->
-                coroutineScope.launch {
-                    val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
-                        message = text,
-                        actionLabel = "Dismiss"
-                    )
-                    if (snackbarResult == SnackbarResult.Dismissed) {
-                        viewModel.dispatch(DismissSnackbar)
+            if (state.isSnackBarVisible) {
+                val error = state.error as AuthThrowable
+                error.errorText.let { text ->
+                    coroutineScope.launch {
+                        val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+                            message = text,
+                            actionLabel = "Dismiss"
+                        )
+                        if (snackbarResult == SnackbarResult.Dismissed) {
+                            viewModel.dispatch(DismissSnackbar)
+                        }
                     }
                 }
             }
         }
         else -> {
-            // do nothing for now
+            Timber.d("State $state")
         }
+    }
+
+    SideEffect {
+        Timber.d("Recomposition ${counter++}")
     }
 
     var email by remember { mutableStateOf("test@gmail.com") }
@@ -108,15 +106,13 @@ fun LoginScreen(
                     buttonText = "Login",
                     onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) })
 
-                if (isRegisterVisible) {
+                if (state.isSignUpVisible) {
                     AnnotatedClickableText(
                         text = "Don't have an account? ",
                         textColor = Color.Black,
                         tag = "Sign up",
                         tagColor = Color.Red,
-                        onClick = {
-                            navController.navigate(LoginEntryPoint.InternalRoutes.REGISTRATION)
-                        }
+                        onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
                     )
                 }
             }
@@ -141,3 +137,5 @@ fun LoginScreen(
         }
     }
 }
+
+
