@@ -46,7 +46,7 @@ class LoginViewModel @Inject constructor(
                     inProgress = previous.inProgress,
                     isSignUpVisible = previous.isSignUpVisible,
                     isSnackBarVisible = false,
-                    error = previous.error
+                    error = null
                 )
             }
             is NavigateToRegisterResult -> {
@@ -54,7 +54,7 @@ class LoginViewModel @Inject constructor(
                     inProgress = previous.inProgress,
                     isSnackBarVisible = false,
                     isSignUpVisible = false,
-                    error = previous.error
+                    error = null
                 )
             }
             else -> previous

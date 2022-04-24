@@ -1,5 +1,6 @@
 package com.musicianhelper.login.impl.login.ui
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Scaffold
@@ -44,9 +45,9 @@ fun LoginScreen(
     when (state) {
         is LoginState.Fail -> {
             if (state.isSnackBarVisible) {
-                val error = state.error as AuthThrowable
-                error.errorText.let { text ->
-                    coroutineScope.launch {
+                state.error?.let {
+                    val text = (it as AuthThrowable).errorText
+                    LaunchedEffect(scaffoldState.snackbarHostState) {
                         val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
                             message = text,
                             actionLabel = "Dismiss"
@@ -106,7 +107,11 @@ fun LoginScreen(
                     buttonText = "Login",
                     onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) })
 
-                if (state.isSignUpVisible) {
+                AnimatedVisibility(
+                    visible = state.isSignUpVisible,
+                    enter = fadeIn() + expandHorizontally(),
+                    exit = fadeOut() + shrinkHorizontally()
+                ) {
                     AnnotatedClickableText(
                         text = "Don't have an account? ",
                         textColor = Color.Black,
