@@ -1,9 +1,10 @@
-package com.musicianhelper
+package com.musicianhelper.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.musicianhelper.di.LocalAppProvider
+import com.musicianhelper.find
 import com.musicianhelper.login.api.LoginEntry
 
 @Composable

@@ -11,13 +11,13 @@ import dagger.Module
 import dagger.Provides
 
 // TODO think about how we can separate into FirebaseAuth and Firebase, to have the ability
-// to use data source, in-app msgs etc
+// TODO  to use data source, in-app msgs etc
 
 @Module(includes = [FirebaseModule::class, FirebaseAuthExceptionModule::class])
 interface AuthServiceModule {
 
     @Binds
-    fun bindAuthentificationService(firebaseAuth: FirebaseAuthenticationService): AuthenticationService
+    fun bindAuthenticationService(firebaseAuth: FirebaseAuthenticationService): AuthenticationService
 }
 
 @Module
