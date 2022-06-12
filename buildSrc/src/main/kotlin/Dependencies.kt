@@ -35,7 +35,7 @@ object Dependencies {
   }
 
   object Kotlin {
-    private const val coroutinesCoreVersion = "1.5.2"
+    private const val coroutinesCoreVersion = "1.6.2"
     val coroutinesCore by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion" }
   }
 
@@ -81,6 +81,6 @@ object Dependencies {
     val playServicesCoroutines by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion" }
   }
 
-  val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21" }
-  val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.21" }
+  val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0" }
+  val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0" }
 }

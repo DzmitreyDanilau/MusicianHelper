@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.login.ui
+package com.musicianhelper.login.impl.ui
 
 import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
@@ -21,7 +21,7 @@ import com.musicianhelper.login.impl.LoginEntryPoint
 import com.musicianhelper.login.impl.components.DefaultButton
 import com.musicianhelper.login.impl.components.DefaultOutlinedField
 import com.musicianhelper.login.impl.components.DefaultSnackbar
-import com.musicianhelper.login.impl.login.ui.LoginEvent.DismissSnackbar
+import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest

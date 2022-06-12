@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.login.ui
+package com.musicianhelper.login.impl.ui
 
 import com.musicianhelper.common.Action
 

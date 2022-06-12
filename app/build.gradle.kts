@@ -2,7 +2,7 @@ plugins {
   id("com.android.application")
   id("com.google.gms.google-services")
   kotlin("android")
-  kotlin("kapt") version "1.5.21"
+  kotlin("kapt") version("1.7.0") apply false
 }
 
 repositories {
@@ -26,6 +26,7 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
+
     signingConfig = signingConfigs.getByName("debug")
   }
 
@@ -64,12 +65,11 @@ android {
   }
 }
 
-
-
 dependencies {
 
   implementation(project(":common"))
   implementation(project(":login:impl"))
+  implementation(project(":registration:impl"))
   implementation(project(":data:firebase"))
 
   implementation(Dependencies.Core.activityKtx)

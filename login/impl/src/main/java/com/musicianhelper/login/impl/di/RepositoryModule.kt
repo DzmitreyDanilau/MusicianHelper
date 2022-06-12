@@ -1,7 +1,7 @@
-package com.musicianhelper.login.impl.login.di
+package com.musicianhelper.login.impl.di
 
 import com.musicianhelper.login.impl.data.LoginRepository
-import com.musicianhelper.login.impl.login.domain.Repository
+import com.musicianhelper.login.impl.domain.Repository
 import dagger.Binds
 import dagger.Module
 

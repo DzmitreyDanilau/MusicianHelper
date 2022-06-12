@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.login.ui
+package com.musicianhelper.login.impl.ui
 
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
@@ -6,11 +6,11 @@ import com.musicianhelper.common.Navigation
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
 import com.musicianhelper.di.Main
-import com.musicianhelper.login.impl.login.domain.Login
-import com.musicianhelper.login.impl.login.domain.LoginResult
-import com.musicianhelper.login.impl.login.domain.LoginResult.DismissResult
-import com.musicianhelper.login.impl.login.domain.LoginResult.NavigateToRegisterResult
-import com.musicianhelper.login.impl.login.ui.LoginState.*
+import com.musicianhelper.login.impl.domain.Login
+import com.musicianhelper.login.impl.domain.LoginResult
+import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
+import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
+import com.musicianhelper.login.impl.ui.LoginState.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

@@ -1,10 +1,10 @@
-package com.musicianhelper.login.impl.login.ui
+package com.musicianhelper.login.impl.ui
 
-import com.musicianhelper.login.impl.login.domain.Login
-import com.musicianhelper.login.impl.login.domain.LoginResult
-import com.musicianhelper.login.impl.login.domain.LoginResult.Fail
-import com.musicianhelper.login.impl.login.domain.LoginResult.Success
-import com.musicianhelper.login.impl.login.domain.Repository
+import com.musicianhelper.login.impl.domain.Login
+import com.musicianhelper.login.impl.domain.LoginResult
+import com.musicianhelper.login.impl.domain.LoginResult.Fail
+import com.musicianhelper.login.impl.domain.LoginResult.Success
+import com.musicianhelper.login.impl.domain.Repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

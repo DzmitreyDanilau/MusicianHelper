@@ -10,13 +10,6 @@ object Versions {
     const val navVersion = "2.2.0-rc03"
   }
 
-  object Hilt {
-    const val version = "2.38.1"
-    const val kapt = "2.38.1"
-    const val navigation = "1.0.0-alpha03"
-    const val compiler = "2.38.1"
-  }
-
   val javaVersion = JavaVersion.VERSION_11
 }
 

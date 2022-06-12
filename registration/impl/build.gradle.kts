@@ -42,10 +42,12 @@ android {
         kotlinCompilerExtensionVersion = Versions.compose
     }
 }
+
 dependencies {
 
     implementation(project(":common"))
     implementation(project(":data:api"))
+    api(project(":registration:api"))
 
     implementation(Dependencies.Dagger.dagger)
     kapt(Dependencies.Dagger.kapt)
