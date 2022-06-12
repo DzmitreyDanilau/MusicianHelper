@@ -25,6 +25,7 @@ include(":app")
 include(":common")
 
 include(":login:impl", ":login:api")
+include(":home:api", ":home:impl")
+include(":navigation")
 include(":data:firebase")
 include(":data:api")
-include(":home:api", ":home:impl")

@@ -69,6 +69,7 @@ android {
 dependencies {
 
   implementation(project(":common"))
+  implementation(project(":navigation"))
   implementation(project(":login:impl"))
   implementation(project(":data:firebase"))
 

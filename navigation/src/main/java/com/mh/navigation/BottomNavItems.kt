@@ -1,6 +1,4 @@
-package com.musicianhelper.navigation
-
-import com.musicianhelper.R
+package com.mh.navigation
 
 sealed class BottomNavItems(
     var title: String,
