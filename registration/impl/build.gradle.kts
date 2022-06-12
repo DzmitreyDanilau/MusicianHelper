@@ -30,6 +30,10 @@ android {
         }
     }
 
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
     buildFeatures {
         compose = true
     }
@@ -37,26 +41,21 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.compose
     }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
 }
-
 dependencies {
 
-    implementation(Dependencies.Compose.composeUI)
-    implementation(Dependencies.Compose.composeActivity)
-    implementation(Dependencies.Compose.composeCompiler)
-    implementation(Dependencies.Compose.composeLifeCycleViewModel)
-    implementation(Dependencies.Compose.composeNavigation)
+    implementation(project(":common"))
+    implementation(project(":data:api"))
 
     implementation(Dependencies.Dagger.dagger)
     kapt(Dependencies.Dagger.kapt)
 
-    api(Dependencies.Common.timber)
-
-    implementation(Dependencies.stdLibjdk8)
-    implementation(Dependencies.Kotlin.coroutinesCore)
+    implementation(Dependencies.Compose.composeUI)
+    implementation(Dependencies.Compose.composeActivity)
+    implementation(Dependencies.Compose.composeUiTooling)
+    implementation(Dependencies.Compose.composeMaterial)
+    implementation(Dependencies.Compose.composeCompiler)
+    implementation(Dependencies.Compose.composeLifeCycleViewModel)
+    implementation(Dependencies.Compose.composeAnimation)
+    implementation(Dependencies.Compose.composeNavigation)
 }
