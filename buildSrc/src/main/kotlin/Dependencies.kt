@@ -1,3 +1,5 @@
+import Versions.kotlinVersion
+
 object Dependencies {
 
     object Common {
@@ -14,9 +16,10 @@ object Dependencies {
         val findBugs by lazy { "com.google.code.findbugs:jsr305:$findBugsVersion" }
     }
 
-    object Design {
-        private const val version = "1.3.0"
-        val materialDesign by lazy { "com.google.android.material:material:$version" }
+    object ImagesLoader {
+        private const val version = "2.1.0"
+
+        val coil by lazy { "io.coil-kt:coil-compose:$version" }
     }
 
     object LifeCycle {
@@ -63,10 +66,11 @@ object Dependencies {
         val composeCompiler by lazy { "androidx.compose.compiler:compiler:$composeDepVersion" }
         val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion" }
         val composeRuntime by lazy { "androidx.compose.runtime:runtime:$composeDepVersion" }
+        val composeToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview:$composeDepVersion" }
     }
 
     object Dagger {
-        private const val version = "2.40.1"
+        private const val version = "2.42"
 
         val dagger by lazy { "com.google.dagger:dagger:$version" }
         val kapt by lazy { "com.google.dagger:dagger-compiler:$version" }
@@ -79,6 +83,6 @@ object Dependencies {
         val playServicesCoroutines by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion" }
     }
 
-    val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21" }
-    val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.21" }
+    val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion" }
+    val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion" }
 }

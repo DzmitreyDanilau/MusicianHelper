@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.components
+package com.mh.ui.snackbars
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

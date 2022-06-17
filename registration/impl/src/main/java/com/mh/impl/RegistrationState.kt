@@ -4,5 +4,7 @@ import com.musicianhelper.common.State
 
 sealed class RegistrationState : State {
 
-    object Initial : RegistrationState()
+  object Initial : RegistrationState()
+
+  object ShowPhotoSource : RegistrationState()
 }

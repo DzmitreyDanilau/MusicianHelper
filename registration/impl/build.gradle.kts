@@ -54,6 +54,7 @@ dependencies {
 
     implementation(project(":common"))
     implementation(project(":data:api"))
+    implementation(project(":platform:ui"))
     api(project(":registration:api"))
 
     implementation(Dependencies.Dagger.dagger)
@@ -61,11 +62,15 @@ dependencies {
 
     implementation(Dependencies.Compose.composeUI)
     implementation(Dependencies.Compose.composeActivity)
-    implementation(Dependencies.Compose.composeUiTooling)
     implementation(Dependencies.Compose.composeMaterial)
     implementation(Dependencies.Compose.composeCompiler)
     implementation(Dependencies.Compose.composeLifeCycleViewModel)
     implementation(Dependencies.Compose.composeAnimation)
     implementation(Dependencies.Compose.composeNavigation)
     implementation(Dependencies.Compose.composeRuntime)
+
+    debugImplementation(Dependencies.Compose.composeUiTooling)
+    implementation(Dependencies.Compose.composeToolingPreview)
+
+    implementation(Dependencies.ImagesLoader.coil)
 }

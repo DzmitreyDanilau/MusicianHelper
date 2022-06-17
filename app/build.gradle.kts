@@ -75,8 +75,6 @@ dependencies {
   implementation(Dependencies.Core.activityKtx)
   implementation(Dependencies.Core.coreKtx)
 
-  implementation(Dependencies.Design.materialDesign)
-
   implementation(Dependencies.Compose.composeActivity)
   implementation(Dependencies.Compose.composeAnimation)
   implementation(Dependencies.Compose.composeCompiler)

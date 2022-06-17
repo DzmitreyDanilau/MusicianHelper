@@ -21,6 +21,7 @@ pluginManagement {
 }
 
 rootProject.name = "MusicianHelper"
+
 include(":app")
 include(":common")
 
@@ -29,3 +30,5 @@ include(":registration:api", ":registration:impl")
 
 include(":data:firebase")
 include(":data:api")
+
+include(":platform:ui")

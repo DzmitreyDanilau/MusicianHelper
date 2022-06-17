@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.components
+package com.mh.ui.inputfields
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,7 +19,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun DefaultOutlinedField(
+fun DefaultOutlinedField(
   modifier: Modifier = Modifier,
   value: String = "",
   label: String = "",

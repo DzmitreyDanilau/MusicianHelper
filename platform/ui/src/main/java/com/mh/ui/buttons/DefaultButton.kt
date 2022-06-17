@@ -1,4 +1,4 @@
-package com.musicianhelper.login.impl.components
+package com.mh.ui.buttons
 
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.ButtonDefaults
