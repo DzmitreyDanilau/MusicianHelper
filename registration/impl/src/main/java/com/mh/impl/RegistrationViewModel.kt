@@ -6,9 +6,14 @@ import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
 import com.musicianhelper.di.Main
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class RegistrationViewModel(
+@ExperimentalCoroutinesApi
+@FlowPreview
+class RegistrationViewModel @Inject constructor(
         @Main private val dispatcher: CoroutineDispatcher
 ) : BaseViewModel<RegistrationState>(
         initialState = RegistrationState.Initial,

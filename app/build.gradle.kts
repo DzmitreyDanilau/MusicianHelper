@@ -2,7 +2,7 @@ plugins {
   id("com.android.application")
   id("com.google.gms.google-services")
   kotlin("android")
-  kotlin("kapt") version("1.7.0") apply false
+  kotlin("kapt")
 }
 
 repositories {
@@ -84,6 +84,7 @@ dependencies {
   implementation(Dependencies.Compose.composeMaterial)
   implementation(Dependencies.Compose.composeUiTooling)
   implementation(Dependencies.Compose.composeNavigation)
+  implementation(Dependencies.Compose.composeRuntime)
 
   implementation(Dependencies.LifeCycle.lifecycleCommonJava8)
   implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
@@ -95,6 +96,6 @@ dependencies {
   testImplementation("junit:junit:4.+")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
   androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.4")
-  debugImplementation("androidx.compose.ui:ui-tooling:1.0.4")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
+  debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
 }

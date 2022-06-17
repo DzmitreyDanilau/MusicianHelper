@@ -1,3 +1,5 @@
+import Versions.javaVersion
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -38,9 +40,13 @@ android {
         kotlinCompilerExtensionVersion = Versions.compose
     }
 
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjvm-default=enable")
+    }
+
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
 }
 

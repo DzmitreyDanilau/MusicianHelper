@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.navigation.NavController
 import com.musicianhelper.data.AuthThrowable
-import com.musicianhelper.login.impl.LoginEntryPoint
 import com.musicianhelper.login.impl.components.DefaultButton
 import com.musicianhelper.login.impl.components.DefaultOutlinedField
 import com.musicianhelper.login.impl.components.DefaultSnackbar
@@ -34,8 +33,8 @@ var counter = 0
 @FlowPreview
 @Composable
 fun LoginScreen(
-    navController: NavController,
-    viewModel: LoginViewModel
+        navController: NavController,
+        viewModel: LoginViewModel
 ) {
 
     val scaffoldState = rememberScaffoldState()
@@ -49,8 +48,8 @@ fun LoginScreen(
                     val text = (it as AuthThrowable).errorText
                     LaunchedEffect(scaffoldState.snackbarHostState) {
                         val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
-                            message = text,
-                            actionLabel = "Dismiss"
+                                message = text,
+                                actionLabel = "Dismiss"
                         )
                         if (snackbarResult == SnackbarResult.Dismissed) {
                             viewModel.dispatch(DismissSnackbar)
@@ -72,60 +71,60 @@ fun LoginScreen(
     var password by remember { mutableStateOf("1234") }
 
     Scaffold(
-        scaffoldState = scaffoldState,
-        snackbarHost = { scaffoldState.snackbarHostState },
+            scaffoldState = scaffoldState,
+            snackbarHost = { scaffoldState.snackbarHostState },
     ) {
         Box(modifier = Modifier.padding(it)) {
             Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .fillMaxHeight(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 val focusManager = LocalFocusManager.current
 
                 DefaultOutlinedField(
-                    value = email,
-                    onValueChange = { textValue -> email = textValue },
-                    label = "Email",
-                    icon = Icons.Default.Email,
-                    keyboardActions = KeyboardActions(
-                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
-                    )
+                        value = email,
+                        onValueChange = { textValue -> email = textValue },
+                        label = "Email",
+                        icon = Icons.Default.Email,
+                        keyboardActions = KeyboardActions(
+                                onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                        )
                 )
                 DefaultOutlinedField(
-                    value = password,
-                    onValueChange = { textValue -> password = textValue },
-                    label = "Password",
-                    icon = Icons.Default.Lock,
-                    keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
+                        value = password,
+                        onValueChange = { textValue -> password = textValue },
+                        label = "Password",
+                        icon = Icons.Default.Lock,
+                        keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() })
                 )
                 DefaultButton(
-                    isEnabled = email.isNotBlank(),
-                    buttonText = "Login",
-                    onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) })
+                        isEnabled = email.isNotBlank(),
+                        buttonText = "Login",
+                        onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) })
 
                 AnimatedVisibility(
-                    visible = state.isSignUpVisible,
-                    enter = fadeIn() + expandHorizontally(),
-                    exit = fadeOut() + shrinkHorizontally()
+                        visible = state.isSignUpVisible,
+                        enter = fadeIn() + expandHorizontally(),
+                        exit = fadeOut() + shrinkHorizontally()
                 ) {
                     AnnotatedClickableText(
-                        text = "Don't have an account? ",
-                        textColor = Color.Black,
-                        tag = "Sign up",
-                        tagColor = Color.Red,
-                        onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
+                            text = "Don't have an account? ",
+                            textColor = Color.Black,
+                            tag = "Sign up",
+                            tagColor = Color.Red,
+                            onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
                     )
                 }
             }
 
             DefaultSnackbar(
-                snackbarHostState = scaffoldState.snackbarHostState,
-                onDismiss = { scaffoldState.snackbarHostState.currentSnackbarData?.dismiss() },
-                modifier = Modifier.align(Alignment.BottomCenter)
+                    snackbarHostState = scaffoldState.snackbarHostState,
+                    onDismiss = { scaffoldState.snackbarHostState.currentSnackbarData?.dismiss() },
+                    modifier = Modifier.align(Alignment.BottomCenter)
             )
         }
     }
@@ -135,12 +134,10 @@ fun LoginScreen(
             viewModel.collectNavigation().collectLatest {
                 when (it) {
                     NavigateToRegistration -> {
-                        navController.navigate(LoginEntryPoint.InternalRoutes.REGISTRATION)
+                        navController.navigate("registration")
                     }
                 }
             }
         }
     }
 }
-
-

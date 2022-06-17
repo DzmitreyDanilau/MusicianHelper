@@ -1,3 +1,5 @@
+import Versions.javaVersion
+
 plugins {
     id("com.android.library")
     kotlin("android")
@@ -30,6 +32,11 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -60,4 +67,5 @@ dependencies {
     implementation(Dependencies.Compose.composeLifeCycleViewModel)
     implementation(Dependencies.Compose.composeAnimation)
     implementation(Dependencies.Compose.composeNavigation)
+    implementation(Dependencies.Compose.composeRuntime)
 }

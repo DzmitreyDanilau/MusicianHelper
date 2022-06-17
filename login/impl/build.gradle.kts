@@ -60,4 +60,5 @@ dependencies {
     implementation(Dependencies.Compose.composeLifeCycleViewModel)
     implementation(Dependencies.Compose.composeAnimation)
     implementation(Dependencies.Compose.composeNavigation)
+    implementation(Dependencies.Compose.composeRuntime)
 }
