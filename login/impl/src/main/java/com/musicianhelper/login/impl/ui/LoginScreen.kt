@@ -1,5 +1,6 @@
 package com.musicianhelper.login.impl.ui
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -7,13 +8,13 @@ import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -128,28 +129,12 @@ fun LoginScreen(
         SideEffect {
           Timber.d("isSignUpVisible ${state.isSignUpVisible}")
         }
-
-        //   androidx.compose.animation.AnimatedVisibility(
-        //     modifier = Modifier.wrapContentWidth(
-        //       align = Alignment.CenterHorizontally, unbounded = true
-        //     ),
-        //     visible = state.isSignUpVisible,
-        //     enter = fadeIn() + expandHorizontally(),
-        //     exit = fadeOut() + shrinkHorizontally()
-        //   ) {
-        //     AnnotatedClickableText(
-        //       text = "Don't have an account? ",
-        //       textColor = Color.Black,
-        //       tag = "Sign up",
-        //       tagColor = Color.Red,
-        //       onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
-        //     )
-        //
-        // }
-        Box(modifier = Modifier
-          .height(20.dp)
-          .padding(it)) {
-          androidx.compose.animation.AnimatedVisibility(
+        // Box(
+        //   modifier = Modifier
+        //     .height(20.dp)
+        //     .padding(it)
+        // ) {
+          this@Column.AnimatedVisibility(
             visible = state.isSignUpVisible,
             enter = fadeIn() + expandHorizontally(),
             exit = fadeOut() + shrinkHorizontally()
@@ -161,22 +146,10 @@ fun LoginScreen(
               tagColor = Color.Red,
               onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
             )
-          }
+            //
+            // Text("Hello")
+          // }
         }
-
-        // AnimatedVisibility(
-        //         visible = state.isSignUpVisible,
-        //         enter = fadeIn() + expandHorizontally(),
-        //         exit = fadeOut() + shrinkHorizontally()
-        // ) {
-        //     AnnotatedClickableText(
-        //             text = "Don't have an account? ",
-        //             textColor = Color.Black,
-        //             tag = "Sign up",
-        //             tagColor = Color.Red,
-        //             onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
-        //     )
-        // }
       }
 
       DefaultSnackbar(

@@ -11,9 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
@@ -38,9 +36,8 @@ fun ColumnScope.AnimatedVisibilityItem(
     modifier = Modifier
       .height(height)
       .padding(padding)
-      .wrapContentWidth()
   ) {
-    this@AnimatedVisibilityItem.AnimatedVisibility(
+    androidx.compose.animation.AnimatedVisibility(
       visible = isVisible,
       enter = enterTransition,
       exit = exitTransition
