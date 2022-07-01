@@ -9,12 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -33,12 +31,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.mh.ui.buttons.DefaultButton
 import com.mh.ui.inputfields.DefaultOutlinedField
 import com.mh.ui.snackbars.DefaultSnackbar
 import com.mh.ui.text.AnnotatedClickableText
+import com.musicianhelper.common.android.observeLifecycle
 import com.musicianhelper.data.AuthThrowable
 import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -47,8 +46,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-var counter = 0
-
 @OptIn(ExperimentalCoroutinesApi::class)
 @FlowPreview
 @Composable
@@ -56,6 +53,8 @@ fun LoginScreen(
   navController: NavController,
   viewModel: LoginViewModel
 ) {
+
+  viewModel.observeLifecycle(lifecycle = LocalLifecycleOwner.current.lifecycle)
 
   val scaffoldState = rememberScaffoldState()
   val coroutineScope = rememberCoroutineScope()
@@ -72,7 +71,7 @@ fun LoginScreen(
               actionLabel = "Dismiss"
             )
             if (snackbarResult == SnackbarResult.Dismissed) {
-              viewModel.dispatch(DismissSnackbar)
+              viewModel.dispatchEvent(DismissSnackbar)
             }
           }
         }
@@ -81,10 +80,6 @@ fun LoginScreen(
     else -> {
       Timber.d("State $state")
     }
-  }
-
-  SideEffect {
-    Timber.d("Recomposition ${counter++}")
   }
 
   var email by remember { mutableStateOf("test@gmail.com") }
@@ -123,32 +118,26 @@ fun LoginScreen(
         DefaultButton(
           isEnabled = email.isNotBlank(),
           buttonText = "Login",
-          onClick = { viewModel.dispatch(LoginEvent.Login(email, password)) }
+          onClick = { viewModel.dispatchEvent(LoginEvent.Login(email, password)) }
         )
 
         SideEffect {
           Timber.d("isSignUpVisible ${state.isSignUpVisible}")
         }
-        // Box(
-        //   modifier = Modifier
-        //     .height(20.dp)
-        //     .padding(it)
-        // ) {
-          this@Column.AnimatedVisibility(
-            visible = state.isSignUpVisible,
-            enter = fadeIn() + expandHorizontally(),
-            exit = fadeOut() + shrinkHorizontally()
-          ) {
-            AnnotatedClickableText(
-              text = "Don't have an account? ",
-              textColor = Color.Black,
-              tag = "Sign up",
-              tagColor = Color.Red,
-              onClick = { viewModel.dispatch(LoginEvent.SignUpClicked) }
-            )
-            //
-            // Text("Hello")
-          // }
+        this@Column.AnimatedVisibility(
+          visible = state.isSignUpVisible,
+          enter = fadeIn() + expandHorizontally(),
+          exit = fadeOut() + shrinkHorizontally()
+        ) {
+          AnnotatedClickableText(
+            text = "Don't have an account? ",
+            textColor = Color.Black,
+            tag = "Sign up",
+            tagColor = Color.Red,
+            onClick = {
+              viewModel.dispatchEvent(LoginEvent.SignUpClicked)
+            }
+          )
         }
       }
 

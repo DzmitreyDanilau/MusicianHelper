@@ -68,6 +68,7 @@ dependencies {
     implementation(Dependencies.Compose.composeAnimation)
     implementation(Dependencies.Compose.composeNavigation)
     implementation(Dependencies.Compose.composeRuntime)
+    // implementation(Dependencies.Compose.accompanist)
 
     debugImplementation(Dependencies.Compose.composeUiTooling)
     implementation(Dependencies.Compose.composeToolingPreview)

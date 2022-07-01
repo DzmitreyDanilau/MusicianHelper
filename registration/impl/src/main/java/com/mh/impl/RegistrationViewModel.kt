@@ -11,7 +11,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -23,18 +24,8 @@ class RegistrationViewModel @Inject constructor(
   dispatcher = dispatcher
 ) {
 
-  override fun mapEventToAction(event: Event): Action {
-    return when (event) {
-      is ShowPickSourceDialogEvent -> ShowPickSourceDialogAction
-      else -> object : Action {}
-    }
-  }
-
-  override fun mapActionToResult(action: Action): Flow<Result> {
-    return when (action) {
-      is ShowPickSourceDialogAction -> flowOf(ShowPickSourceDialogResult)
-      else -> emptyFlow()
-    }
+  override fun result(flow: Flow<Event>): Flow<Result> {
+    return merge(flow.map(::toResult))
   }
 
   override fun reduceState(
@@ -46,10 +37,22 @@ class RegistrationViewModel @Inject constructor(
       else -> previous
     }
   }
+
+  override fun getSharedActions(action: Flow<Action>): Flow<Result> {
+    return emptyFlow()
+  }
+
+  private fun toResult(event: Event): Result {
+    return when (event) {
+      is ShowPickSourceDialogEvent -> ShowPickSourceDialogResult
+      is PictureSelected -> PicturePicked
+      else -> object : Result {}
+    }
+  }
 }
 
-object ShowPickSourceDialogAction : Action
-
 object ShowPickSourceDialogResult : Result
+object PicturePicked : Result
 
 object ShowPickSourceDialogEvent : Event
+object PictureSelected : Event

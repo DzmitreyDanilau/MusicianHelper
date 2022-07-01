@@ -1,72 +1,89 @@
 package com.musicianhelper.common.android
 
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.musicianhelper.common.*
+import com.musicianhelper.common.Action
+import com.musicianhelper.common.Event
+import com.musicianhelper.common.Navigation
+import com.musicianhelper.common.Result
+import com.musicianhelper.common.State
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.scan
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @FlowPreview
 abstract class BaseViewModel<S : State>(
-    private val initialState: S,
-    private val dispatcher: CoroutineDispatcher
-) : ViewModel() {
+  private val initialState: S,
+  private val dispatcher: CoroutineDispatcher
+) : ViewModel(), DefaultLifecycleObserver {
 
-    private val stateFlow = MutableStateFlow(initialState)
-    private val actionFlow = MutableSharedFlow<Action>()
-    private val navigationFlow = MutableSharedFlow<Navigation>()
+  private val stateFlow = MutableStateFlow(initialState)
+  private val actionFlow = MutableSharedFlow<Action>()
+  private val navigationFlow = MutableSharedFlow<Navigation>()
+  private val eventFLow = MutableSharedFlow<Event>()
 
-    init {
-        initState()
+  override fun onResume(owner: LifecycleOwner) {
+    initState(eventFLow)
+  }
+
+  override fun onStop(owner: LifecycleOwner) {
+    super.onStop(owner)
+    viewModelScope.coroutineContext[Job]?.cancelChildren()
+  }
+
+  private fun initState(eventFlow: Flow<Event>) {
+    result(eventFlow)
+      .distinctUntilChanged()
+      .onEach(::navigate)
+      .filterNot { it is Navigation }
+      .scan(initialState, ::reduceState)
+      .onEach { stateFlow.emit(it) }
+      .launchIn(viewModelScope)
+  }
+
+  private suspend fun navigate(result: Result) {
+    val navigation = getNavigationByResult(result)
+    navigation?.let {
+      navigationFlow.emit(navigation)
     }
+  }
 
-    private fun initState() {
-        actionFlow
-            .flatMapMerge(transform = ::mapActionToResult)
-            .distinctUntilChanged()
-            .onEach(::navigate)
-            .filterNot { it is Navigation }
-            .scan(initialState, ::reduceState)
-            .onEach { stateFlow.emit(it) }
-            .launchIn(viewModelScope)
+  fun dispatchEvent(event: Event) {
+    Timber.tag("ViewModel").d("dispatch")
+    viewModelScope.launch {
+      eventFLow.emit(event)
     }
+  }
 
-    private fun processEvent(event: Flow<Event>) {
-        event.onEach {
-            actionFlow.emit(mapEventToAction(it))
-        }.launchIn(viewModelScope)
-    }
+  fun collectState(): StateFlow<S> = stateFlow
 
-    fun dispatch(event: Event) {
-        processEvent(flowOf(event))
-    }
+  fun collectNavigation(): SharedFlow<Navigation> = navigationFlow
 
-    fun collectState(): StateFlow<S> {
-        return stateFlow
-    }
+  protected abstract fun result(flow: Flow<Event>): Flow<Result>
 
-    fun collectNavigation(): SharedFlow<Navigation> = navigationFlow
+  protected abstract fun getSharedActions(action: Flow<Action>): Flow<Result>
 
-    private suspend fun navigate(result: Result) {
-        val navigation = getNavigationByResult(result)
-        navigation?.let {
-            navigationFlow.emit(navigation)
-        }
-    }
+  protected open fun getNavigationByResult(result: Result): Navigation? = null
 
-    protected open fun getNavigationByResult(result: Result): Navigation? {
-        return null
-    }
-
-    abstract fun mapEventToAction(event: Event): Action
-
-    abstract fun mapActionToResult(action: Action): Flow<Result>
-
-    abstract fun reduceState(
-        previous: S,
-        result: Result
-    ): S
+  abstract fun reduceState(
+    previous: S,
+    result: Result
+  ): S
 }
