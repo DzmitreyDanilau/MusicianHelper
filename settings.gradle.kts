@@ -32,3 +32,4 @@ include(":data:firebase")
 include(":data:api")
 
 include(":platform:ui")
+include(":uikit")

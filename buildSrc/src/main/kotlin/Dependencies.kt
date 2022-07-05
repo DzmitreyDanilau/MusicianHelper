@@ -56,7 +56,9 @@ object Dependencies {
     private const val lifeCycleViewModelVersion = "2.5.0-rc02"
     private const val navigationVersion = "2.5.0-rc02"
     private const val composeDepVersion = "1.1.1"
+    private const val composeCompilerVersion = "1.2.0"
     private const val acompanistVerssion = "1.2.0-rc03"
+    private const val composeFoundationVersion = "1.2.0-rc03"
 
     val composeUI by lazy { "androidx.compose.ui:ui:$composeDepVersion" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
@@ -64,11 +66,12 @@ object Dependencies {
     val composeAnimation by lazy { "androidx.compose.animation:animation:$composeDepVersion" }
     val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:$composeDepVersion" }
     val composeLifeCycleViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:$lifeCycleViewModelVersion" }
-    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$composeDepVersion" }
+    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$composeCompilerVersion" }
     val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion" }
     val composeRuntime by lazy { "androidx.compose.runtime:runtime:$composeDepVersion" }
     val composeToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview:$composeDepVersion" }
     val accompanist by lazy { "com.google.accompanist:accompanist-permissions:$acompanistVerssion" }
+    val composeFoundation by lazy { "androidx.compose.foundation:foundation:$composeFoundationVersion" }
   }
 
   object Dagger {

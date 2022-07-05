@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardActions.Companion
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedTextField
@@ -25,7 +26,7 @@ fun DefaultOutlinedField(
   label: String = "",
   icon: ImageVector? = null,
   description: String? = null,
-  keyboardActions: KeyboardActions,
+  keyboardActions: KeyboardActions = KeyboardActions.Default,
   onValueChange: (String) -> Unit
 ) {
 
