@@ -1,9 +1,9 @@
 package com.musicianhelper.login.impl.di
 
-import com.musicianhelper.login.impl.domain.Login
+import com.musicianhelper.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult
+import com.musicianhelper.login.impl.domain.LoginUseCase
 import com.musicianhelper.login.impl.ui.LoginAction
-import com.musicianhelper.login.impl.ui.LoginUseCase
 import dagger.Binds
 import dagger.Module
 
@@ -11,5 +11,5 @@ import dagger.Module
 interface UseCaseModule {
 
   @Binds
-  fun bindLoginUseCase(useCase: LoginUseCase): Login<LoginAction, LoginResult>
+  fun bindLoginUseCase(useCase: LoginUseCase): UseCase<LoginAction, LoginResult>
 }

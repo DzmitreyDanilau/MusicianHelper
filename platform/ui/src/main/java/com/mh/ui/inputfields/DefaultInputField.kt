@@ -27,14 +27,14 @@ fun DefaultOutlinedField(
   icon: ImageVector? = null,
   description: String? = null,
   keyboardActions: KeyboardActions = KeyboardActions.Default,
-  onValueChange: (String) -> Unit
+  onValueChange: ((String) -> Unit)? = null
 ) {
 
   OutlinedTextField(
     value = value,
     label = { Text(text = label) },
     onValueChange = { text ->
-      onValueChange.invoke(text)
+      onValueChange?.invoke(text)
     },
     leadingIcon = {
       icon?.let {

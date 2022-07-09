@@ -6,7 +6,7 @@ import com.musicianhelper.common.Navigation
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
 import com.musicianhelper.di.Main
-import com.musicianhelper.login.impl.domain.Login
+import com.musicianhelper.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
 import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
@@ -20,14 +20,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
-import kotlinx.coroutines.flow.take
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
 @FlowPreview
 class LoginViewModel @Inject constructor(
   @Main dispatcher: CoroutineDispatcher,
-  private val loginUseCase: Login<LoginAction, LoginResult>,
+  private val loginUseCase: UseCase<LoginAction, LoginResult>,
 ) : BaseViewModel<LoginState>(initialState = Initial, dispatcher = dispatcher) {
 
   override fun reduceState(

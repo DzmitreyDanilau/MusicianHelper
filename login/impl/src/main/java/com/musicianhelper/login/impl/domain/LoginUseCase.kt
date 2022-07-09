@@ -1,10 +1,9 @@
-package com.musicianhelper.login.impl.ui
+package com.musicianhelper.login.impl.domain
 
-import com.musicianhelper.login.impl.domain.Login
-import com.musicianhelper.login.impl.domain.LoginResult
+import com.musicianhelper.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult.Fail
 import com.musicianhelper.login.impl.domain.LoginResult.Success
-import com.musicianhelper.login.impl.domain.Repository
+import com.musicianhelper.login.impl.ui.LoginAction
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
@@ -15,7 +14,7 @@ import javax.inject.Inject
 @OptIn(FlowPreview::class)
 class LoginUseCase @Inject constructor(
   private val repository: Repository
-) : Login<LoginAction, LoginResult> {
+) : UseCase<LoginAction, LoginResult> {
 
   override fun apply(upstream: Flow<LoginAction>): Flow<LoginResult> {
     Timber.tag("LoginUseCase").d("LoginUseCase")

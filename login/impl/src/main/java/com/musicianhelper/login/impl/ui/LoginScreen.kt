@@ -124,6 +124,7 @@ fun LoginScreen(
         SideEffect {
           Timber.d("isSignUpVisible ${state.isSignUpVisible}")
         }
+
         this@Column.AnimatedVisibility(
           visible = state.isSignUpVisible,
           enter = fadeIn() + expandHorizontally(),
@@ -134,9 +135,7 @@ fun LoginScreen(
             textColor = Color.Black,
             tag = "Sign up",
             tagColor = Color.Red,
-            onClick = {
-              viewModel.dispatchEvent(LoginEvent.SignUpClicked)
-            }
+            onClick = { viewModel.dispatchEvent(LoginEvent.SignUpClicked) }
           )
         }
       }

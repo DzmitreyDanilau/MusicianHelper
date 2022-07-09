@@ -5,8 +5,7 @@ import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Singleton
-@Component(modules = [DispatchersModule::class])
+@Component(modules = [DispatchersModule::class, ResourceProviderModule::class])
 interface CommonComponent : CommonProvider {
 
   @Component.Factory

@@ -1,16 +1,23 @@
 package com.mh.impl
 
 import com.mh.impl.RegistrationState.ShowPhotoSource
+import com.mh.impl.domain.RegistrationAction
+import com.mh.impl.domain.RegistrationResult
+import com.mh.impl.domain.RegistrationResult.Success
+import com.mh.impl.mappers.RegistrationFieldsMapper
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Event
+import com.musicianhelper.common.Navigation
 import com.musicianhelper.common.Result
 import com.musicianhelper.common.android.BaseViewModel
+import com.musicianhelper.data.UserData
 import com.musicianhelper.di.Main
+import com.musicianhelper.domain.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
@@ -18,14 +25,26 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 @FlowPreview
 class RegistrationViewModel @Inject constructor(
-  @Main private val dispatcher: CoroutineDispatcher
+  @Main private val dispatcher: CoroutineDispatcher,
+  private val mapper: RegistrationFieldsMapper,
+  private val useCase: UseCase<RegistrationAction, RegistrationResult>
 ) : BaseViewModel<RegistrationState>(
   initialState = RegistrationState.Initial,
   dispatcher = dispatcher
 ) {
 
   override fun result(flow: Flow<Event>): Flow<Result> {
-    return merge(flow.map(::toResult))
+    return merge(
+      getSharedActions(flow.map(::toAction)),
+      flow.map(::toResult)
+    )
+  }
+
+  private fun toAction(event: Event): Action {
+    return when (event) {
+      is SignInEvent -> RegistrationAction(UserData("", event.email, event.password))
+      else -> object : Action {}
+    }
   }
 
   override fun reduceState(
@@ -39,7 +58,18 @@ class RegistrationViewModel @Inject constructor(
   }
 
   override fun getSharedActions(action: Flow<Action>): Flow<Result> {
-    return emptyFlow()
+    return merge(
+      action.filterIsInstance<RegistrationAction>().let {
+        useCase.apply(it)
+      }
+    )
+  }
+
+  override fun getNavigationByResult(result: Result): Navigation? {
+    return when (result) {
+      is Success -> NavigateToMain
+      else -> null
+    }
   }
 
   private fun toResult(event: Event): Result {
@@ -51,8 +81,14 @@ class RegistrationViewModel @Inject constructor(
   }
 }
 
+object NavigateToMain : Navigation
+
 object ShowPickSourceDialogResult : Result
 object PicturePicked : Result
 
 object ShowPickSourceDialogEvent : Event
 object PictureSelected : Event
+data class SignInEvent(
+  val email: String,
+  val password: String
+) : Event

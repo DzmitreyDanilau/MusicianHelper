@@ -10,7 +10,6 @@ import kotlinx.coroutines.FlowPreview
 
 @ExperimentalCoroutinesApi
 @FlowPreview
-@LoginScope
 @Component(
   modules = [UseCaseModule::class, RepositoryModule::class, DispatchersModule::class],
   dependencies = [CommonProvider::class, AuthenticationServiceProvider::class]

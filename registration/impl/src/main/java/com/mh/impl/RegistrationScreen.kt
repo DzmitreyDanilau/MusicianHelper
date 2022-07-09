@@ -5,17 +5,21 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,10 +30,11 @@ import androidx.navigation.NavController
 import com.mh.impl.RegistrationState.ShowPhotoSource
 import com.mh.ui.image.CircleBorderImage
 import com.mh.ui.inputfields.DefaultOutlinedField
-import com.mh.ui.list.ColumnTest
 import com.musicianhelper.common.android.observeLifecycle
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @ExperimentalCoroutinesApi
 @FlowPreview
@@ -41,6 +46,8 @@ fun RegistrationScreen(
 
   viewModel.observeLifecycle(lifecycle = LocalLifecycleOwner.current.lifecycle)
 
+  val coroutineScope = rememberCoroutineScope()
+
   var pictureUri by remember { mutableStateOf<Uri?>(null) }
   val launcher = rememberLauncherForActivityResult(
     contract = ActivityResultContracts.StartActivityForResult(),
@@ -50,6 +57,9 @@ fun RegistrationScreen(
     })
 
   val state by viewModel.collectState().collectAsState()
+
+  var email by remember { mutableStateOf("") }
+  var password by remember { mutableStateOf("") }
 
   when (state) {
     is ShowPhotoSource -> {
@@ -67,11 +77,13 @@ fun RegistrationScreen(
   }
 
   Column(
-    horizontalAlignment = Alignment.CenterHorizontally,
     modifier = Modifier
-      .padding(50.dp)
       .fillMaxSize(),
+    verticalArrangement = Arrangement.Center,
+    horizontalAlignment = Alignment.CenterHorizontally
   ) {
+
+    // TODO upload to FireStore
     CircleBorderImage(
       isClickable = true,
       pictureUri = pictureUri,
@@ -82,9 +94,37 @@ fun RegistrationScreen(
       defaultDrawable = R.drawable.ic_add_photo,
       onClick = { viewModel.dispatchEvent(ShowPickSourceDialogEvent) }
     )
-    val list = listOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    ColumnTest(list = list) {
-      ItemFactory(item = it)
+
+    DefaultOutlinedField(
+      onValueChange = { email = it },
+      value = email,
+      label = "Email",
+      icon = Icons.Default.Email,
+    )
+    DefaultOutlinedField(
+      onValueChange = { password = it },
+      value = password,
+      label = "Password",
+      icon = Icons.Default.Lock,
+    )
+    DefaultOutlinedField(
+      value = "",
+      label = "Confirm Password",
+      icon = Icons.Default.Lock,
+    )
+    Button(onClick = { viewModel.dispatchEvent(SignInEvent(email, password)) }) {
+      Text(text = "Sign In")
+    }
+  }
+
+  LaunchedEffect(coroutineScope) {
+    viewModel.collectNavigation().collectLatest { navigation ->
+      when (navigation) {
+        is NavigateToMain -> {
+          Timber.d("Navigated to the main screen")
+          // navController.navigate("main")
+        }
+      }
     }
   }
 }

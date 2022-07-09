@@ -5,15 +5,15 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 
 @Composable
-fun <T> ColumnTest(
-  list: List<T>,
-  factory: @Composable (item: T) -> Unit
+fun <Int> ColumnTest(
+  list: List<Int>,
+  factory: @Composable (item: Int) -> Unit
+
 ) {
   LazyColumn {
-      items(list, contentType = {
-      }) {
-        factory(it)
-      }
+    items(list, contentType = { it }) {
+      factory(it)
+    }
   }
 }
 

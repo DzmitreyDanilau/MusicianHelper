@@ -4,7 +4,6 @@ import com.musicianhelper.data.api.AuthenticationServiceProvider
 import dagger.Component
 import javax.inject.Singleton
 
-@Singleton
 @Component(
   modules = [AuthServiceModule::class]
 )
