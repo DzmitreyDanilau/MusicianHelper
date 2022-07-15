@@ -9,6 +9,8 @@ import timber.log.Timber
 
 class MusicianHelperApp : Application() {
 
+    private val test: String = ""
+    private val test1: String = ""
     lateinit var appProvider: AppProvider
 
     override fun onCreate() {
