@@ -1,7 +1,7 @@
 name: Actions WorkFlow
 
 on:
-  push:
+  # push:
   pull_request:
     types: [ opened, edited, reopened ]
 
