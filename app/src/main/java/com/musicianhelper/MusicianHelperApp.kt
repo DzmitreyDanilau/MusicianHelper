@@ -11,7 +11,6 @@ class MusicianHelperApp : Application() {
 
     private val test: String = ""
     private val test1: String = ""
-    private val test2: String = ""
     lateinit var appProvider: AppProvider
 
     override fun onCreate() {
