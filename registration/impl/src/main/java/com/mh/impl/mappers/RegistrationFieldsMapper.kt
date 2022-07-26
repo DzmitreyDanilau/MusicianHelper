@@ -1,7 +1,9 @@
 package com.mh.impl.mappers
 
-import com.mh.impl.RegistrationFieldViewModel
-import com.musicianhelper.ViewModel
+import com.mh.impl.ViewModel
+import com.mh.impl.models.RegistrationImage
+import com.mh.impl.models.RegistrationInputFieldEmail
+import com.mh.impl.models.RegistrationInputFieldPassword
 import com.musicianhelper.common.android.ResourceProvider
 import javax.inject.Inject
 
@@ -10,25 +12,18 @@ class RegistrationFieldsMapper @Inject constructor(
 ) {
 
   fun map(): List<ViewModel> {
-    val items = mutableListOf<RegistrationFieldViewModel>()
-
+    val items = mutableListOf<ViewModel>()
     items.add(
-      RegistrationFieldViewModel("0", "Email", "")
+      RegistrationImage(id = "0", imageUrl = null)
     )
     items.add(
-      RegistrationFieldViewModel("1", "Name", "")
+      RegistrationInputFieldEmail("1", "", "Email")
     )
     items.add(
-      RegistrationFieldViewModel("2", "Second Name", "")
+      RegistrationInputFieldPassword("4", "", "Password")
     )
     items.add(
-      RegistrationFieldViewModel("3", "Address", "")
-    )
-    items.add(
-      RegistrationFieldViewModel("4", "Zip-code", "")
-    )
-    items.add(
-      RegistrationFieldViewModel("5", "Phone number", "")
+      RegistrationInputFieldPassword("4", "", "Confirm Password")
     )
 
     return items

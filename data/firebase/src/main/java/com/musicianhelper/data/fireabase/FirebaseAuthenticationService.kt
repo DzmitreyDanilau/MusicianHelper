@@ -21,7 +21,7 @@ class FirebaseAuthenticationService @Inject constructor(
     name: String,
     password: String
   ): Flow<Result<User>> {
-    return flow<Result<User>> {
+    return flow {
       try {
         val authResult = firebaseAuth.signInWithEmailAndPassword(name, password).await()
         emit(Result.success(mapToUser(authResult)))

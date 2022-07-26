@@ -2,9 +2,11 @@ package com.mh.impl
 
 import com.musicianhelper.common.State
 
-sealed class RegistrationState : State {
+sealed interface RegistrationState : State {
+  data class Default(val itemsList: List<ViewModel>) : RegistrationState
+  object ShowPhotoSource : RegistrationState
+}
 
-  object Initial : RegistrationState()
-
-  object ShowPhotoSource : RegistrationState()
+interface ViewModel {
+  val id: String
 }

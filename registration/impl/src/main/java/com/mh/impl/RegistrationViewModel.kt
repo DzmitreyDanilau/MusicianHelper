@@ -1,6 +1,8 @@
 package com.mh.impl
 
+import com.mh.impl.RegistrationState.Default
 import com.mh.impl.RegistrationState.ShowPhotoSource
+import com.mh.impl.domain.GetFieldsAction
 import com.mh.impl.domain.RegistrationAction
 import com.mh.impl.domain.RegistrationResult
 import com.mh.impl.domain.RegistrationResult.Success
@@ -18,8 +20,10 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
@@ -29,13 +33,16 @@ class RegistrationViewModel @Inject constructor(
   private val mapper: RegistrationFieldsMapper,
   private val useCase: UseCase<RegistrationAction, RegistrationResult>
 ) : BaseViewModel<RegistrationState>(
-  initialState = RegistrationState.Initial,
+  initialState = Default(emptyList()),
   dispatcher = dispatcher
 ) {
 
   override fun result(flow: Flow<Event>): Flow<Result> {
     return merge(
-      getSharedActions(flow.map(::toAction)),
+      getSharedActions(
+        flow
+          .onStart { GetFieldsAction }
+          .map(::toAction)),
       flow.map(::toResult)
     )
   }
@@ -52,6 +59,7 @@ class RegistrationViewModel @Inject constructor(
     result: Result
   ): RegistrationState {
     return when (result) {
+      is GetFieldsResult -> Default(mapper.map())
       is ShowPickSourceDialogResult -> ShowPhotoSource
       else -> previous
     }
@@ -61,6 +69,9 @@ class RegistrationViewModel @Inject constructor(
     return merge(
       action.filterIsInstance<RegistrationAction>().let {
         useCase.apply(it)
+      },
+      action.filterIsInstance<GetFieldsAction>().let {
+        flowOf(GetFieldsResult)
       }
     )
   }
@@ -83,11 +94,13 @@ class RegistrationViewModel @Inject constructor(
 
 object NavigateToMain : Navigation
 
+object GetFieldsResult : Result
 object ShowPickSourceDialogResult : Result
 object PicturePicked : Result
 
 object ShowPickSourceDialogEvent : Event
 object PictureSelected : Event
+
 data class SignInEvent(
   val email: String,
   val password: String

@@ -1,5 +1,6 @@
 package com.mh.impl
 
+import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -18,22 +19,25 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class RegistrationEntryPoint @Inject constructor() : RegistrationEntry() {
 
-    override fun NavGraphBuilder.navigation(
-            navController: NavHostController,
-            destinations: Destinations
-    ) {
-        navigation(startDestination = startDestination, route = "@registration") {
-            composable(featureRoute) {
-                val viewModel = injectedViewModel {
-                    DaggerRegistrationComponent
-                            .builder()
-                            .commonProvider(LocalCommonProvider.current)
-                            .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
-                            .build()
-                            .viewModel
-                }
-                RegistrationScreen(navController = navController, viewModel = viewModel)
-            }
+  override fun NavGraphBuilder.navigation(
+    navController: NavHostController,
+    destinations: Destinations
+  ) {
+    navigation(startDestination = startDestination, route = "@registration") {
+      composable(featureRoute) {
+        val viewModel = injectedViewModel {
+          DaggerRegistrationComponent
+            .builder()
+            .commonProvider(LocalCommonProvider.current)
+            .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
+            .build()
+            .viewModel
         }
+        RegistrationRoute(
+          navController = navController,
+          viewModel = viewModel,
+        )
+      }
     }
+  }
 }
