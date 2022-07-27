@@ -2,6 +2,7 @@ package com.mh.impl.di
 
 import com.mh.impl.RegistrationViewModel
 import com.musicianhelper.data.api.AuthenticationServiceProvider
+import com.musicianhelper.data.api.UserDataSourceProvider
 import com.musicianhelper.di.CommonProvider
 import com.musicianhelper.di.DispatchersModule
 import com.musicianhelper.di.ResourceProviderModule
@@ -18,7 +19,11 @@ import kotlinx.coroutines.FlowPreview
     UseCaseModule::class,
     RepositoryModule::class
   ],
-  dependencies = [AuthenticationServiceProvider::class, CommonProvider::class]
+  dependencies = [
+    AuthenticationServiceProvider::class,
+    CommonProvider::class,
+    UserDataSourceProvider::class
+  ]
 )
 interface RegistrationComponent {
   val viewModel: RegistrationViewModel

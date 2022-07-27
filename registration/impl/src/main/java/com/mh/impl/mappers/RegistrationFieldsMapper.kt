@@ -2,6 +2,7 @@ package com.mh.impl.mappers
 
 import com.mh.impl.ViewModel
 import com.mh.impl.models.RegistrationImage
+import com.mh.impl.models.RegistrationInputFieldConfirmPassword
 import com.mh.impl.models.RegistrationInputFieldEmail
 import com.mh.impl.models.RegistrationInputFieldPassword
 import com.musicianhelper.common.android.ResourceProvider
@@ -20,10 +21,10 @@ class RegistrationFieldsMapper @Inject constructor(
       RegistrationInputFieldEmail("1", "", "Email")
     )
     items.add(
-      RegistrationInputFieldPassword("4", "", "Password")
+      RegistrationInputFieldPassword("2", "", "Password")
     )
     items.add(
-      RegistrationInputFieldPassword("4", "", "Confirm Password")
+      RegistrationInputFieldConfirmPassword("3", "", "Confirm Password")
     )
 
     return items

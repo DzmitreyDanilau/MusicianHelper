@@ -1,6 +1,5 @@
 package com.mh.impl
 
-import androidx.compose.runtime.collectAsState
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -9,6 +8,7 @@ import com.mh.impl.di.DaggerRegistrationComponent
 import com.mh.registration.api.RegistrationEntry
 import com.musicianhelper.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
+import com.musicianhelper.data.api.LocalUserDataSourceProvider
 import com.musicianhelper.di.LocalCommonProvider
 import com.musicianhelper.di.injectedViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -30,6 +30,7 @@ class RegistrationEntryPoint @Inject constructor() : RegistrationEntry() {
             .builder()
             .commonProvider(LocalCommonProvider.current)
             .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
+            .userDataSourceProvider(LocalUserDataSourceProvider.current)
             .build()
             .viewModel
         }

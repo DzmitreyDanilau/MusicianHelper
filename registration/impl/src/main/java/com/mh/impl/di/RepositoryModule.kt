@@ -1,7 +1,7 @@
 package com.mh.impl.di
 
 import com.mh.impl.data.RegistrationRepository
-import com.mh.impl.domain.Repository
+import com.musicianhelper.data.api.UserCreator
 import dagger.Binds
 import dagger.Module
 
@@ -9,5 +9,7 @@ import dagger.Module
 interface RepositoryModule {
 
   @Binds
-  fun bindRepository(repository: RegistrationRepository): Repository
+  fun bindRepository(
+    repository: RegistrationRepository
+  ): com.mh.impl.domain.repositories.RegistrationRepository
 }

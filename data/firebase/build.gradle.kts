@@ -38,8 +38,9 @@ dependencies {
   api(project(":data:api"))
 
   implementation(Dependencies.Firebase.firebaseCore)
-  implementation(Dependencies.Firebase.firebaseAuth)
   implementation(Dependencies.Firebase.firebaseAuthKtx)
+  implementation(Dependencies.Firebase.firebaseFirestoreKtx)
+
   implementation(Dependencies.PlayServices.playServicesCoroutines)
 
   implementation(Dependencies.Kotlin.coroutinesCore)

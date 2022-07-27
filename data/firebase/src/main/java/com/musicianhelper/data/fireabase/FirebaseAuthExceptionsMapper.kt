@@ -7,50 +7,56 @@ import javax.inject.Inject
 
 class FirebaseAuthExceptionsMapper @Inject constructor() : ExceptionMapper<FirebaseAuthException> {
 
-    override fun map(exception: FirebaseAuthException): Throwable {
-        val error = when (exception.errorCode) {
-            "ERROR_INVALID_EMAIL" -> {
-                FirebaseAuthErrors.ERROR_INVALID_EMAIL
-            }
-            "ERROR_CREDENTIAL_ALREADY_IN_USE" -> {
-                FirebaseAuthErrors.ERROR_CREDENTIAL_ALREADY_IN_USE
-            }
-            "ERROR_USER_NOT_FOUND" -> {
-                FirebaseAuthErrors.ERROR_USER_NOT_FOUND
-            }
-            "ERROR_WEAK_PASSWORD" -> {
-                FirebaseAuthErrors.ERROR_WEAK_PASSWORD
-            }
-            "ERROR_MISSING_EMAIL" -> {
-                FirebaseAuthErrors.ERROR_MISSING_EMAIL
-            }
-            else -> FirebaseAuthErrors.ERROR_UNKNOWN
-        }
-
-        return AuthThrowable(error.text, error.code)
+  override fun map(exception: FirebaseAuthException): Throwable {
+    val error = when (exception.errorCode) {
+      "ERROR_INVALID_EMAIL" -> {
+        FirebaseAuthErrors.ERROR_INVALID_EMAIL
+      }
+      "ERROR_CREDENTIAL_ALREADY_IN_USE" -> {
+        FirebaseAuthErrors.ERROR_CREDENTIAL_ALREADY_IN_USE
+      }
+      "ERROR_USER_NOT_FOUND" -> {
+        FirebaseAuthErrors.ERROR_USER_NOT_FOUND
+      }
+      "ERROR_WEAK_PASSWORD" -> {
+        FirebaseAuthErrors.ERROR_WEAK_PASSWORD
+      }
+      "ERROR_MISSING_EMAIL" -> {
+        FirebaseAuthErrors.ERROR_MISSING_EMAIL
+      }
+      "ERROR_EMAIL_ALREADY_IN_USE" -> {
+        FirebaseAuthErrors.ERROR_EMAIL_ALREADY_IN_USE
+      }
+      else -> FirebaseAuthErrors.ERROR_UNKNOWN
     }
 
-    internal enum class FirebaseAuthErrors(val code: Int, val text: String) {
-        ERROR_UNKNOWN(999, "Sorry, something happened. Try again later"),
-        ERROR_INVALID_EMAIL(
-            901,
-            "The email address is badly formatted."
-        ),
-        ERROR_CREDENTIAL_ALREADY_IN_USE(
-            902,
-            "This credential is already associated with a different user account."
-        ),
-        ERROR_USER_NOT_FOUND(
-            903,
-            "There is no user record corresponding to this identifier. The user may have been deleted."
-        ),
-        ERROR_WEAK_PASSWORD(904, "The given password is invalid."),
-        ERROR_MISSING_EMAIL(905, "An email address must be provided."),
-        ERROR_EMAIL_ALREADY_IN_USE(
-            906,
-            "The email address is already in use by another account."
-        )
-    }
+    return AuthThrowable(error.text, error.code)
+  }
+
+  internal enum class FirebaseAuthErrors(
+    val code: Int,
+    val text: String
+  ) {
+    ERROR_UNKNOWN(999, "Sorry, something happened. Try again later"),
+    ERROR_INVALID_EMAIL(
+      901,
+      "The email address is badly formatted."
+    ),
+    ERROR_CREDENTIAL_ALREADY_IN_USE(
+      902,
+      "This credential is already associated with a different user account."
+    ),
+    ERROR_USER_NOT_FOUND(
+      903,
+      "There is no user record corresponding to this identifier. The user may have been deleted."
+    ),
+    ERROR_WEAK_PASSWORD(904, "The given password is invalid."),
+    ERROR_MISSING_EMAIL(905, "An email address must be provided."),
+    ERROR_EMAIL_ALREADY_IN_USE(
+      906,
+      "The email address is already in use by another account."
+    )
+  }
 
 //    ("ERROR_INVALID_CUSTOM_TOKEN", "The custom token format is incorrect. Please check the documentation."));
 //    ("ERROR_CUSTOM_TOKEN_MISMATCH", "The custom token corresponds to a different audience."));

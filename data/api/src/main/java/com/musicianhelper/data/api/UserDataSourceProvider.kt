@@ -1,11 +1,11 @@
 package com.musicianhelper.data.api
 
 import androidx.compose.runtime.compositionLocalOf
-import com.musicianhelper.domain.UserDataSource
 
 interface UserDataSourceProvider {
-
-  val userDataSource: UserDataSource
+  val userCreator: UserCreator
+  val userUpdater: UserUpdater
+  val userProvider: UserProvider
 }
 
 val LocalUserDataSourceProvider =

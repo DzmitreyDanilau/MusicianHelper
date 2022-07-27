@@ -2,6 +2,7 @@ package com.mh.impl.domain
 
 import com.mh.impl.domain.RegistrationResult.Failed
 import com.mh.impl.domain.RegistrationResult.Success
+import com.mh.impl.domain.repositories.RegistrationRepository
 import com.musicianhelper.common.Action
 import com.musicianhelper.common.Result
 import com.musicianhelper.data.UserData
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
 class RegisterUseCase @Inject constructor(
-  private val repository: Repository
+  private val repository: RegistrationRepository
 ) : UseCase<RegistrationAction, RegistrationResult> {
 
   override fun apply(upstream: Flow<RegistrationAction>): Flow<RegistrationResult> {

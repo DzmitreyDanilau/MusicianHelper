@@ -11,5 +11,7 @@ import dagger.Module
 interface UseCaseModule {
 
   @Binds
-  fun bindRegistrationUseCase(useCase: RegisterUseCase): UseCase<RegistrationAction, RegistrationResult>
+  fun bindRegistrationUseCase(
+    useCase: RegisterUseCase
+  ): UseCase<RegistrationAction, RegistrationResult>
 }

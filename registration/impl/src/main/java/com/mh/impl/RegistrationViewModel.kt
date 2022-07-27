@@ -1,5 +1,6 @@
 package com.mh.impl
 
+import android.net.Uri
 import com.mh.impl.RegistrationState.Default
 import com.mh.impl.RegistrationState.ShowPhotoSource
 import com.mh.impl.domain.GetFieldsAction
@@ -103,5 +104,6 @@ object PictureSelected : Event
 
 data class SignInEvent(
   val email: String,
-  val password: String
+  val password: String,
+  val pictureUri: Uri? = null
 ) : Event

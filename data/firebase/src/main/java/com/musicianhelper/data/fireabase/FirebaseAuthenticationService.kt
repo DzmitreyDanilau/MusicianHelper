@@ -10,6 +10,7 @@ import com.musicianhelper.domain.AuthenticationService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 import javax.inject.Inject
 
 class FirebaseAuthenticationService @Inject constructor(
@@ -38,6 +39,7 @@ class FirebaseAuthenticationService @Inject constructor(
   override fun singIn(userData: UserData): Flow<Result<User>> {
     return flow {
       try {
+        Timber.tag("TEST").d("SIGNIN name: ${userData.name}, password: ${userData.password}")
         val singInResult = firebaseAuth.createUserWithEmailAndPassword(
           userData.email, userData.password
         ).await()

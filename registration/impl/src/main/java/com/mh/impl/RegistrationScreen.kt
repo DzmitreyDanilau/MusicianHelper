@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +62,10 @@ fun RegistrationScreen(
       viewModel.dispatchEvent(PictureSelected)
     })
 
+  SideEffect {
+    Timber.d("RECOMPOSITION")
+  }
+
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
   var confirmedPassword by remember { mutableStateOf("") }
@@ -90,10 +95,11 @@ fun RegistrationScreen(
             ColumnItemsFactory(
               viewModel = viewModel,
               item = it,
+
               onEmailChanged = { email = it },
+              emailValue = email,
               onPasswordChanged = { password = it },
               passwordValue = password,
-              emailValue = email,
               onConfirmPasswordChanged = { confirmedPassword = it },
               confirmPasswordValue = confirmedPassword,
               pictureUri = pictureUri
@@ -101,7 +107,10 @@ fun RegistrationScreen(
           })
 
           item {
-            Button(onClick = { viewModel.dispatchEvent(SignInEvent(email, password)) }) {
+            Button(
+              enabled = email.isNotEmpty() && password.isNotEmpty() && confirmedPassword.isNotEmpty(),
+              onClick = { viewModel.dispatchEvent(SignInEvent( email, password)) }
+            ) {
               Text(text = "Sign In")
             }
           }
@@ -143,28 +152,15 @@ fun ColumnItemsFactory(
   viewModel: RegistrationViewModel,
   item: ViewModel,
   onEmailChanged: (String) -> Unit,
+  emailValue: String,
   onPasswordChanged: (String) -> Unit,
   passwordValue: String,
-  emailValue: String,
   onConfirmPasswordChanged: (String) -> Unit,
   confirmPasswordValue: String,
   pictureUri: Uri?
 ) {
   when (item) {
     is RegistrationInputFieldPassword -> {
-      DefaultOutlinedField(
-        onValueChange = { onConfirmPasswordChanged.invoke(it) },
-        value = confirmPasswordValue,
-        label = { Text(text = item.title) },
-        icon = {
-          Icon(
-            imageVector = Icons.Default.Lock,
-            contentDescription = null,
-          )
-        },
-      )
-    }
-    is RegistrationInputFieldConfirmPassword -> {
       DefaultOutlinedField(
         onValueChange = { onPasswordChanged.invoke(it) },
         value = passwordValue,
@@ -177,6 +173,19 @@ fun ColumnItemsFactory(
         },
       )
     }
+    is RegistrationInputFieldConfirmPassword -> {
+      DefaultOutlinedField(
+        onValueChange = { onConfirmPasswordChanged.invoke(it) },
+        value = confirmPasswordValue,
+        label = { Text(text = item.title) },
+        icon = {
+          Icon(
+            imageVector = Icons.Default.Lock,
+            contentDescription = null,
+          )
+        }
+      )
+    }
     is RegistrationInputFieldEmail -> {
       DefaultOutlinedField(
         onValueChange = { onEmailChanged.invoke(it) },
@@ -187,7 +196,7 @@ fun ColumnItemsFactory(
             imageVector = Icons.Default.Email,
             contentDescription = null,
           )
-        },
+        }
       )
     }
     is RegistrationImage -> {
