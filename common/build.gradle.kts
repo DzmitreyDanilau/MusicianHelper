@@ -1,62 +1,68 @@
+import Versions.javaVersion
+
 plugins {
-  id("com.android.library")
-  kotlin("android")
-  kotlin("kapt")
+    id("com.android.library")
+    kotlin("android")
+    kotlin("kapt")
 }
 
 repositories {
-  google()
-  mavenCentral()
-  maven(url = "https://jitpack.io")
-  maven(url = "https://maven.google.com")
+    google()
+    mavenCentral()
+    maven(url = "https://jitpack.io")
+    maven(url = "https://maven.google.com")
 }
 
 android {
-  compileSdk = ConfigData.compileSdkVersion
+    compileSdk = ConfigData.compileSdkVersion
 
-  defaultConfig {
-    minSdk = ConfigData.minSdkVersion
-    targetSdk = ConfigData.targetSdkVersion
-  }
-
-  buildTypes {
-
-    debug {
-
+    defaultConfig {
+        minSdk = ConfigData.minSdkVersion
+        targetSdk = ConfigData.targetSdkVersion
     }
 
-    release {
+    buildTypes {
 
+        debug {
+
+        }
+
+        release {
+
+        }
     }
-  }
 
-  buildFeatures {
-    compose = true
-  }
+    buildFeatures {
+        compose = true
+    }
 
-  composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
-  }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.compose
+    }
 
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjvm-default=enable")
+    }
+
+    compileOptions {
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
+    }
 }
 
 dependencies {
 
-  implementation(Dependencies.Compose.composeUI)
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeCompiler)
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeNavigation)
+    implementation(Dependencies.Compose.composeUI)
+    implementation(Dependencies.Compose.composeActivity)
+    implementation(Dependencies.Compose.composeCompiler)
+    implementation(Dependencies.Compose.composeLifeCycleViewModel)
+    implementation(Dependencies.Compose.composeNavigation)
 
-  implementation(Dependencies.Dagger.dagger)
-  kapt(Dependencies.Dagger.kapt)
+    implementation(Dependencies.Dagger.dagger)
+    kapt(Dependencies.Dagger.kapt)
 
-  api(Dependencies.Common.timber)
+    api(Dependencies.Common.timber)
 
-  implementation(Dependencies.stdLibjdk8)
-  implementation(Dependencies.Kotlin.coroutinesCore)
+    implementation(Dependencies.stdLibjdk8)
+    implementation(Dependencies.Kotlin.coroutinesCore)
 }

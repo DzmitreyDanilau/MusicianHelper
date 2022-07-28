@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
           CompositionLocalProvider(
             LocalAppProvider provides application.appProvider,
             LocalCommonProvider provides application.appProvider,
-            LocalAuthenticationServiceProvider provides application.appProvider
+            LocalAuthenticationServiceProvider provides application.appProvider,
+            LocalUserDataSourceProvider provides application.appProvider
           ) {
             Navigation()
           }

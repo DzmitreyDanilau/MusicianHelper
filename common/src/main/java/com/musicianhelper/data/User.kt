@@ -1,6 +1,6 @@
 package com.musicianhelper.data
 
 data class User(
-  val id: String,
-  val name: String,
+  val uid: String,
+  val name: String
 )

@@ -2,7 +2,7 @@ plugins {
   id("com.android.application")
   id("com.google.gms.google-services")
   kotlin("android")
-  kotlin("kapt") version "1.5.21"
+  kotlin("kapt")
 }
 
 repositories {
@@ -26,6 +26,7 @@ android {
     vectorDrawables {
       useSupportLibrary = true
     }
+
     signingConfig = signingConfigs.getByName("debug")
   }
 
@@ -64,18 +65,15 @@ android {
   }
 }
 
-
-
 dependencies {
 
   implementation(project(":common"))
   implementation(project(":login:impl"))
+  implementation(project(":registration:impl"))
   implementation(project(":data:firebase"))
 
   implementation(Dependencies.Core.activityKtx)
   implementation(Dependencies.Core.coreKtx)
-
-  implementation(Dependencies.Design.materialDesign)
 
   implementation(Dependencies.Compose.composeActivity)
   implementation(Dependencies.Compose.composeAnimation)
@@ -84,6 +82,7 @@ dependencies {
   implementation(Dependencies.Compose.composeMaterial)
   implementation(Dependencies.Compose.composeUiTooling)
   implementation(Dependencies.Compose.composeNavigation)
+  implementation(Dependencies.Compose.composeRuntime)
 
   implementation(Dependencies.LifeCycle.lifecycleCommonJava8)
   implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
@@ -95,6 +94,6 @@ dependencies {
   testImplementation("junit:junit:4.+")
   androidTestImplementation("androidx.test.ext:junit:1.1.3")
   androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.4")
-  debugImplementation("androidx.compose.ui:ui-tooling:1.0.4")
+  androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
+  debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
 }

@@ -1,3 +1,5 @@
+import Versions.kotlinVersion
+
 object Dependencies {
 
   object Common {
@@ -14,9 +16,10 @@ object Dependencies {
     val findBugs by lazy { "com.google.code.findbugs:jsr305:$findBugsVersion" }
   }
 
-  object Design {
-    private const val version = "1.3.0"
-    val materialDesign by lazy { "com.google.android.material:material:$version" }
+  object ImagesLoader {
+    private const val version = "2.1.0"
+
+    val coil by lazy { "io.coil-kt:coil-compose:$version" }
   }
 
   object LifeCycle {
@@ -35,40 +38,46 @@ object Dependencies {
   }
 
   object Kotlin {
-    private const val coroutinesCoreVersion = "1.5.2"
+    private const val coroutinesCoreVersion = "1.6.2"
     val coroutinesCore by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesCoreVersion" }
   }
 
   object Firebase {
-    private const val version = "21.0.1"
+    private const val bomVersion = "30.3.1"
+    private const val authVersion = "21.0.1"
     private const val coreVersion = "20.0.0"
-
-    val firebaseCore by lazy {"com.google.firebase:firebase-core:$coreVersion"}
-    val firebaseAuth by lazy { "com.google.firebase:firebase-auth:$version" }
-    val firebaseAuthKtx by lazy { "com.google.firebase:firebase-auth-ktx:$version" }
+    private const val firestoreVersion = "24.2.1"
+    val firebaseBom by lazy { "com.google.firebase:firebase-bom:$bomVersion"}
+    val firebaseCore by lazy { "com.google.firebase:firebase-core:$coreVersion" }
+    val firebaseAuthKtx by lazy { "com.google.firebase:firebase-auth-ktx:$authVersion" }
+    val firebaseFirestoreKtx by lazy { "com.google.firebase:firebase-firestore-ktx:$firestoreVersion" }
   }
 
   object Compose {
-      private const val activityVersion = "1.4.0"
-    private const val materialVersion = "1.1.1"
-    private const val animationVersion = "1.1.1"
-    private const val uiToolingVersion = "1.1.1"
-    private const val lifeCycleViewModelVersion = "2.4.0"
-    private const val compilerVersion = "1.1.0-beta03"
-    private const val uiVersion = "1.1.1"
-    private const val navigationVersion = "2.4.0-beta02"
-    val composeUI by lazy { "androidx.compose.ui:ui:$uiVersion" }
+    private const val activityVersion = "1.5.0-rc01"
+    private const val lifeCycleViewModelVersion = "2.5.0-rc02"
+    private const val navigationVersion = "2.5.0-rc02"
+    private const val composeDepVersion = "1.1.1"
+    private const val composeCompilerVersion = "1.2.0"
+    private const val acompanistVerssion = "1.2.0-rc03"
+    private const val composeFoundationVersion = "1.2.0-rc03"
+
+    val composeUI by lazy { "androidx.compose.ui:ui:$composeDepVersion" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
-    val composeMaterial by lazy { "androidx.compose.material:material:$materialVersion" }
-    val composeAnimation by lazy { "androidx.compose.animation:animation:$animationVersion" }
-    val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:$uiToolingVersion" }
+    val composeMaterial by lazy { "androidx.compose.material:material:$composeDepVersion" }
+    val composeAnimation by lazy { "androidx.compose.animation:animation:$composeDepVersion" }
+    val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:$composeDepVersion" }
     val composeLifeCycleViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:$lifeCycleViewModelVersion" }
-    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$compilerVersion" }
-    val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion"}
+    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$composeCompilerVersion" }
+    val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion" }
+    val composeRuntime by lazy { "androidx.compose.runtime:runtime:$composeDepVersion" }
+    val composeToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview:$composeDepVersion" }
+    val accompanist by lazy { "com.google.accompanist:accompanist-permissions:$acompanistVerssion" }
+    val composeFoundation by lazy { "androidx.compose.foundation:foundation:$composeFoundationVersion" }
   }
 
   object Dagger {
-    private const val version = "2.40.1"
+    private const val version = "2.42"
 
     val dagger by lazy { "com.google.dagger:dagger:$version" }
     val kapt by lazy { "com.google.dagger:dagger-compiler:$version" }
@@ -81,6 +90,6 @@ object Dependencies {
     val playServicesCoroutines by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion" }
   }
 
-  val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.21" }
-  val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.5.21" }
+  val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion" }
+  val stdLibjdk7 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion" }
 }
