@@ -4,7 +4,9 @@ import androidx.compose.runtime.compositionLocalOf
 import com.musicianhelper.Destinations
 import com.musicianhelper.data.api.AuthenticationServiceProvider
 import com.musicianhelper.data.api.UserDataSourceProvider
+import javax.inject.Singleton
 
+@Singleton
 interface AppProvider : CommonProvider, AuthenticationServiceProvider, UserDataSourceProvider {
 
   val destinations: Destinations

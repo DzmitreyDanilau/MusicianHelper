@@ -4,14 +4,14 @@ import com.musicianhelper.data.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserProvider {
-  fun getUser(): Flow<User>
+  fun getUser(uid: String): Flow<Result<User?>>
 }
 
 interface UserUpdater {
   fun deleteUser()
-  fun editUser()
+  fun editUser(user: User) : Flow<Result<Boolean>>
 }
 
 interface UserCreator {
-  fun createUser()
+  fun createUser(user: User)
 }

@@ -18,6 +18,7 @@ class RegistrationRepository @Inject constructor(
   override fun signIn(userData: UserData): Flow<Result<User>> {
     return authService.singIn(userData)
       .onEach {
+        Timber.tag("TEST").d("Sucess: ${it.isSuccess}")
         if(it.isSuccess) {
           saveUser(it.getOrNull()!!)
         }
@@ -26,6 +27,6 @@ class RegistrationRepository @Inject constructor(
 
   private fun saveUser(user: User) {
     Timber.tag("TEST").d("SAVE")
-    userCreator.createUser()
+    userCreator.createUser(user)
   }
 }

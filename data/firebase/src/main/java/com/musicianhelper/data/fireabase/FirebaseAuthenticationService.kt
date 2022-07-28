@@ -52,10 +52,10 @@ class FirebaseAuthenticationService @Inject constructor(
 
   private fun mapToUser(authResult: AuthResult): User {
     val user = authResult.user
-    return User(id = user?.uid ?: "", name = user?.email ?: "")
+    return User(uid = user?.uid ?: "", name = user?.email ?: "")
   }
 
   private fun mapToUser(firebaseUser: FirebaseUser?): User {
-    return User(id = firebaseUser?.uid ?: "", name = firebaseUser?.email ?: "")
+    return User(uid = firebaseUser?.uid ?: "", name = firebaseUser?.email ?: "")
   }
 }

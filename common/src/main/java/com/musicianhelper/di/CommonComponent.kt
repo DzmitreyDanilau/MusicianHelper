@@ -3,9 +3,14 @@ package com.musicianhelper.di
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
-@Component(modules = [DispatchersModule::class, ResourceProviderModule::class])
+@Component(
+  modules = [
+    DispatchersModule::class,
+    ResourceProviderModule::class,
+    CoroutineScopeModule::class
+  ]
+)
 interface CommonComponent : CommonProvider {
 
   @Component.Factory

@@ -12,10 +12,17 @@ import com.musicianhelper.data.api.UserUpdater
 import com.musicianhelper.data.fireabase.FirebaseAuthExceptionsMapper
 import com.musicianhelper.data.fireabase.FirebaseAuthenticationService
 import com.musicianhelper.data.fireabase.FirebaseUserDataSource
+import com.musicianhelper.di.CoroutineScopeModule
+import com.musicianhelper.di.DispatchersModule
+import com.musicianhelper.di.IO
+import com.musicianhelper.di.MainScope
 import com.musicianhelper.domain.AuthenticationService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import javax.inject.Singleton
 
 // TODO think about how we can separate into FirebaseAuth and Firebase, to have the ability
 // to use data source, in-app msgs etc
@@ -24,12 +31,19 @@ import dagger.Provides
 interface AuthServiceModule {
 
   @Binds
+  @Singleton
   fun bindAuthentificationService(
     firebaseAuth: FirebaseAuthenticationService
   ): AuthenticationService
 }
 
-@Module(includes = [FirebaseUserDataSourceModule::class])
+@Module(
+  includes = [
+    FirebaseUserDataSourceModule::class,
+    CoroutineScopeModule::class,
+    DispatchersModule::class
+  ]
+)
 interface UserDataSource {
 
   @Binds
@@ -42,12 +56,19 @@ interface UserDataSource {
   fun bindUserProviderStore(firestore: FirebaseUserDataSource): UserProvider
 }
 
-@Module(includes = [FirebaseModule::class])
+@Module(
+  includes = [FirebaseModule::class]
+)
 object FirebaseUserDataSourceModule {
 
   @Provides
-  fun provideUserDataSource(firestore: FirebaseFirestore): FirebaseUserDataSource {
-    return FirebaseUserDataSource(firestore)
+  @Singleton
+  fun provideUserDataSource(
+    firestore: FirebaseFirestore,
+    @IO dispatcher: CoroutineDispatcher,
+    @MainScope coroutineScope: CoroutineScope
+  ): FirebaseUserDataSource {
+    return FirebaseUserDataSource(firestore, dispatcher, coroutineScope)
   }
 }
 

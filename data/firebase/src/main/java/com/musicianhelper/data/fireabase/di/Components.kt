@@ -3,13 +3,12 @@ package com.musicianhelper.data.fireabase.di
 import com.musicianhelper.data.api.AuthenticationServiceProvider
 import com.musicianhelper.data.api.UserDataSourceProvider
 import dagger.Component
+import javax.inject.Singleton
 
-@Component(
-  modules = [AuthServiceModule::class]
-)
+@Singleton
+@Component(modules = [AuthServiceModule::class])
 interface UserAuthComponent : AuthenticationServiceProvider
 
-@Component(
-  modules = [UserDataSource::class]
-)
+@Singleton
+@Component(modules = [UserDataSource::class])
 interface UserDataSourceComponent : UserDataSourceProvider
