@@ -1,5 +1,3 @@
-import Versions.javaVersion
-
 plugins {
   id("com.android.library")
   kotlin("android")
@@ -14,12 +12,13 @@ repositories {
 }
 
 android {
+  compileSdk = ConfigData.compileSdkVersion
 
   defaultConfig {
     minSdk = ConfigData.minSdkVersion
     targetSdk = ConfigData.targetSdkVersion
-    compileSdk = ConfigData.compileSdkVersion
   }
+
   buildFeatures {
     compose = true
   }
@@ -27,30 +26,29 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = Versions.compose
   }
-
-  // kotlinOptions {
-  //     freeCompilerArgs = listOf("-Xjvm-default=enable")
-  // }
-
-  compileOptions {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-  }
 }
 
 dependencies {
 
-  implementation(Dependencies.Compose.composeUI)
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeCompiler)
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeNavigation)
+  implementation(project(":common"))
+  implementation(project(":platform:ui"))
+  implementation(project(":data:api"))
+  api(project(":mainscreen:api"))
 
   implementation(Dependencies.Dagger.dagger)
   kapt(Dependencies.Dagger.kapt)
 
-  api(Dependencies.Common.timber)
+  implementation(Dependencies.Compose.composeUI)
+  implementation(Dependencies.Compose.composeActivity)
+  implementation(Dependencies.Compose.composeUiTooling)
+  implementation(Dependencies.Compose.composeMaterial)
+  implementation(Dependencies.Compose.composeCompiler)
+  implementation(Dependencies.Compose.composeLifeCycleViewModel)
+  implementation(Dependencies.Compose.composeAnimation)
+  implementation(Dependencies.Compose.composeNavigation)
+  implementation(Dependencies.Compose.composeRuntime)
+  implementation(Dependencies.Compose.composeFoundation)
+  implementation(Dependencies.Compose.composeGoogleMaps)
 
-  implementation(Dependencies.stdLibjdk8)
-  implementation(Dependencies.Kotlin.coroutinesCore)
+  implementation(Dependencies.PlayServices.googleMaps)
 }

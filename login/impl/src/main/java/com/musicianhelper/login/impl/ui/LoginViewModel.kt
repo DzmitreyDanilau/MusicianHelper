@@ -26,7 +26,7 @@ import javax.inject.Inject
 @FlowPreview
 class LoginViewModel @Inject constructor(
   @Main dispatcher: CoroutineDispatcher,
-  private val loginUseCase: UseCase<LoginAction, LoginResult>,
+  private val loginUseCase: UseCase<LoginAction, LoginResult>
 ) : BaseViewModel<LoginState>(initialState = Initial, dispatcher = dispatcher) {
 
   override fun reduceState(

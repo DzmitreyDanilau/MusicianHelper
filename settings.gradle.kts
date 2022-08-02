@@ -11,7 +11,7 @@ pluginManagement {
         useModule("com.android.tools.build:gradle:7.2.1")
       }
       if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-        useVersion("1.6.10")
+        useVersion("1.7.10")
       }
       if (requested.id.id.startsWith("com.google.gms")) {
         useModule("com.google.gms:google-services:4.3.8")
@@ -27,8 +27,9 @@ include(":common")
 
 include(":login:impl", ":login:api")
 include(":registration:api", ":registration:impl")
+include(":mainscreen:api",":mainscreen:impl" )
 
-include(":data:firebase")
 include(":data:api")
+include(":data:firebase")
 
 include(":platform:ui")

@@ -22,16 +22,19 @@ class LoginEntryPoint @Inject constructor() : LoginEntry() {
             navController: NavHostController,
             destinations: Destinations
     ) {
-        composable(route = featureRoute) {
+        composable(route = featureRoute, content = {
+            val common = LocalCommonProvider.current
+            val auth = LocalAuthenticationServiceProvider.current
             val viewModel = injectedViewModel {
                 DaggerLoginComponent
-                        .builder()
-                        .commonProvider(LocalCommonProvider.current)
-                        .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
-                        .build()
-                        .viewModel
+                  .builder()
+                  .commonProvider(common)
+                  .authenticationServiceProvider(auth)
+                  .build()
+                  .viewModel
             }
             LoginScreen(navController = navController, viewModel = viewModel)
-        }
+        })
+
     }
 }

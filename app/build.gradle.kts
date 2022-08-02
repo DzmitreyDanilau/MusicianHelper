@@ -1,6 +1,11 @@
+import Versions.javaVersion
+
 plugins {
   id("com.android.application")
   id("com.google.gms.google-services")
+  id(
+    "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
+  ) version ("2.0.1")
   kotlin("android")
   kotlin("kapt")
 }
@@ -13,12 +18,12 @@ repositories {
 }
 
 android {
-  compileSdk = ConfigData.compileSdkVersion
 
   defaultConfig {
     applicationId = ConfigData.applicationName
     minSdk = ConfigData.minSdkVersion
     targetSdk = ConfigData.targetSdkVersion
+    compileSdk = ConfigData.compileSdkVersion
     buildToolsVersion = ConfigData.buildToolsVersion
     versionCode = Versions.versionCode
     versionName = Versions.versionName
@@ -42,8 +47,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
   }
 
   kotlinOptions {
@@ -57,12 +62,6 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = Versions.compose
   }
-
-  packagingOptions {
-    resources {
-      excludes += "/META-INF/{AL2.0,LGPL2.1}"
-    }
-  }
 }
 
 dependencies {
@@ -71,6 +70,7 @@ dependencies {
   implementation(project(":login:impl"))
   implementation(project(":registration:impl"))
   implementation(project(":data:firebase"))
+  implementation(project(":mainscreen:impl"))
 
   implementation(Dependencies.Core.activityKtx)
   implementation(Dependencies.Core.coreKtx)

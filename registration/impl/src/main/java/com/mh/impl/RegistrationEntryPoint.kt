@@ -1,5 +1,6 @@
 package com.mh.impl
 
+import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -24,13 +25,16 @@ class RegistrationEntryPoint @Inject constructor() : RegistrationEntry() {
     destinations: Destinations
   ) {
     navigation(startDestination = startDestination, route = "@registration") {
-      composable(featureRoute) {
+      composable(route = featureRoute, content = {
+        val common = LocalCommonProvider.current
+        val auth = LocalAuthenticationServiceProvider.current
+        val user = LocalUserDataSourceProvider.current
         val viewModel = injectedViewModel {
           DaggerRegistrationComponent
             .builder()
-            .commonProvider(LocalCommonProvider.current)
-            .authenticationServiceProvider(LocalAuthenticationServiceProvider.current)
-            .userDataSourceProvider(LocalUserDataSourceProvider.current)
+            .commonProvider(common)
+            .authenticationServiceProvider(auth)
+            .userDataSourceProvider(user)
             .build()
             .viewModel
         }
@@ -38,7 +42,7 @@ class RegistrationEntryPoint @Inject constructor() : RegistrationEntry() {
           navController = navController,
           viewModel = viewModel,
         )
-      }
+      })
     }
   }
 }

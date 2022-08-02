@@ -109,7 +109,7 @@ fun RegistrationScreen(
           item {
             Button(
               enabled = email.isNotEmpty() && password.isNotEmpty() && confirmedPassword.isNotEmpty(),
-              onClick = { viewModel.dispatchEvent(SignInEvent( email, password)) }
+              onClick = { viewModel.dispatchEvent(SignInEvent(email, password)) }
             ) {
               Text(text = "Sign In")
             }
@@ -124,7 +124,12 @@ fun RegistrationScreen(
       when (navigation) {
         is NavigateToMain -> {
           Timber.d("Navigated to the main screen")
-          // navController.navigate("main")
+          // TODO think about abstraction
+          navController.navigate("main-screen") {
+            popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
+              inclusive = true
+            }
+          }
         }
       }
     }

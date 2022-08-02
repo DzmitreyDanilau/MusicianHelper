@@ -1,4 +1,5 @@
 import Versions.kotlinVersion
+import Versions.compose
 
 object Dependencies {
 
@@ -31,8 +32,8 @@ object Dependencies {
   }
 
   object Core {
-    private const val coreKtxVersion = "1.7.0"
-    private const val activityKtxVersion = "1.4.0"
+    private const val coreKtxVersion = "1.8.0"
+    private const val activityKtxVersion = "1.5.1"
     val coreKtx by lazy { "androidx.core:core-ktx:$coreKtxVersion" }
     val activityKtx by lazy { "androidx.activity:activity-ktx:$activityKtxVersion" }
   }
@@ -44,10 +45,10 @@ object Dependencies {
 
   object Firebase {
     private const val bomVersion = "30.3.1"
-    private const val authVersion = "21.0.1"
-    private const val coreVersion = "20.0.0"
+    private const val authVersion = "21.0.6"
+    private const val coreVersion = "20.1.0"
     private const val firestoreVersion = "24.2.1"
-    val firebaseBom by lazy { "com.google.firebase:firebase-bom:$bomVersion"}
+    val firebaseBom by lazy { "com.google.firebase:firebase-bom:$bomVersion" }
     val firebaseCore by lazy { "com.google.firebase:firebase-core:$coreVersion" }
     val firebaseAuthKtx by lazy { "com.google.firebase:firebase-auth-ktx:$authVersion" }
     val firebaseFirestoreKtx by lazy { "com.google.firebase:firebase-firestore-ktx:$firestoreVersion" }
@@ -55,25 +56,27 @@ object Dependencies {
 
   object Compose {
     private const val activityVersion = "1.5.0-rc01"
-    private const val lifeCycleViewModelVersion = "2.5.0-rc02"
-    private const val navigationVersion = "2.5.0-rc02"
-    private const val composeDepVersion = "1.1.1"
+    private const val lifeCycleViewModelVersion = "2.5.1"
+    private const val navigationVersion = "2.5.1"
+    private const val composeDepVersion = compose
     private const val composeCompilerVersion = "1.2.0"
     private const val acompanistVerssion = "1.2.0-rc03"
     private const val composeFoundationVersion = "1.2.0-rc03"
+    private const val composeMaps = "2.5.3"
 
-    val composeUI by lazy { "androidx.compose.ui:ui:$composeDepVersion" }
+    val composeUI by lazy { "androidx.compose.ui:ui:1.2.0" }
     val composeActivity by lazy { "androidx.activity:activity-compose:$activityVersion" }
-    val composeMaterial by lazy { "androidx.compose.material:material:$composeDepVersion" }
-    val composeAnimation by lazy { "androidx.compose.animation:animation:$composeDepVersion" }
-    val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:$composeDepVersion" }
+    val composeMaterial by lazy { "androidx.compose.material:material:1.2.0" }
+    val composeAnimation by lazy { "androidx.compose.animation:animation:1.2.0" }
+    val composeUiTooling by lazy { "androidx.compose.ui:ui-tooling:1.2.0" }
     val composeLifeCycleViewModel by lazy { "androidx.lifecycle:lifecycle-viewmodel-compose:$lifeCycleViewModelVersion" }
-    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$composeCompilerVersion" }
+    val composeCompiler by lazy { "androidx.compose.compiler:compiler:$compose" }
     val composeNavigation by lazy { "androidx.navigation:navigation-compose:$navigationVersion" }
-    val composeRuntime by lazy { "androidx.compose.runtime:runtime:$composeDepVersion" }
-    val composeToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview:$composeDepVersion" }
+    val composeRuntime by lazy { "androidx.compose.runtime:runtime:1.2.0" }
+    val composeToolingPreview by lazy { "androidx.compose.ui:ui-tooling-preview:1.2.0" }
     val accompanist by lazy { "com.google.accompanist:accompanist-permissions:$acompanistVerssion" }
     val composeFoundation by lazy { "androidx.compose.foundation:foundation:$composeFoundationVersion" }
+    val composeGoogleMaps by lazy { "com.google.maps.android:maps-compose:$composeMaps" }
   }
 
   object Dagger {
@@ -84,10 +87,11 @@ object Dependencies {
   }
 
   object PlayServices {
-    const val gmsVersion = "4.3.3"
-    const val coroutinesVersion = "1.1.1"
+    private const val coroutinesVersion = "1.1.1"
+    private const val mapsVersion = "18.0.2"
 
     val playServicesCoroutines by lazy { "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutinesVersion" }
+    val googleMaps by lazy { "com.google.android.gms:play-services-maps:$mapsVersion" }
   }
 
   val stdLibjdk8 by lazy { "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion" }
