@@ -11,6 +11,7 @@ import javax.inject.Singleton
 
 @Module
 interface RegistrationEntryModule {
+
     @Binds
     @Singleton
     @IntoMap

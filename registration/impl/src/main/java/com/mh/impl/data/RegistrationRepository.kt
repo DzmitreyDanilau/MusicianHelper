@@ -7,7 +7,6 @@ import com.musicianhelper.data.api.UserCreator
 import com.musicianhelper.domain.AuthenticationService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
-import timber.log.Timber
 import javax.inject.Inject
 
 class RegistrationRepository @Inject constructor(
@@ -18,15 +17,15 @@ class RegistrationRepository @Inject constructor(
   override fun signIn(userData: UserData): Flow<Result<User>> {
     return authService.singIn(userData)
       .onEach {
-        Timber.tag("TEST").d("Sucess: ${it.isSuccess}")
-        if(it.isSuccess) {
-          saveUser(it.getOrNull()!!)
+        if (it.isSuccess) {
+          saveUser(it.getOrNull())
         }
       }
   }
 
-  private fun saveUser(user: User) {
-    Timber.tag("TEST").d("SAVE")
-    userCreator.createUser(user)
+  private fun saveUser(user: User?) {
+    user?.let {
+      userCreator.createUser(user)
+    }
   }
 }

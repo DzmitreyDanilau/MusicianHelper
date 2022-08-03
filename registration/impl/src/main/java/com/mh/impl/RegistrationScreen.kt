@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.mh.impl.R.drawable
 import com.mh.impl.RegistrationState.Default
 import com.mh.impl.RegistrationState.ShowPhotoSource
@@ -62,10 +63,6 @@ fun RegistrationScreen(
       viewModel.dispatchEvent(PictureSelected)
     })
 
-  SideEffect {
-    Timber.d("RECOMPOSITION")
-  }
-
   var email by remember { mutableStateOf("") }
   var password by remember { mutableStateOf("") }
   var confirmedPassword by remember { mutableStateOf("") }
@@ -95,7 +92,6 @@ fun RegistrationScreen(
             ColumnItemsFactory(
               viewModel = viewModel,
               item = it,
-
               onEmailChanged = { email = it },
               emailValue = email,
               onPasswordChanged = { password = it },
@@ -126,7 +122,7 @@ fun RegistrationScreen(
           Timber.d("Navigated to the main screen")
           // TODO think about abstraction
           navController.navigate("main-screen") {
-            popUpTo(navController.currentBackStackEntry?.destination?.route ?: return@navigate) {
+            popUpTo(navController.graph.findStartDestination().id) {
               inclusive = true
             }
           }

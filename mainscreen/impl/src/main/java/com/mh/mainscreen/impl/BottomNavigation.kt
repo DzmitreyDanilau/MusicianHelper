@@ -1,15 +1,15 @@
-package com.mh. mainscreen.impl
+package com.mh.mainscreen.impl
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.mh.mainscreen.impl.BottomNavigationItem.Home
 import com.mh.mainscreen.impl.BottomNavigationItem.Map
@@ -30,8 +29,9 @@ fun BottomNavigation(navController: NavController) {
   val navItems = listOf(Home, Map, Profile)
 
   androidx.compose.material.BottomNavigation(
-    backgroundColor = Color.Blue,
-    contentColor = Color.Cyan
+    modifier = Modifier
+      .navigationBarsPadding()
+      .height(56.dp),
   ) {
     navItems.forEach {
       BottomNavigationItem(
@@ -86,7 +86,6 @@ fun AnimatableIcon(
     )
   }
 }
-
 
 private val ICON_SIZE = 24.dp
 private val COLOR_NORMAL = Color(0xffEDEFF4)

@@ -9,7 +9,7 @@ object Versions {
 
   const val kotlinVersion = "1.7.10"
 
-  val javaVersion = JavaVersion.VERSION_11
+  val javaVersion = JavaVersion.VERSION_1_8
 }
 
 

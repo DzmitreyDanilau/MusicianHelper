@@ -62,6 +62,10 @@ android {
   composeOptions {
     kotlinCompilerExtensionVersion = Versions.compose
   }
+
+  android.sourceSets.all {
+    kotlin.srcDir("src/main/kotlin")
+  }
 }
 
 dependencies {

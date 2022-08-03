@@ -1,13 +1,10 @@
 package com.mh.impl
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.NavController
-import com.mh.ui.inputfields.DefaultOutlinedField
 import com.musicianhelper.common.android.observeLifecycle
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview

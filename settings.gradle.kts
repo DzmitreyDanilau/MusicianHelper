@@ -20,6 +20,8 @@ pluginManagement {
   }
 }
 
+
+
 rootProject.name = "MusicianHelper"
 
 include(":app")
@@ -33,3 +35,5 @@ include(":data:api")
 include(":data:firebase")
 
 include(":platform:ui")
+include(":build-logic")
+
