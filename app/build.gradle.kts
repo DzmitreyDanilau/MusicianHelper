@@ -1,99 +1,102 @@
-import Versions.javaVersion
+import com.mh.build.logic.convention.Flavor
+import com.mh.build.logic.convention.FlavorDimension
 
 plugins {
-  id("com.android.application")
-  id("com.google.gms.google-services")
-  id(
-    "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
-  ) version ("2.0.1")
-  kotlin("android")
-  kotlin("kapt")
-}
-
-repositories {
-  google()
-  mavenCentral()
-  maven(url = "https://jitpack.io")
-  maven(url = "https://maven.google.com")
+    id("musicianhelper.android.application")
+    kotlin("kapt")
+//  id("com.google.gms.google-services")
+//  id(
+//    "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
+//  ) version ("2.0.1")
 }
 
 android {
 
-  defaultConfig {
-    applicationId = ConfigData.applicationName
-    minSdk = ConfigData.minSdkVersion
-    targetSdk = ConfigData.targetSdkVersion
-    compileSdk = ConfigData.compileSdkVersion
-    buildToolsVersion = ConfigData.buildToolsVersion
-    versionCode = Versions.versionCode
-    versionName = Versions.versionName
+    defaultConfig {
+        applicationId = "com.musicianhelper"
+        versionCode = 1
+        versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
-    vectorDrawables {
-      useSupportLibrary = true
+        // Custom test runner to set up Hilt dependency graph
+        vectorDrawables {
+            useSupportLibrary = true
+        }
+    }
+    buildTypes {
+        val debug by getting {
+            applicationIdSuffix = ".debug"
+        }
+        val release by getting {
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
+            // To publish on the Play store a private signing key is required, but to allow anyone
+            // who clones the code to sign and run the release variant, use the debug signing key.
+            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
 
-    signingConfig = signingConfigs.getByName("debug")
-  }
-
-  buildTypes {
-    debug {
-
+    // @see Flavor for more details on the app product flavors.
+    flavorDimensions += FlavorDimension.contentType.name
+    productFlavors {
+        Flavor.values().forEach {
+            create(it.name) {
+                dimension = it.dimension.name
+                if (it.applicationIdSuffix != null) {
+                    applicationIdSuffix = it.applicationIdSuffix
+                }
+            }
+        }
     }
-
-    release {
-      isMinifyEnabled = false
-      proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+    packagingOptions {
+        resources {
+            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
+        }
     }
-  }
-
-  compileOptions {
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-  }
-
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-
-  buildFeatures {
-    compose = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
-  }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
 
-  implementation(project(":common"))
-  implementation(project(":login:impl"))
-  implementation(project(":registration:impl"))
-  implementation(project(":data:firebase"))
-  implementation(project(":mainscreen:impl"))
+//  implementation(project(":common"))
+//  implementation(project(":login:impl"))
+//  implementation(project(":registration:impl"))
+//  implementation(project(":data:firebase"))
+//  implementation(project(":mainscreen:impl"))
 
-  implementation(Dependencies.Core.activityKtx)
-  implementation(Dependencies.Core.coreKtx)
-
-  implementation(Dependencies.Compose.composeActivity)
-  implementation(Dependencies.Compose.composeAnimation)
-  implementation(Dependencies.Compose.composeCompiler)
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
-  implementation(Dependencies.Compose.composeMaterial)
-  implementation(Dependencies.Compose.composeUiTooling)
-  implementation(Dependencies.Compose.composeNavigation)
-  implementation(Dependencies.Compose.composeRuntime)
-
-  implementation(Dependencies.LifeCycle.lifecycleCommonJava8)
-  implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
-  implementation(Dependencies.LifeCycle.lifecycleViewmodelKtx)
-
-  implementation(Dependencies.Dagger.dagger)
-  kapt(Dependencies.Dagger.kapt)
-
-  testImplementation("junit:junit:4.+")
-  androidTestImplementation("androidx.test.ext:junit:1.1.3")
-  androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-  androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
-  debugImplementation("androidx.compose.ui:ui-tooling:1.1.1")
+//  implementation(Dependencies.Core.activityKtx)
+//  implementation(Dependencies.Core.coreKtx)
+//
+//  implementation(Dependencies.Compose.composeActivity)
+//  implementation(Dependencies.Compose.composeAnimation)
+//  implementation(Dependencies.Compose.composeCompiler)
+//  implementation(Dependencies.Compose.composeLifeCycleViewModel)
+//  implementation(Dependencies.Compose.composeMaterial)
+//  implementation(Dependencies.Compose.composeUiTooling)
+//  implementation(Dependencies.Compose.composeNavigation)
+//  implementation(Dependencies.Compose.composeRuntime)
+//
+//  implementation(Dependencies.LifeCycle.lifecycleCommonJava8)
+//  implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
+//  implementation(Dependencies.LifeCycle.lifecycleViewmodelKtx)
+//
+//  implementation(Dependencies.Dagger.dagger)
+//  kapt(Dependencies.Dagger.kapt)
+//
+// androidx.test is forcing JUnit, 4.12. This forces it to use 4.13
+//  configurations.configureEach {
+//    resolutionStrategy {
+//      force(libs.junit4)
+//       Temporary workaround for https://issuetracker.google.com/174733673
+//      force("org.objenesis:objenesis:2.6")
+//    }
+//  }
 }

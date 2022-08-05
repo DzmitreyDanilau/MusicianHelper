@@ -1,35 +1,29 @@
 pluginManagement {
-  repositories {
-    gradlePluginPortal()
-    google()
-    jcenter()
-    mavenCentral()
-  }
-  resolutionStrategy {
-    eachPlugin {
-      if (requested.id.id.startsWith("com.android")) {
-        useModule("com.android.tools.build:gradle:7.2.1")
-      }
-      if (requested.id.id.startsWith("org.jetbrains.kotlin")) {
-        useVersion("1.7.10")
-      }
-      if (requested.id.id.startsWith("com.google.gms")) {
-        useModule("com.google.gms:google-services:4.3.8")
-      }
+    includeBuild("build-logic")
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
     }
-  }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        // Register the AndroidX snapshot repository first so snapshots don't attempt (and fail)
+        // to download from the non-snapshot repositories
+        maven(url = "https://androidx.dev/snapshots/builds/8455591/artifacts/repository") {
+            content {
+                // The AndroidX snapshot repository will only have androidx artifacts, don't
+                // bother trying to find other ones
+                includeGroupByRegex("androidx\\..*")
+            }
+        }
+        google()
+        mavenCentral()
+    }
 }
 
 rootProject.name = "MusicianHelper"
 
 include(":app")
-include(":common")
-
-include(":login:impl", ":login:api")
-include(":registration:api", ":registration:impl")
-include(":mainscreen:api",":mainscreen:impl" )
-
-include(":data:api")
-include(":data:firebase")
-
-include(":platform:ui")
