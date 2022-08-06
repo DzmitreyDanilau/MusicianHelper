@@ -1,72 +1,76 @@
-import com.mh.build.logic.convention.Flavor
-import com.mh.build.logic.convention.FlavorDimension
+import com.mh.convention.com.mh.Flavor
+import com.mh.convention.com.mh.FlavorDimension
 
 plugins {
-    id("musicianhelper.android.application")
-    kotlin("kapt")
-//  id("com.google.gms.google-services")
-//  id(
-//    "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
-//  ) version ("2.0.1")
+  id("musicianhelper.android.application")
+  id("musicianhelper.android.application.compose")
+  kotlin("kapt")
+  // id("com.google.gms.google-services")
+  id(
+    "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
+  )
 }
 
 android {
 
-    defaultConfig {
-        applicationId = "com.musicianhelper"
-        versionCode = 1
-        versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
+  defaultConfig {
+    applicationId = "com.musicianhelper"
+    versionCode = 1
+    versionName = "0.0.1" // X.Y.Z; X = Major, Y = minor, Z = Patch level
 
-        // Custom test runner to set up Hilt dependency graph
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+    // Custom test runner to set up Hilt dependency graph
+    vectorDrawables {
+      useSupportLibrary = true
     }
-    buildTypes {
-        val debug by getting {
-            applicationIdSuffix = ".debug"
-        }
-        val release by getting {
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+  }
+  buildTypes {
+    val debug by getting {
+      applicationIdSuffix = ".debug"
+    }
+    val release by getting {
+      isMinifyEnabled = true
+      proguardFiles(
+        getDefaultProguardFile("proguard-android-optimize.txt"),
+        "proguard-rules.pro"
+      )
 
-            // To publish on the Play store a private signing key is required, but to allow anyone
-            // who clones the code to sign and run the release variant, use the debug signing key.
-            // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
-            signingConfig = signingConfigs.getByName("debug")
-        }
+      // To publish on the Play store a private signing key is required, but to allow anyone
+      // who clones the code to sign and run the release variant, use the debug signing key.
+      // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
+      signingConfig = signingConfigs.getByName("debug")
     }
+  }
 
-    // @see Flavor for more details on the app product flavors.
-    flavorDimensions += FlavorDimension.contentType.name
-    productFlavors {
-        Flavor.values().forEach {
-            create(it.name) {
-                dimension = it.dimension.name
-                if (it.applicationIdSuffix != null) {
-                    applicationIdSuffix = it.applicationIdSuffix
-                }
-            }
+  // @see Flavor for more details on the app product flavors.
+  flavorDimensions += FlavorDimension.contentType.name
+  productFlavors {
+    Flavor.values().forEach {
+      create(it.name) {
+        dimension = it.dimension.name
+        if (it.applicationIdSuffix != null) {
+          applicationIdSuffix = it.applicationIdSuffix
         }
+      }
     }
-    packagingOptions {
-        resources {
-            excludes.add("/META-INF/{AL2.0,LGPL2.1}")
-        }
+  }
+  packagingOptions {
+    resources {
+      excludes.add("/META-INF/{AL2.0,LGPL2.1}")
     }
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-        }
+  }
+  testOptions {
+    unitTests {
+      isIncludeAndroidResources = true
     }
+  }
 }
 
 dependencies {
 
-//  implementation(project(":common"))
+ implementation(project(":core-common"))
+ implementation(project(":core-navigation"))
+ implementation(project(":core-designsystem"))
+ implementation(project(":core-ui"))
 //  implementation(project(":login:impl"))
 //  implementation(project(":registration:impl"))
 //  implementation(project(":data:firebase"))
@@ -88,8 +92,9 @@ dependencies {
 //  implementation(Dependencies.LifeCycle.lifecycleRuntimeKtx)
 //  implementation(Dependencies.LifeCycle.lifecycleViewmodelKtx)
 //
-//  implementation(Dependencies.Dagger.dagger)
-//  kapt(Dependencies.Dagger.kapt)
+  implementation(libs.dagger)
+  kapt(libs.dagger.compiler)
+
 //
 // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13
 //  configurations.configureEach {

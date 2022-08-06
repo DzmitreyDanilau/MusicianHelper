@@ -1,6 +1,7 @@
-package com.mh.build.logic.convention
+package com.mh.convention.com.mh
 
 import com.android.build.api.dsl.CommonExtension
+import com.mh.convention.com.mh.FlavorDimension.contentType
 import org.gradle.api.Project
 
 enum class FlavorDimension {
@@ -11,15 +12,15 @@ enum class FlavorDimension {
 // purposes, or from a production backend server which supplies up-to-date, real content.
 // These two product flavors reflect this behaviour.
 enum class Flavor (val dimension : FlavorDimension, val applicationIdSuffix : String? = null) {
-    demo(FlavorDimension.contentType, ".demo"),
-    prod(FlavorDimension.contentType)
+    demo(contentType, ".demo"),
+    prod(contentType)
 }
 
 fun Project.configureFlavors(
     commonExtension: CommonExtension<*, *, *, *>
 ) {
     commonExtension.apply {
-        flavorDimensions += FlavorDimension.contentType.name
+        flavorDimensions += contentType.name
         productFlavors {
             Flavor.values().forEach{
                 create(it.name) {

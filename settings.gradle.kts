@@ -27,3 +27,7 @@ dependencyResolutionManagement {
 rootProject.name = "MusicianHelper"
 
 include(":app")
+include(":core-common")
+include(":core-navigation")
+include(":core-designsystem")
+include(":core-ui")

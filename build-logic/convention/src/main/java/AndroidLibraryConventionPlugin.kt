@@ -15,7 +15,8 @@
  */
 
 import com.android.build.gradle.LibraryExtension
-import com.mh.build.logic.convention.configureFlavors
+import com.mh.convention.com.mh.configureFlavors
+import com.mh.convention.com.mh.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
