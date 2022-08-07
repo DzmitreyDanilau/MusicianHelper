@@ -28,19 +28,11 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         apply("org.jetbrains.kotlin.android")
         apply("org.jetbrains.kotlin.kapt")
       }
-//            extensions.configure<LibraryExtension> {
-//                defaultConfig {
-//                    testInstrumentationRunner =
-//                        "com.google.samples.apps.nowinandroid.core.testing.NiaTestRunner"
-//                }
-//            }
 
       val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
       dependencies {
-//                add("implementation", project(":core-model"))
         add("implementation", project(":core-ui"))
-//                add("implementation", project(":core-data"))
         add("implementation", project(":core-common"))
         add("implementation", project(":core-designsystem"))
         add("implementation", project(":core-navigation"))
@@ -51,13 +43,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
         add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
         add("implementation", libs.findLibrary("dagger").get())
         add("kapt", libs.findLibrary("dagger.compiler").get())
-
-        // TODO : Remove this dependency once we upgrade to Android Studio Dolphin b/228889042
-        // These dependencies are currently necessary to render Compose previews
-//                add(
-//                    "debugImplementation",
-//                    libs.findLibrary("androidx.customview.poolingcontainer").get()
-//                )
       }
     }
   }

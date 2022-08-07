@@ -24,5 +24,6 @@ buildscript {
         classpath(libs.android.gradlePlugin)
         classpath(libs.kotlin.gradlePlugin)
         classpath(libs.secrets.gradlePlugin)
+        classpath(libs.play.services.gradlePlugin)
     }
 }

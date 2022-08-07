@@ -1,8 +1,8 @@
 package com.musicianhelper.di
 
-import com.mh.impl.di.RegistrationEntryModule
-import com.mh.mainscreen.impl.di.MainScreenEntryModule
 import com.musicianhelper.login.impl.di.LoginEntryModule
+import com.musicianhelper.main.screen.impl.di.MainScreenEntryModule
+import com.musicianhelper.registration.impl.di.RegistrationEntryModule
 import dagger.Module
 
 @Module(

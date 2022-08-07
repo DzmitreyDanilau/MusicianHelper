@@ -32,5 +32,9 @@ gradlePlugin {
       id = "musicianhelper.android.library.compose"
       implementationClass = "AndroidLibraryComposeConventionPlugin"
     }
+    register("androidFeature") {
+      id = "musicianhelper.android.feature"
+      implementationClass = "AndroidFeatureConventionPlugin"
+    }
   }
 }

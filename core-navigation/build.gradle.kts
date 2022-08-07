@@ -4,4 +4,6 @@ plugins {
 
 dependencies {
   api(libs.androidx.navigation.compose)
+
+  implementation(libs.dagger)
 }

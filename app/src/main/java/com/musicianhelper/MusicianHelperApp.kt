@@ -1,12 +1,11 @@
 package com.musicianhelper
 
 import android.app.Application
-import com.musicianhelper.data.fireabase.di.DaggerUserAuthComponent
-import com.musicianhelper.data.fireabase.di.DaggerUserDataSourceComponent
+import com.musicianhelper.core.common.di.DaggerCommonComponent
+import com.musicianhelper.data.firebase.di.DaggerUserAuthComponent
+import com.musicianhelper.data.firebase.di.DaggerUserDataSourceComponent
 import com.musicianhelper.di.AppProvider
 import com.musicianhelper.di.DaggerAppComponent
-import com.musicianhelper.di.DaggerCommonComponent
-import timber.log.Timber
 
 class MusicianHelperApp : Application() {
 
@@ -21,8 +20,6 @@ class MusicianHelperApp : Application() {
       .authenticationServiceProvider(DaggerUserAuthComponent.builder().build())
       .userDataSourceProvider(DaggerUserDataSourceComponent.builder().build())
       .build()
-
-    Timber.plant(Timber.DebugTree())
   }
 }
 

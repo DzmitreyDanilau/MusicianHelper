@@ -1,5 +1,6 @@
 package com.musicianhelper.di
 
+import com.musicianhelper.core.common.di.CommonProvider
 import com.musicianhelper.data.api.AuthenticationServiceProvider
 import com.musicianhelper.data.api.UserDataSourceProvider
 import dagger.Component

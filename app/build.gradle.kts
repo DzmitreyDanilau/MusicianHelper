@@ -5,7 +5,6 @@ plugins {
   id("musicianhelper.android.application")
   id("musicianhelper.android.application.compose")
   kotlin("kapt")
-  // id("com.google.gms.google-services")
   id(
     "com.google.android.libraries.mapsplatform.secrets-gradle-plugin"
   )
@@ -26,6 +25,7 @@ android {
   buildTypes {
     val debug by getting {
       applicationIdSuffix = ".debug"
+      signingConfig = signingConfigs.getByName("debug")
     }
     val release by getting {
       isMinifyEnabled = true
@@ -37,22 +37,23 @@ android {
       // To publish on the Play store a private signing key is required, but to allow anyone
       // who clones the code to sign and run the release variant, use the debug signing key.
       // TODO: Abstract the signing configuration to a separate file to avoid hardcoding this.
-      signingConfig = signingConfigs.getByName("debug")
+      // signingConfig = signingConfigs.getByName("debug")
     }
   }
 
   // @see Flavor for more details on the app product flavors.
-  flavorDimensions += FlavorDimension.contentType.name
-  productFlavors {
-    Flavor.values().forEach {
-      create(it.name) {
-        dimension = it.dimension.name
-        if (it.applicationIdSuffix != null) {
-          applicationIdSuffix = it.applicationIdSuffix
-        }
-      }
-    }
-  }
+  // commented for now
+  // flavorDimensions += FlavorDimension.contentType.name
+  // productFlavors {
+  //   Flavor.values().forEach {
+  //     create(it.name) {
+  //       dimension = it.dimension.name
+  //       if (it.applicationIdSuffix != null) {
+  //         applicationIdSuffix = it.applicationIdSuffix
+  //       }
+  //     }
+  //   }
+  // }
   packagingOptions {
     resources {
       excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -71,10 +72,10 @@ dependencies {
  implementation(project(":core-navigation"))
  implementation(project(":core-designsystem"))
  implementation(project(":core-ui"))
-//  implementation(project(":login:impl"))
-//  implementation(project(":registration:impl"))
-//  implementation(project(":data:firebase"))
-//  implementation(project(":mainscreen:impl"))
+ implementation(project(":login:impl"))
+ implementation(project(":registration:impl"))
+ implementation(project(":data:firebase"))
+ implementation(project(":main-screen:impl"))
 
 //  implementation(Dependencies.Core.activityKtx)
 //  implementation(Dependencies.Core.coreKtx)
