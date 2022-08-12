@@ -1,6 +1,6 @@
 package com.musicianhelper.login.api
 
-import com.musicianhelper.AggregateFeatureEntry
+import com.musicianhelper.core.navigation.AggregateFeatureEntry
 
 abstract class LoginEntry : AggregateFeatureEntry {
 

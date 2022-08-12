@@ -1,8 +1,8 @@
 package com.musicianhelper.login.impl.di
 
+import com.musicianhelper.core.common.di.CommonProvider
+import com.musicianhelper.core.common.di.DispatchersModule
 import com.musicianhelper.data.api.AuthenticationServiceProvider
-import com.musicianhelper.di.CommonProvider
-import com.musicianhelper.di.DispatchersModule
 import com.musicianhelper.login.impl.ui.LoginViewModel
 import dagger.Component
 import kotlinx.coroutines.ExperimentalCoroutinesApi

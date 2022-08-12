@@ -3,10 +3,10 @@ package com.musicianhelper.login.impl
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.musicianhelper.Destinations
+import com.musicianhelper.core.common.di.LocalCommonProvider
+import com.musicianhelper.core.common.di.injectedViewModel
+import com.musicianhelper.core.navigation.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
-import com.musicianhelper.di.LocalCommonProvider
-import com.musicianhelper.di.injectedViewModel
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
 import com.musicianhelper.login.impl.ui.LoginScreen

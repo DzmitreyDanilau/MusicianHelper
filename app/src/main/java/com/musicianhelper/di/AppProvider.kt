@@ -1,7 +1,8 @@
 package com.musicianhelper.di
 
 import androidx.compose.runtime.compositionLocalOf
-import com.musicianhelper.Destinations
+import com.musicianhelper.core.common.di.CommonProvider
+import com.musicianhelper.core.navigation.Destinations
 import com.musicianhelper.data.api.AuthenticationServiceProvider
 import com.musicianhelper.data.api.UserDataSourceProvider
 import javax.inject.Singleton

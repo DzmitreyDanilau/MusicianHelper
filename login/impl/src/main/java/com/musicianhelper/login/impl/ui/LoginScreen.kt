@@ -11,17 +11,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarResult
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SmallTopAppBar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,20 +37,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.NavController
-import com.mh.ui.buttons.DefaultButton
-import com.mh.ui.inputfields.DefaultOutlinedField
-import com.mh.ui.snackbars.DefaultSnackbar
-import com.mh.ui.text.AnnotatedClickableText
-import com.musicianhelper.common.android.observeLifecycle
-import com.musicianhelper.data.AuthThrowable
+import com.musicianhelper.core.common.data.AuthThrowable
+import com.musicianhelper.core.common.observeLifecycle
+import com.musicianhelper.core.ui.buttons.DefaultButton
+import com.musicianhelper.core.ui.inputfields.DefaultOutlinedField
+import com.musicianhelper.core.ui.snackbar.DefaultSnackbar
+import com.musicianhelper.core.ui.text.AnnotatedClickableText
 import com.musicianhelper.login.impl.ui.LoginEvent.DismissSnackbar
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, ExperimentalMaterial3Api::class)
 @FlowPreview
 @Composable
 fun LoginScreen(
@@ -58,17 +59,17 @@ fun LoginScreen(
 
   viewModel.observeLifecycle(lifecycle = LocalLifecycleOwner.current.lifecycle)
 
-  val scaffoldState = rememberScaffoldState()
   val coroutineScope = rememberCoroutineScope()
   val state by viewModel.collectState().collectAsState()
+  val snackBarHostState = remember { SnackbarHostState() }
 
   when (state) {
     is LoginState.Fail -> {
       if (state.isSnackBarVisible) {
         state.error?.let {
           val text = (it as AuthThrowable).errorText
-          LaunchedEffect(scaffoldState.snackbarHostState) {
-            val snackbarResult = scaffoldState.snackbarHostState.showSnackbar(
+          LaunchedEffect(snackBarHostState) {
+            val snackbarResult = snackBarHostState.showSnackbar(
               message = text,
               actionLabel = "Dismiss"
             )
@@ -79,18 +80,19 @@ fun LoginScreen(
         }
       }
     }
-    else -> {
-      Timber.d("State $state")
-    }
+    else -> {}
   }
 
   var email by remember { mutableStateOf("test@gmail.com") }
   var password by remember { mutableStateOf("1234") }
 
   Scaffold(
-    scaffoldState = scaffoldState,
-    snackbarHost = { scaffoldState.snackbarHostState },
-  ) {
+    topBar = {
+      SmallTopAppBar(title = { Text("Login") })
+    },
+    snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
+
+    ) {
     Box(modifier = Modifier.padding(it)) {
       Column(
         modifier = Modifier
@@ -133,10 +135,6 @@ fun LoginScreen(
           onClick = { viewModel.dispatchEvent(LoginEvent.Login(email, password)) }
         )
 
-        SideEffect {
-          Timber.d("isSignUpVisible ${state.isSignUpVisible}")
-        }
-
         this@Column.AnimatedVisibility(
           visible = state.isSignUpVisible,
           enter = fadeIn() + expandHorizontally(),
@@ -153,8 +151,8 @@ fun LoginScreen(
       }
 
       DefaultSnackbar(
-        snackbarHostState = scaffoldState.snackbarHostState,
-        onDismiss = { scaffoldState.snackbarHostState.currentSnackbarData?.dismiss() },
+        snackbarHostState = snackBarHostState,
+        onDismiss = { snackBarHostState.currentSnackbarData?.dismiss() },
         modifier = Modifier.align(Alignment.BottomCenter)
       )
     }

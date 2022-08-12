@@ -3,10 +3,11 @@ package com.musicianhelper
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.mh.mainscreen.api.MainScreenEntry
-import com.mh.registration.api.RegistrationEntry
+import com.musicianhelper.core.navigation.find
 import com.musicianhelper.di.LocalAppProvider
 import com.musicianhelper.login.api.LoginEntry
+import com.musicianhelper.main.screen.api.MainScreenEntry
+import com.musicianhelper.registration.api.RegistrationEntry
 
 @Composable
 fun Navigation() {

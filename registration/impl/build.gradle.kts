@@ -1,76 +1,12 @@
-import Versions.javaVersion
-
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-}
-
-repositories {
-    google()
-    mavenCentral()
-    maven(url = "https://jitpack.io")
-    maven(url = "https://maven.google.com")
-}
-
-android {
-    compileSdk = ConfigData.compileSdkVersion
-
-    defaultConfig {
-        minSdk = ConfigData.minSdkVersion
-        targetSdk = ConfigData.targetSdkVersion
-    }
-
-    buildTypes {
-
-        debug {
-
-        }
-
-        release {
-
-        }
-    }
-
-    compileOptions {
-        sourceCompatibility = javaVersion
-        targetCompatibility = javaVersion
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.compose
-    }
+  id("musicianhelper.android.library")
+  id("musicianhelper.android.library.compose")
+  id("musicianhelper.android.feature")
 }
 
 dependencies {
+  api(project(":registration:api"))
+  implementation(project(":data:api"))
 
-    implementation(project(":common"))
-    implementation(project(":data:api"))
-    implementation(project(":platform:ui"))
-    api(project(":registration:api"))
-
-    implementation(Dependencies.Dagger.dagger)
-    kapt(Dependencies.Dagger.kapt)
-
-    implementation(Dependencies.Compose.composeUI)
-    implementation(Dependencies.Compose.composeActivity)
-    implementation(Dependencies.Compose.composeMaterial)
-    implementation(Dependencies.Compose.composeCompiler)
-    implementation(Dependencies.Compose.composeLifeCycleViewModel)
-    implementation(Dependencies.Compose.composeAnimation)
-    implementation(Dependencies.Compose.composeNavigation)
-    implementation(Dependencies.Compose.composeRuntime)
-
-    debugImplementation(Dependencies.Compose.composeUiTooling)
-    implementation(Dependencies.Compose.composeToolingPreview)
-
-    implementation(Dependencies.ImagesLoader.coil)
+  implementation(libs.androidx.lifecycle.viewModelCompose)
 }

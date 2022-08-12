@@ -1,12 +1,11 @@
 package com.musicianhelper.login.impl.ui
 
-import com.musicianhelper.common.Action
-import com.musicianhelper.common.Event
-import com.musicianhelper.common.Navigation
-import com.musicianhelper.common.Result
-import com.musicianhelper.common.android.BaseViewModel
-import com.musicianhelper.di.Main
-import com.musicianhelper.domain.UseCase
+import com.musicianhelper.core.common.Action
+import com.musicianhelper.core.common.BaseViewModel
+import com.musicianhelper.core.common.Event
+import com.musicianhelper.core.common.Navigation
+import com.musicianhelper.core.common.di.Main
+import com.musicianhelper.core.common.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult
 import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
 import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
@@ -22,6 +21,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import javax.inject.Inject
 
+typealias Result = com.musicianhelper.core.common.Result
+
 @ExperimentalCoroutinesApi
 @FlowPreview
 class LoginViewModel @Inject constructor(
@@ -31,7 +32,7 @@ class LoginViewModel @Inject constructor(
 
   override fun reduceState(
     previous: LoginState,
-    result: Result
+    result: com.musicianhelper.core.common.Result
   ): LoginState {
     return when (result) {
       is LoginResult.Success -> Success

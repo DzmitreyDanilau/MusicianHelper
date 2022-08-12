@@ -1,51 +1,10 @@
 plugins {
-  id("com.android.library")
-  kotlin("android")
-  kotlin("kapt")
-}
-
-repositories {
-  google()
-  mavenCentral()
-  maven(url = "https://jitpack.io")
-  maven(url = "https://maven.google.com")
-}
-
-
-android {
-  compileSdk = ConfigData.compileSdkVersion
-
-  defaultConfig {
-    minSdk = ConfigData.minSdkVersion
-    targetSdk = ConfigData.targetSdkVersion
-  }
-
-  buildTypes {
-
-    debug {
-
-    }
-
-    release {
-
-    }
-  }
-
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
-
-  buildFeatures {
-    compose = true
-  }
-
-  composeOptions {
-    kotlinCompilerExtensionVersion = Versions.compose
-  }
+  id("musicianhelper.android.library")
+  id("musicianhelper.android.library.compose")
 }
 
 dependencies {
-  implementation(project(":common"))
-
-  implementation(Dependencies.Compose.composeLifeCycleViewModel)
+  implementation(project(":core-common"))
+  implementation(libs.kotlin.coroutines.core)
+  implementation(libs.androidx.compose.runtime)
 }

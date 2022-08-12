@@ -1,40 +1,8 @@
 plugins {
-    id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
-}
-
-repositories {
-    google()
-    mavenCentral()
-    maven(url = "https://jitpack.io")
-    maven(url = "https://maven.google.com")
-}
-
-android {
-    compileSdk = ConfigData.compileSdkVersion
-
-    defaultConfig {
-        minSdk = ConfigData.minSdkVersion
-        targetSdk = ConfigData.targetSdkVersion
-    }
-
-    buildTypes {
-
-        debug {
-
-        }
-
-        release {
-
-        }
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+  id("musicianhelper.android.library")
 }
 
 dependencies {
-    implementation(project(":common"))
+  implementation(project(":core-common"))
+  implementation(project(":core-navigation"))
 }

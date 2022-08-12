@@ -1,52 +1,22 @@
 plugins {
-  id("com.android.library")
-  kotlin("android")
+  id("musicianhelper.android.library")
   kotlin("kapt")
 }
 
-repositories {
-  google()
-  mavenCentral()
-  maven(url = "https://jitpack.io")
-  maven(url = "https://maven.google.com")
-}
-
-
-android {
-  compileSdk = ConfigData.compileSdkVersion
-
-  defaultConfig {
-    minSdk = ConfigData.minSdkVersion
-    targetSdk = ConfigData.targetSdkVersion
-  }
-
-  buildTypes {
-
-    debug {
-
-    }
-
-    release {
-
-    }
-  }
-}
-
 dependencies {
-
-  implementation(project(":common"))
+  implementation(project(":core-common"))
   api(project(":data:api"))
 
-  implementation(Dependencies.Firebase.firebaseCore)
-  implementation(Dependencies.Firebase.firebaseAuthKtx)
-  implementation(Dependencies.Firebase.firebaseFirestoreKtx)
 
-  implementation(Dependencies.PlayServices.playServicesCoroutines)
+  implementation(libs.firebase.core)
+  implementation(libs.firebase.auth)
+  implementation(libs.firebase.ktx.firestore)
 
-  implementation(Dependencies.Kotlin.coroutinesCore)
-  implementation(Dependencies.stdLibjdk8)
-  implementation(Dependencies.stdLibjdk7)
+  implementation(libs.play.services.coroutines)
+  implementation(libs.google.maps)
 
-  implementation(Dependencies.Dagger.dagger)
-  kapt(Dependencies.Dagger.kapt)
+  implementation(libs.kotlin.coroutines.core)
+
+  implementation(libs.dagger)
+  kapt(libs.dagger.compiler)
 }

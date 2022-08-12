@@ -1,6 +1,6 @@
 package com.musicianhelper.data.api
 
-import com.musicianhelper.data.User
+import com.musicianhelper.core.common.data.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserProvider {

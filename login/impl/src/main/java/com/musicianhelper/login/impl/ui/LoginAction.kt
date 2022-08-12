@@ -1,6 +1,6 @@
 package com.musicianhelper.login.impl.ui
 
-import com.musicianhelper.common.Action
+import com.musicianhelper.core.common.Action
 
 data class LoginAction(
   val name: String,
