@@ -87,11 +87,7 @@ fun LoginScreen(
   var password by remember { mutableStateOf("1234") }
 
   Scaffold(
-    topBar = {
-      SmallTopAppBar(title = { Text("Login") })
-    },
     snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-
     ) {
     Box(modifier = Modifier.padding(it)) {
       Column(
