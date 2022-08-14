@@ -2,39 +2,41 @@ package com.musicianhelper.login.impl.ui
 
 import com.musicianhelper.core.common.State
 
-sealed class LoginState : State {
-  abstract val inProgress: Boolean
-  abstract val isSnackBarVisible: Boolean
-  abstract val isSignUpVisible: Boolean
-  abstract val error: Throwable?
+sealed interface LoginState : State {
+  val isSnackBarVisible: Boolean
+  val isSignUpVisible: Boolean
+  val error: Throwable?
 
-  object Initial : LoginState() {
-    override val inProgress: Boolean = false
+  object Initial : LoginState {
     override val isSnackBarVisible: Boolean = false
     override val isSignUpVisible: Boolean = false
     override val error: Throwable? = null
   }
 
-  object Success : LoginState() {
+  object Success : LoginState {
     override val error: Throwable? = null
-    override var inProgress: Boolean = false
     override val isSnackBarVisible: Boolean = false
     override val isSignUpVisible: Boolean = false
   }
 
-  object Dismiss : LoginState() {
-    override var inProgress: Boolean = false
+  object Dismiss : LoginState {
     override val isSnackBarVisible: Boolean = false
     override val isSignUpVisible: Boolean = false
     override val error: Throwable? = null
   }
 
   data class Fail(
-    override var inProgress: Boolean,
     override val isSnackBarVisible: Boolean,
     override val isSignUpVisible: Boolean,
     override val error: Throwable?
-  ) : LoginState()
+  ) : LoginState
+
+  data class Loading(
+    override val isSignUpVisible: Boolean,
+    override val isSnackBarVisible: Boolean
+  ) : LoginState {
+    override val error: Throwable? = null
+  }
 }
 
 

@@ -2,12 +2,14 @@ package com.musicianhelper.login.impl.domain
 
 import com.musicianhelper.core.common.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult.Fail
+import com.musicianhelper.login.impl.domain.LoginResult.Loading
 import com.musicianhelper.login.impl.domain.LoginResult.Success
 import com.musicianhelper.login.impl.ui.LoginAction
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @OptIn(FlowPreview::class)
@@ -23,6 +25,9 @@ class LoginUseCase @Inject constructor(
           onFailure = { error -> Fail(error) }
         )
       }
+        .onStart {
+          Loading
+        }
     }
   }
 }

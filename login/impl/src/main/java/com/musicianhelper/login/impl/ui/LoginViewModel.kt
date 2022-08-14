@@ -11,6 +11,7 @@ import com.musicianhelper.login.impl.domain.LoginResult.DismissResult
 import com.musicianhelper.login.impl.domain.LoginResult.NavigateToRegisterResult
 import com.musicianhelper.login.impl.ui.LoginState.Fail
 import com.musicianhelper.login.impl.ui.LoginState.Initial
+import com.musicianhelper.login.impl.ui.LoginState.Loading
 import com.musicianhelper.login.impl.ui.LoginState.Success
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,11 +36,17 @@ class LoginViewModel @Inject constructor(
     result: com.musicianhelper.core.common.Result
   ): LoginState {
     return when (result) {
+      is LoginResult.Loading -> {
+        Loading(
+          isSignUpVisible = previous.isSignUpVisible,
+          isSnackBarVisible = previous.isSnackBarVisible
+        )
+      }
+
       is LoginResult.Success -> Success
 
       is LoginResult.Fail -> {
         Fail(
-          inProgress = false,
           error = result.error,
           isSnackBarVisible = true,
           isSignUpVisible = true
@@ -47,7 +54,6 @@ class LoginViewModel @Inject constructor(
       }
       is DismissResult -> {
         Fail(
-          inProgress = previous.inProgress,
           isSignUpVisible = previous.isSignUpVisible,
           isSnackBarVisible = false,
           error = null
@@ -55,7 +61,6 @@ class LoginViewModel @Inject constructor(
       }
       is NavigateToRegisterResult -> {
         Fail(
-          inProgress = previous.inProgress,
           isSnackBarVisible = false,
           isSignUpVisible = false,
           error = null

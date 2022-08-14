@@ -9,7 +9,7 @@ import com.musicianhelper.core.navigation.Destinations
 import com.musicianhelper.data.api.LocalAuthenticationServiceProvider
 import com.musicianhelper.login.api.LoginEntry
 import com.musicianhelper.login.impl.di.DaggerLoginComponent
-import com.musicianhelper.login.impl.ui.LoginScreen
+import com.musicianhelper.login.impl.ui.LoginEntry
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import javax.inject.Inject
@@ -18,23 +18,22 @@ import javax.inject.Inject
 @ExperimentalCoroutinesApi
 class LoginEntryPoint @Inject constructor() : LoginEntry() {
 
-    override fun NavGraphBuilder.navigation(
-            navController: NavHostController,
-            destinations: Destinations
-    ) {
-        composable(route = featureRoute, content = {
-            val common = LocalCommonProvider.current
-            val auth = LocalAuthenticationServiceProvider.current
-            val viewModel = injectedViewModel {
-                DaggerLoginComponent
-                  .builder()
-                  .commonProvider(common)
-                  .authenticationServiceProvider(auth)
-                  .build()
-                  .viewModel
-            }
-            LoginScreen(navController = navController, viewModel = viewModel)
-        })
-
-    }
+  override fun NavGraphBuilder.navigation(
+    navController: NavHostController,
+    destinations: Destinations
+  ) {
+    composable(route = featureRoute, content = {
+      val common = LocalCommonProvider.current
+      val auth = LocalAuthenticationServiceProvider.current
+      val viewModel = injectedViewModel {
+        DaggerLoginComponent
+          .builder()
+          .commonProvider(common)
+          .authenticationServiceProvider(auth)
+          .build()
+          .viewModel
+      }
+      LoginEntry(navController = navController, viewModel = viewModel)
+    })
+  }
 }

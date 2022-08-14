@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @Composable
 fun DefaultSnackbar(
@@ -27,8 +28,9 @@ fun DefaultSnackbar(
         modifier = Modifier.padding(16.dp),
         content = {
           Text(
+            fontSize = 12.sp,
             text = data.visuals.message,
-            style = MaterialTheme.typography.bodySmall
+            style = MaterialTheme.typography.bodySmall,
           )
         },
         action = {

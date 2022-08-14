@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
@@ -16,15 +17,13 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,10 +34,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.navigation.NavController
 import com.musicianhelper.core.common.data.AuthThrowable
-import com.musicianhelper.core.common.observeLifecycle
 import com.musicianhelper.core.ui.buttons.DefaultButton
 import com.musicianhelper.core.ui.inputfields.DefaultOutlinedField
 import com.musicianhelper.core.ui.snackbar.DefaultSnackbar
@@ -49,18 +46,19 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoroutinesApi::class, ExperimentalMaterial3Api::class)
+@OptIn(
+  ExperimentalCoroutinesApi::class,
+  ExperimentalMaterial3Api::class,
+)
 @FlowPreview
 @Composable
-fun LoginScreen(
+internal fun LoginScreen(
   navController: NavController,
-  viewModel: LoginViewModel
+  viewModel: LoginViewModel,
+  state: LoginState
 ) {
 
-  viewModel.observeLifecycle(lifecycle = LocalLifecycleOwner.current.lifecycle)
-
   val coroutineScope = rememberCoroutineScope()
-  val state by viewModel.collectState().collectAsState()
   val snackBarHostState = remember { SnackbarHostState() }
 
   when (state) {
@@ -68,11 +66,12 @@ fun LoginScreen(
       if (state.isSnackBarVisible) {
         state.error?.let {
           val text = (it as AuthThrowable).errorText
-          LaunchedEffect(snackBarHostState) {
+          coroutineScope.launch {
             val snackbarResult = snackBarHostState.showSnackbar(
               message = text,
               actionLabel = "Dismiss"
             )
+            println("Action from snackbar: $snackbarResult")
             if (snackbarResult == SnackbarResult.Dismissed) {
               viewModel.dispatchEvent(DismissSnackbar)
             }
@@ -87,8 +86,13 @@ fun LoginScreen(
   var password by remember { mutableStateOf("1234") }
 
   Scaffold(
-    snackbarHost = { SnackbarHost(hostState = snackBarHostState) },
-    ) {
+    topBar = { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) },
+    snackbarHost = {
+      DefaultSnackbar(snackbarHostState = snackBarHostState) {
+        snackBarHostState.currentSnackbarData?.dismiss()
+      }
+    },
+  ) {
     Box(modifier = Modifier.padding(it)) {
       Column(
         modifier = Modifier
@@ -110,7 +114,7 @@ fun LoginScreen(
             )
           },
           keyboardActions = KeyboardActions(
-            onNext = { focusManager.moveFocus(FocusDirection.Down) }
+            onDone = { focusManager.moveFocus(FocusDirection.Down) }
           )
         )
         DefaultOutlinedField(
@@ -145,21 +149,15 @@ fun LoginScreen(
           )
         }
       }
-
-      DefaultSnackbar(
-        snackbarHostState = snackBarHostState,
-        onDismiss = { snackBarHostState.currentSnackbarData?.dismiss() },
-        modifier = Modifier.align(Alignment.BottomCenter)
-      )
     }
-  }
 
-  LaunchedEffect(coroutineScope) {
-    launch {
-      viewModel.collectNavigation().collectLatest {
-        when (it) {
-          NavigateToRegistration -> {
-            navController.navigate("registration")
+    LaunchedEffect(coroutineScope) {
+      launch {
+        viewModel.collectNavigation().collectLatest {
+          when (it) {
+            NavigateToRegistration -> {
+              navController.navigate("registration")
+            }
           }
         }
       }
