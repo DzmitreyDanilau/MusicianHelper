@@ -8,6 +8,9 @@ pluginManagement {
 }
 
 dependencyResolutionManagement {
+  versionCatalogs {
+    create("libs")
+  }
   repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
   repositories {
     // Register the AndroidX snapshot repository first so snapshots don't attempt (and fail)
@@ -34,5 +37,5 @@ include(":core-ui")
 include(":login:api", ":login:impl")
 include(":data:api")
 include(":data:firebase")
-include(":registration:api",":registration:impl")
-include(":main-screen:api",":main-screen:impl")
+include(":registration:api", ":registration:impl")
+include(":main-screen:api", ":main-screen:impl")
