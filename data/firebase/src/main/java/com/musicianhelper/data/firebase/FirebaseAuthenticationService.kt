@@ -7,6 +7,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.musicianhelper.core.common.data.User
 import com.musicianhelper.core.common.data.UserData
 import com.musicianhelper.core.common.domain.AuthenticationService
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
@@ -23,6 +24,7 @@ class FirebaseAuthenticationService @Inject constructor(
   ): Flow<Result<User>> {
     return flow {
       try {
+        delay(5000)
         val authResult = firebaseAuth.signInWithEmailAndPassword(name, password).await()
         emit(Result.success(mapToUser(authResult)))
       } catch (e: Exception) {

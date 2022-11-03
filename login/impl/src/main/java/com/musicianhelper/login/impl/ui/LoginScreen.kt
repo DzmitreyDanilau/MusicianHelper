@@ -5,6 +5,7 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,10 +61,12 @@ internal fun LoginScreen(
 
   val coroutineScope = rememberCoroutineScope()
   val snackBarHostState = remember { SnackbarHostState() }
+  val progressBarVisibility = remember { mutableStateOf(false) }
 
   when (state) {
     is LoginState.Fail -> {
       if (state.isSnackBarVisible) {
+        progressBarVisibility.value = state.isLoading
         state.error?.let {
           val text = (it as AuthThrowable).errorText
           coroutineScope.launch {
@@ -79,14 +82,24 @@ internal fun LoginScreen(
         }
       }
     }
-    else -> {}
+    is LoginState.Loading -> {
+      progressBarVisibility.value = state.isLoading
+    }
+    else -> progressBarVisibility.value = state.isLoading
   }
 
   var email by remember { mutableStateOf("test@gmail.com") }
   var password by remember { mutableStateOf("1234") }
 
   Scaffold(
-    topBar = { LinearProgressIndicator(modifier = Modifier.fillMaxWidth()) },
+    topBar = {
+      AnimatedVisibility(visible = progressBarVisibility.value) {
+        LinearProgressIndicator(
+          modifier = Modifier.fillMaxWidth()
+        )
+      }
+    },
+
     snackbarHost = {
       DefaultSnackbar(snackbarHostState = snackBarHostState) {
         snackBarHostState.currentSnackbarData?.dismiss()

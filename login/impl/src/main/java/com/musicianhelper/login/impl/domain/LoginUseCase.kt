@@ -1,8 +1,8 @@
 package com.musicianhelper.login.impl.domain
 
+import com.musicianhelper.core.common.data.User
 import com.musicianhelper.core.common.domain.UseCase
 import com.musicianhelper.login.impl.domain.LoginResult.Fail
-import com.musicianhelper.login.impl.domain.LoginResult.Loading
 import com.musicianhelper.login.impl.domain.LoginResult.Success
 import com.musicianhelper.login.impl.ui.LoginAction
 import kotlinx.coroutines.FlowPreview
@@ -18,16 +18,17 @@ class LoginUseCase @Inject constructor(
 ) : UseCase<LoginAction, LoginResult> {
 
   override fun apply(upstream: Flow<LoginAction>): Flow<LoginResult> {
-    return upstream.flatMapConcat {
-      repository.login(it.name, it.password).map { result ->
-        result.fold(
-          onSuccess = { user -> Success(user) },
-          onFailure = { error -> Fail(error) }
-        )
-      }
-        .onStart {
-          Loading
-        }
+    return upstream.flatMapConcat { action ->
+      repository.login(action.name, action.password)
+        .map { result -> handleResult(result) }
+        .onStart { emit(LoginResult.Loading) }
     }
+  }
+
+  private fun handleResult(result: Result<User>): LoginResult {
+    return result.fold(
+      onSuccess = { user -> Success(user) },
+      onFailure = { error -> Fail(error) }
+    )
   }
 }
