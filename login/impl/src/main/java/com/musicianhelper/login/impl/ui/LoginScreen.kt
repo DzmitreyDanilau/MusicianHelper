@@ -5,10 +5,10 @@ import androidx.compose.animation.expandHorizontally
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -148,18 +148,22 @@ internal fun LoginScreen(
           onClick = { viewModel.dispatchEvent(LoginEvent.Login(email, password)) }
         )
 
-        this@Column.AnimatedVisibility(
-          visible = state.isSignUpVisible,
-          enter = fadeIn() + expandHorizontally(),
-          exit = fadeOut() + shrinkHorizontally()
-        ) {
-          AnnotatedClickableText(
-            text = "Don't have an account? ",
-            textColor = Color.Black,
-            tag = "Sign up",
-            tagColor = Color.Red,
-            onClick = { viewModel.dispatchEvent(LoginEvent.SignUpClicked) }
-          )
+        Box(modifier = Modifier.fillMaxWidth()) {
+          Row(modifier = Modifier.align(Alignment.Center)) {
+            this@Column.AnimatedVisibility(
+              visible = state.isSignUpVisible,
+              enter = fadeIn() + expandHorizontally(),
+              exit = fadeOut() + shrinkHorizontally()
+            ) {
+              AnnotatedClickableText(
+                text = "Don't have an account? ",
+                textColor = Color.Black,
+                tag = "Sign up",
+                tagColor = Color.Red,
+                onClick = { viewModel.dispatchEvent(LoginEvent.SignUpClicked) }
+              )
+            }
+          }
         }
       }
     }

@@ -20,10 +20,6 @@ class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     setContent {
       AppTheme {
-        Surface(
-          color = MaterialTheme.colorScheme.background,
-          modifier = Modifier.padding(MaterialTheme.spacing.small)
-        ) {
           CompositionLocalProvider(
             LocalAppProvider provides application.appProvider,
             LocalCommonProvider provides application.appProvider,
@@ -36,4 +32,3 @@ class MainActivity : ComponentActivity() {
       }
     }
   }
-}
