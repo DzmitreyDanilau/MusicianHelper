@@ -40,10 +40,10 @@ abstract class BaseViewModel<S : State>(
 
   private fun initState(eventFlow: Flow<Event>) {
     result(eventFlow)
-      .distinctUntilChanged()
       .onEach(::navigate)
       .filterNot { it is Navigation }
       .scan(initialState, ::reduceState)
+      .distinctUntilChanged()
       .onEach { stateFlow.emit(it) }
       .launchIn(viewModelScope)
   }
